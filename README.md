@@ -5,13 +5,7 @@ My personal Claude Code skills collection.
 ## Installation
 
 ```bash
-claude-code plugin add https://github.com/niracler/skill.git
-```
-
-Or in Claude Code:
-
-```bash
-/plugin add https://github.com/niracler/skill.git
+claude plugin marketplace add https://github.com/niracler/skill.git
 ```
 
 ## Skills
