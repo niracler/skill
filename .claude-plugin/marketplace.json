@@ -1,0 +1,22 @@
+{
+  "name": "niracler-skills",
+  "owner": {
+    "name": "Niracler",
+    "email": "niracler@gmail.com"
+  },
+  "metadata": {
+    "description": "Personal collection of Claude Code skills for daily workflow",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "workflow-skills",
+      "description": "Collection of workflow automation skills including Git workflow for commits, PRs, and releases",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./git-workflow"
+      ]
+    }
+  ]
+}
