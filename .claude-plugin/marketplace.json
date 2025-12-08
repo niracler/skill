@@ -26,6 +26,15 @@
       "skills": [
         "./writing-assistant"
       ]
+    },
+    {
+      "name": "learning-skills",
+      "description": "Learning and study tools including Anki card generation with atomization principles and cognitive science best practices",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./anki-card-generator"
+      ]
     }
   ]
 }
