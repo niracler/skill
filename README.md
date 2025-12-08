@@ -20,6 +20,27 @@ Standardized Git workflow for commits, PRs, and releases.
 
 [View Documentation](git-workflow/SKILL.md)
 
+### ✍️ writing-assistant
+
+Chinese writing assistant with two modes. Designed specifically for **Chinese language writing workflows**.
+
+**Inspiration Mode** - Guided writing for when you don't know what to write
+
+- Diary / Weekly / Monthly journal prompts
+- Travel writing guidance
+- TIL (Today I Learned) technical notes
+- General article brainstorming
+
+**Review Mode** - Polish and refine articles
+
+- Structure diagnosis & reader context check
+- Chinese style guide (based on Yu Guangzhong's "How to Improve Anglicized Chinese")
+- Source verification & footnotes
+- Personal style consistency
+- Markdown formatting (prettier + markdownlint)
+
+[View Documentation](writing-assistant/SKILL.md)
+
 ## Development
 
 ### Add New Skill
@@ -58,6 +79,9 @@ skill/
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── git-workflow/
+│   ├── SKILL.md
+│   └── references/
+├── writing-assistant/
 │   ├── SKILL.md
 │   ├── references/
 │   └── scripts/
