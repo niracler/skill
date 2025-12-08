@@ -41,6 +41,17 @@ Chinese writing assistant with two modes. Designed specifically for **Chinese la
 
 [View Documentation](writing-assistant/SKILL.md)
 
+### 🃏 anki-card-generator
+
+Generate high-quality Anki flashcards following atomization principles and cognitive science best practices.
+
+- simple-anki-sync compatible markdown output
+- Atomization rules (word limits, one concept per card)
+- Standardized question templates
+- Domain examples (history, programming, language, psychology)
+
+[View Documentation](anki-card-generator/SKILL.md)
+
 ## Development
 
 ### Add New Skill
@@ -85,6 +96,9 @@ skill/
 │   ├── SKILL.md
 │   ├── references/
 │   └── scripts/
+├── anki-card-generator/
+│   ├── SKILL.md
+│   └── references/
 └── scripts/
     ├── init_skill.py
     ├── quick_validate.py
