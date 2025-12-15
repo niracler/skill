@@ -52,6 +52,17 @@ Generate high-quality Anki flashcards following atomization principles and cogni
 
 [View Documentation](anki-card-generator/SKILL.md)
 
+### 🎭 zaregoto-miko
+
+Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-year-old with absurd metaphors.
+
+- Core pattern: `就好像『A，可是B』耶！`
+- Original quotes reference from the novel
+- Material → Style conversion workflow
+- Tone markers and rhythm guide
+
+[View Documentation](zaregoto-miko/SKILL.md)
+
 ## Development
 
 ### Add New Skill
@@ -97,6 +108,9 @@ skill/
 │   ├── references/
 │   └── scripts/
 ├── anki-card-generator/
+│   ├── SKILL.md
+│   └── references/
+├── zaregoto-miko/
 │   ├── SKILL.md
 │   └── references/
 └── scripts/

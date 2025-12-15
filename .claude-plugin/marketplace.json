@@ -35,6 +35,15 @@
       "skills": [
         "./anki-card-generator"
       ]
+    },
+    {
+      "name": "fun-skills",
+      "description": "Fun and creative skills for entertainment and roleplay, including character voice style conversion",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./zaregoto-miko"
+      ]
     }
   ]
 }
