@@ -6,6 +6,8 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ -z "$1" ]; then
     echo "用法: $0 <file.md|directory>"
     echo "示例:"
@@ -29,10 +31,22 @@ if ! command -v markdownlint-cli2 &> /dev/null; then
     exit 1
 fi
 
-echo "1/2 prettier 格式化表格..."
+if ! command -v python3 &> /dev/null; then
+    echo "错误: 未找到 python3"
+    exit 1
+fi
+
+echo "1/3 prettier 格式化表格..."
 prettier --write "$TARGET"
 
-echo "2/2 markdownlint 检查修复..."
+echo "2/3 fix_md060 修复表格列样式..."
+if [ -d "$TARGET" ]; then
+    python3 "$SCRIPT_DIR/fix_md060.py" "${TARGET%/}/**/*.md"
+else
+    python3 "$SCRIPT_DIR/fix_md060.py" "$TARGET"
+fi
+
+echo "3/3 markdownlint 检查修复..."
 markdownlint-cli2 --fix "$TARGET"
 
 echo "✅ 格式化完成: $TARGET"
