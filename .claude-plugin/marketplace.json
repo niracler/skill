@@ -11,11 +11,12 @@
   "plugins": [
     {
       "name": "workflow-skills",
-      "description": "Collection of workflow automation skills including Git workflow for commits, PRs, and releases",
+      "description": "Collection of workflow automation skills including Git workflow for commits, PRs, and releases, and HA integration code review",
       "source": "./",
       "strict": false,
       "skills": [
-        "./src/git-workflow"
+        "./src/git-workflow",
+        "./src/ha-integration-reviewer"
       ]
     },
     {

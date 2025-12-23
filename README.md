@@ -20,6 +20,17 @@ Standardized Git workflow for commits, PRs, and releases.
 
 [View Documentation](src/git-workflow/SKILL.md)
 
+### 🏠 ha-integration-reviewer
+
+Strict Home Assistant integration code reviewer for PR preparation.
+
+- Quality Scale rules verification (Bronze/Silver/Gold/Platinum)
+- Parallel checking with multiple agents (code style, config flow, tests, docs)
+- Dynamic fetching of latest HA developer documentation
+- Common issues checklist from real PR reviews
+
+[View Documentation](src/ha-integration-reviewer/SKILL.md)
+
 ### ✍️ writing-assistant
 
 Chinese writing assistant with two modes. Designed specifically for **Chinese language writing workflows**.
@@ -102,6 +113,9 @@ skill/
 │   └── marketplace.json
 ├── src/
 │   ├── git-workflow/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── ha-integration-reviewer/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   ├── writing-assistant/
