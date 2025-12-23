@@ -7,7 +7,7 @@ echo ""
 found_skills=false
 has_errors=false
 
-for skill_dir in */SKILL.md; do
+for skill_dir in src/*/SKILL.md; do
     if [ -f "$skill_dir" ]; then
         found_skills=true
         skill_name=$(dirname "$skill_dir")

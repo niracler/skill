@@ -18,7 +18,7 @@ Standardized Git workflow for commits, PRs, and releases.
 - Pull Request templates
 - Release workflow with CHANGELOG
 
-[View Documentation](git-workflow/SKILL.md)
+[View Documentation](src/git-workflow/SKILL.md)
 
 ### ✍️ writing-assistant
 
@@ -39,7 +39,7 @@ Chinese writing assistant with two modes. Designed specifically for **Chinese la
 - Personal style consistency
 - Markdown formatting (prettier + markdownlint)
 
-[View Documentation](writing-assistant/SKILL.md)
+[View Documentation](src/writing-assistant/SKILL.md)
 
 ### 🃏 anki-card-generator
 
@@ -50,7 +50,7 @@ Generate high-quality Anki flashcards following atomization principles and cogni
 - Standardized question templates
 - Domain examples (history, programming, language, psychology)
 
-[View Documentation](anki-card-generator/SKILL.md)
+[View Documentation](src/anki-card-generator/SKILL.md)
 
 ### 🎭 zaregoto-miko
 
@@ -61,7 +61,7 @@ Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-yea
 - Material → Style conversion workflow
 - Tone markers and rhythm guide
 
-[View Documentation](zaregoto-miko/SKILL.md)
+[View Documentation](src/zaregoto-miko/SKILL.md)
 
 ## Development
 
@@ -69,7 +69,7 @@ Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-yea
 
 ```bash
 # Initialize
-python3 scripts/init_skill.py your-skill-name --path .
+python3 scripts/init_skill.py your-skill-name --path src
 
 # Edit files
 # - your-skill-name/SKILL.md
@@ -77,7 +77,7 @@ python3 scripts/init_skill.py your-skill-name --path .
 # - your-skill-name/scripts/
 
 # Update .claude-plugin/marketplace.json
-# Add "./your-skill-name" to skills array
+# Add "./src/your-skill-name" to skills array
 
 # Validate
 ./scripts/validate.sh
@@ -100,19 +100,20 @@ git push
 skill/
 ├── .claude-plugin/
 │   └── marketplace.json
-├── git-workflow/
-│   ├── SKILL.md
-│   └── references/
-├── writing-assistant/
-│   ├── SKILL.md
-│   ├── references/
-│   └── scripts/
-├── anki-card-generator/
-│   ├── SKILL.md
-│   └── references/
-├── zaregoto-miko/
-│   ├── SKILL.md
-│   └── references/
+├── src/
+│   ├── git-workflow/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── writing-assistant/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   └── scripts/
+│   ├── anki-card-generator/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   └── zaregoto-miko/
+│       ├── SKILL.md
+│       └── references/
 └── scripts/
     ├── init_skill.py
     ├── quick_validate.py
