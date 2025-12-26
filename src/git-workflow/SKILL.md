@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Personal Git workflow for commits, pull requests, and releases following conventional commits and semantic versioning. Use when creating commits, pull requests, or releases. Supports independent or combined usage of these three workflows.
+description: 个人 Git 工作流，遵循 conventional commits 和语义化版本。用于创建提交、PR 和发布版本。当用户说「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」「写 commit message」「推代码」时触发。
 ---
 
 # Git Workflow
