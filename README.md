@@ -20,6 +20,16 @@ Standardized Git workflow for commits, PRs, and releases.
 
 [View Documentation](src/git-workflow/SKILL.md)
 
+### ☁️ yunxiao-cli
+
+CLI tools for Alibaba Cloud DevOps (Yunxiao/云效).
+
+- git-repo installation and commands (git pr)
+- Push Review Mode (zero-install alternative)
+- aliyun CLI + OpenAPI for Projex tasks
+
+[View Documentation](src/yunxiao-cli/SKILL.md)
+
 ### 🏠 ha-integration-reviewer
 
 Strict Home Assistant integration code reviewer for PR preparation.
@@ -123,6 +133,9 @@ skill/
 │   │   ├── references/
 │   │   └── scripts/
 │   ├── anki-card-generator/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── yunxiao-cli/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   └── zaregoto-miko/

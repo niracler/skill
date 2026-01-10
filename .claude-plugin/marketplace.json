@@ -16,7 +16,8 @@
       "strict": false,
       "skills": [
         "./src/git-workflow",
-        "./src/ha-integration-reviewer"
+        "./src/ha-integration-reviewer",
+        "./src/yunxiao-cli"
       ]
     },
     {
