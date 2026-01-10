@@ -51,8 +51,19 @@ aliyun configure list
 ### 列出组织
 
 ```bash
+# 只列出自己拥有的组织
 aliyun devops ListOrganizations
+
+# 列出所有组织（包括作为成员加入的）- 推荐
+aliyun devops ListOrganizations --minAccessLevel 5
 ```
+
+**accessLevel 说明:**
+
+- 5: 企业外部成员
+- 15: 企业成员
+- 60: 企业管理员
+- 70: 企业拥有者
 
 ### 列出仓库
 
@@ -65,6 +76,25 @@ aliyun devops ListRepositories --organizationId <org-id>
 ```bash
 aliyun devops ListProjects --organizationId <org-id> --category Project
 ```
+
+### 列出任务
+
+```bash
+aliyun devops ListWorkitems \
+  --organizationId <org-id> \
+  --spaceIdentifier <project-id> \
+  --spaceType Project \
+  --category Task \
+  --maxResults 50
+```
+
+**category 可选值:**
+
+- `Task`: 任务
+- `Req`: 需求
+- `Bug`: 缺陷
+- `Risk`: 风险
+- `Request`: 原始诉求
 
 ### 创建 Tag
 
@@ -80,26 +110,43 @@ aliyun devops CreateTag \
 ### 列出合并请求
 
 ```bash
+# 查询所有 MR
 aliyun devops ListMergeRequests \
   --organizationId <org-id> \
-  --repositoryId <repo-id> \
-  --state opened
+  --pageSize 50
+
+# 按时间范围查询（createdBefore 是起始时间，createdAfter 是截止时间）
+aliyun devops ListMergeRequests \
+  --organizationId <org-id> \
+  --createdBefore "2026-01-06T00:00:00Z" \
+  --orderBy created_at \
+  --pageSize 50
 ```
+
+**常用参数:**
+
+- `--createdBefore`: 起始创建时间 (ISO 8601 格式)
+- `--createdAfter`: 截止创建时间
+- `--authorIds`: 按创建人过滤（阿里云账号 ID，逗号分隔）
+- `--orderBy`: 排序字段 (`created_at` 或 `updated_at`)
+- `--page` / `--pageSize`: 分页参数
 
 ## 获取 ID
 
 | ID | 如何获取 |
-|----|----------|
-| organizationId | `aliyun devops ListOrganizations` |
+| --- | --- |
+| organizationId | `aliyun devops ListOrganizations --minAccessLevel 5` |
 | repositoryId | `aliyun devops ListRepositories --organizationId <org-id>` |
+| spaceIdentifier (项目ID) | `ListProjects` 返回的 `identifier` 字段 |
 
 ## 故障排查
 
 | 错误 | 解决方案 |
-|------|----------|
+| --- | --- |
 | "用户失败，请确认已关联至云效账号" | RAM 用户需要添加到云效组织成员 |
 | "category is mandatory" | 添加 `--category Project` 参数 |
 | "spaceType is mandatory" | 查看 API 文档确认必需参数 |
+| ListMergeRequests 的 `--repositoryId` 无效 | 该 API 不支持按仓库过滤，使用 `--groupIds` 过滤代码组 |
 
 ## 参考链接
 

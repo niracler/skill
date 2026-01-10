@@ -20,11 +20,12 @@ description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), includ
 ## 工具选择
 
 | 任务 | 首选方案 | 备选方案 |
-|------|----------|----------|
+| --- | --- | --- |
 | 创建 MR | `git pr` (git-repo) | `git push -o review=new` |
 | 更新 MR | `git pr` | `git push -o review=<id>` |
+| 查看 MR | OpenAPI ListMergeRequests | Codeup 网页端 |
 | 创建 Tag | `git tag` + `git push` | OpenAPI CreateTag |
-| 查看任务 | Projex 网页端 | OpenAPI |
+| 查看任务 | OpenAPI ListWorkitems | Projex 网页端 |
 
 **注意:** git-repo 不是 Google 的 repo 工具，而是阿里巴巴为 AGit-Flow 工作流开发的工具。
 
@@ -66,15 +67,44 @@ git tag -a v1.0.0 -m "Release v1.0.0"
 git push origin v1.0.0
 ```
 
+### 查看合并请求
+
+```bash
+# 查询本周的 MR（createdBefore 为起始时间）
+aliyun devops ListMergeRequests \
+  --organizationId <org-id> \
+  --createdBefore "2026-01-06T00:00:00Z" \
+  --orderBy created_at \
+  --pageSize 50
+```
+
+### 查看任务
+
+```bash
+# 1. 列出所有组织（包括作为成员加入的）
+aliyun devops ListOrganizations --minAccessLevel 5
+
+# 2. 列出项目
+aliyun devops ListProjects --organizationId <org-id> --category Project
+
+# 3. 列出任务
+aliyun devops ListWorkitems \
+  --organizationId <org-id> \
+  --spaceIdentifier <project-id> \
+  --spaceType Project \
+  --category Task
+```
+
 ## 常见错误
 
 | 错误 | 解决方案 |
-|------|----------|
+| --- | --- |
 | 混淆 Google repo | 阿里巴巴的 git-repo 是不同的工具，从 [GitHub](https://github.com/alibaba/git-repo-go/releases) 下载 |
 | `git pr` 命令找不到 | 安装后需要配置 git 别名，见 [git-repo.md](references/git-repo.md) |
 | 分支未跟踪远程 | 先运行 `git branch -u origin/<branch>` |
 | 没有新提交 | 先提交更改再运行 `git pr` |
 | OpenAPI "用户未关联云效" | RAM 用户需要添加到云效组织成员 |
+| ListOrganizations 找不到加入的组织 | 添加 `--minAccessLevel 5` 参数 |
 
 ## 详细指南
 
