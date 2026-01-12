@@ -96,6 +96,90 @@ aliyun devops ListWorkitems \
 - `Risk`: 风险
 - `Request`: 原始诉求
 
+### 获取工作项类型
+
+```bash
+aliyun devops ListProjectWorkitemTypes \
+  --organizationId <org-id> \
+  --projectId <project-id> \
+  --category Task \
+  --spaceType Project
+```
+
+返回结果中的 `identifier` 即为 `workitemTypeIdentifier`。
+
+### 获取工作项字段定义
+
+创建任务前，必须获取项目的工作项字段定义（特别是必填字段）：
+
+```bash
+aliyun devops ListWorkItemAllFields \
+  --organizationId <org-id> \
+  --spaceIdentifier <project-id> \
+  --spaceType Project \
+  --workitemTypeIdentifier <task-type-id>
+```
+
+筛选必填字段：
+
+```bash
+... | jq '.fields[] | select(.isRequired == true) | {identifier, name, format, options}'
+```
+
+### 创建任务
+
+```bash
+aliyun devops CreateWorkitem \
+  --organizationId <org-id> \
+  --body '{
+    "subject": "任务标题",
+    "description": "任务描述（支持 Markdown）",
+    "space": "<project-id>",
+    "spaceIdentifier": "<project-id>",
+    "spaceType": "Project",
+    "category": "Task",
+    "workitemType": "<task-type-id>",
+    "workitemTypeIdentifier": "<task-type-id>",
+    "assignedTo": "<user-id>",
+    "fieldValueList": [
+      {"fieldIdentifier": "<custom-field-id>", "value": "<value>"},
+      {"fieldIdentifier": "priority", "value": "<priority-identifier>"}
+    ]
+  }'
+```
+
+**必填参数（body 中）:**
+
+| 参数 | 说明 |
+|------|------|
+| `subject` | 任务标题 |
+| `space` | 项目 ID（与 spaceIdentifier 相同） |
+| `spaceIdentifier` | 项目 ID（与 space 相同） |
+| `spaceType` | 固定为 `"Project"` |
+| `category` | 工作项大类：Task/Req/Bug/Risk |
+| `workitemType` | 工作项类型 ID（与 workitemTypeIdentifier 相同） |
+| `workitemTypeIdentifier` | 工作项类型 ID（与 workitemType 相同） |
+| `assignedTo` | 负责人的阿里云账号 ID |
+| `fieldValueList` | 自定义字段列表（项目配置的必填字段必须包含） |
+
+**fieldValueList 格式:**
+
+```json
+{
+  "fieldIdentifier": "字段标识符",
+  "value": "字段值"
+}
+```
+
+- 选项类字段（如 priority）：`value` 使用选项的 `identifier`，不是 `displayValue`
+- 文本类字段：`value` 直接使用文本值
+
+**⚠️ 常见陷阱:**
+
+1. **字段重复**: `space`/`spaceIdentifier` 和 `workitemType`/`workitemTypeIdentifier` 必须同时提供，值相同
+2. **自定义必填字段**: 项目管理员配置的必填字段必须在 fieldValueList 中提供，否则报错 `字段【xxx】不能为空`
+3. **选项值格式**: priority 等选项字段需要用 identifier（如 `c31cc0589797babd16889232e4`），不是 displayValue（如 `中`）
+
 ### 创建 Tag
 
 ```bash
@@ -187,6 +271,9 @@ aliyun devops ListMergeRequests \
 | "category is mandatory" | 添加 `--category Project` 参数 |
 | "spaceType is mandatory" | 查看 API 文档确认必需参数 |
 | ListMergeRequests 的 `--repositoryId` 无效 | 该 API 不支持按仓库过滤，使用 `--groupIds` 过滤代码组 |
+| "Missingspace" / "MissingspaceIdentifier" | body 中同时包含 space 和 spaceIdentifier |
+| "MissingworkitemType" | body 中同时包含 workitemType 和 workitemTypeIdentifier |
+| "字段【xxx】不能为空" | 用 ListWorkItemAllFields 获取必填字段，在 fieldValueList 中提供 |
 
 ## 参考链接
 

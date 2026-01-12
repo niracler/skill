@@ -120,8 +120,8 @@ aliyun devops ListMergeRequests \
 # 1. 列出组织
 aliyun devops ListOrganizations --minAccessLevel 5
 
-# 2. 列出仓库
-aliyun devops ListRepositories --organizationId <org-id>
+# 2. 列出项目（注意: 必须加 --category Project）
+aliyun devops ListProjects --organizationId <org-id> --category Project
 
 # 3. 列出任务
 aliyun devops ListWorkitems \
@@ -130,6 +130,51 @@ aliyun devops ListWorkitems \
   --spaceType Project \
   --category Task
 ```
+
+### 创建任务
+
+```bash
+# 1. 获取工作项类型
+aliyun devops ListProjectWorkitemTypes \
+  --organizationId <org-id> \
+  --projectId <project-id> \
+  --category Task \
+  --spaceType Project
+
+# 2. 获取必填字段（含自定义字段）
+aliyun devops ListWorkItemAllFields \
+  --organizationId <org-id> \
+  --spaceIdentifier <project-id> \
+  --spaceType Project \
+  --workitemTypeIdentifier <task-type-id> \
+  | jq '.fields[] | select(.isRequired == true) | {identifier, name, options}'
+
+# 3. 创建任务
+aliyun devops CreateWorkitem \
+  --organizationId <org-id> \
+  --body '{
+    "subject": "任务标题",
+    "space": "<project-id>",
+    "spaceIdentifier": "<project-id>",
+    "spaceType": "Project",
+    "category": "Task",
+    "workitemType": "<task-type-id>",
+    "workitemTypeIdentifier": "<task-type-id>",
+    "assignedTo": "<user-id>",
+    "fieldValueList": [
+      {"fieldIdentifier": "<field-id>", "value": "<value>"}
+    ]
+  }'
+```
+
+**⚠️ 重要陷阱:**
+
+- `space` 和 `spaceIdentifier` 必须**同时提供**，值相同
+- `workitemType` 和 `workitemTypeIdentifier` 必须**同时提供**，值相同
+- 项目的自定义必填字段必须在 `fieldValueList` 中提供
+- `priority` 等选项字段使用 `identifier`（如 `c31cc...`），不是 `displayValue`
+
+详见 [references/openapi.md](references/openapi.md)
 
 ## 常见错误
 
@@ -141,6 +186,9 @@ aliyun devops ListWorkitems \
 | "MissingsourceProjectId" | API 缺少必需参数 | 添加 sourceProjectId, targetProjectId |
 | "MissingcreateFrom" | API 缺少必需参数 | 添加 `createFrom: "WEB"` |
 | 脚本卡在 (y/N) | git-repo 的确认提示 | 用 `yes \|` 管道 |
+| "category is mandatory" | ListProjects 缺少参数 | 添加 `--category Project` |
+| "字段【xxx】不能为空" | CreateWorkitem 缺少必填字段 | 用 ListWorkItemAllFields 获取必填字段 |
+| "Missingspace" | 需要同时提供两个字段 | body 中同时包含 space 和 spaceIdentifier |
 
 ## 详细指南
 
