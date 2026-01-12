@@ -2,6 +2,16 @@
 
 使用 git push 选项创建合并请求的零安装方案。
 
+## ⚠️ 重要限制
+
+**Push Review Mode 只在有新提交需要推送时工作。** 如果提交已推送到远程，会报：
+
+```
+Everything up-to-date
+```
+
+此时必须使用 [git-repo](git-repo.md) 创建 MR。
+
 ## 可用选项
 
 ### 创建新 MR

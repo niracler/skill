@@ -12,52 +12,90 @@ description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), includ
 | 工具 | 用途 | 安装方式 |
 |------|------|----------|
 | Git | 所有操作 | 大多数系统已预装 |
+| aliyun CLI | OpenAPI（推荐） | `brew install aliyun-cli` |
 | git-repo | `git pr` 命令 | 见 [git-repo.md](references/git-repo.md) |
-| aliyun CLI | OpenAPI 调用 | `brew install aliyun-cli` 或 [下载](https://github.com/aliyun/aliyun-cli/releases) |
 
 **无需安装:** Push Review Mode (`git push -o review=...`) 使用标准 Git 即可。
 
-## 工具选择
+## 创建 MR 方式对比
 
-| 任务 | 首选方案 | 备选方案 |
-| --- | --- | --- |
-| 创建 MR | `git pr` (git-repo) | `git push -o review=new` |
-| 更新 MR | `git pr` | `git push -o review=<id>` |
-| 查看 MR | OpenAPI ListMergeRequests | Codeup 网页端 |
-| 创建 Tag | `git tag` + `git push` | OpenAPI CreateTag |
-| 查看任务 | OpenAPI ListWorkitems | Projex 网页端 |
+| 方式 | 显示为 | 适用场景 |
+|------|--------|----------|
+| Push Review Mode | 分支名 | 提交未推送，最简单 |
+| aliyun CLI API | 分支名 | 提交已推送（推荐） |
+| git-repo | commit hash | 提交已推送（备选） |
 
-**注意:** git-repo 不是 Google 的 repo 工具，而是阿里巴巴为 AGit-Flow 工作流开发的工具。
+**⚠️ 重要区别**：
+- **分支合并请求**: 显示 "将 `feature-branch` 合并至 `main`"
+- **Commit 评审**: 显示 "将 `0c556845` 合并至 `main`"（git-repo 方式）
+
+## 创建 MR 决策流程
+
+```dot
+digraph mr_decision {
+    rankdir=TB;
+    node [shape=diamond];
+
+    "提交是否已推送?" -> "Push Review Mode" [label="否"];
+    "提交是否已推送?" -> "需要显示分支名?" [label="是"];
+    "需要显示分支名?" -> "aliyun CLI API\n(推荐)" [label="是"];
+    "需要显示分支名?" -> "git-repo" [label="否/无所谓"];
+
+    node [shape=box];
+    "Push Review Mode" [shape=box];
+    "aliyun CLI API\n(推荐)" [shape=box];
+    "git-repo" [shape=box];
+}
+```
 
 ## 快速参考
 
-### 创建合并请求
+### 创建 MR（提交未推送）
 
-**方案 A: git-repo (需要安装 + 配置别名)**
 ```bash
-# 基本用法 - 打开编辑器填写标题/描述
-git pr
-
-# 指定评审人
-git pr --reviewers user1@example.com,user2@example.com
-
-# 草稿模式
-git pr --draft
-
-# 更新已有 MR
-git pr --change <MR-ID>
+# Push Review Mode - 推送同时创建 MR
+git push -u origin <branch> -o review=new
 ```
 
-**方案 B: Push Review Mode (零安装)**
+### 创建 MR（提交已推送）- 推荐方案
+
+**使用 aliyun CLI API**（显示分支名）：
+
 ```bash
-# 创建新 MR
-git push -o review=new
+# 1. 获取 Repository ID（首次需要）
+aliyun devops ListRepositories --organizationId <org-id> | jq '.result[] | {Id, name}'
 
-# 更新指定 MR
-git push -o review=<MR-ID>
+# 2. 创建分支合并请求
+aliyun devops CreateMergeRequest \
+  --organizationId <org-id> \
+  --repositoryId <repo-id> \
+  --body '{
+    "title": "feat: your title",
+    "description": "Description here",
+    "sourceBranch": "<your-branch>",
+    "targetBranch": "main",
+    "sourceProjectId": <repo-id>,
+    "targetProjectId": <repo-id>,
+    "createFrom": "WEB"
+  }'
+```
 
-# 跳过评审 (需要推送权限)
-git push -o review=no
+**必需参数**：`sourceProjectId`, `targetProjectId`, `createFrom: "WEB"`
+
+### 创建 MR（提交已推送）- 备选方案
+
+**使用 git-repo**（显示 commit hash）：
+
+```bash
+yes | git-repo upload --single --cbr --dest main \
+  --title "feat: your title" \
+  --no-edit
+```
+
+### 更新已有 MR
+
+```bash
+git push origin <branch>  # MR 自动更新
 ```
 
 ### 创建发布 Tag
@@ -70,10 +108,8 @@ git push origin v1.0.0
 ### 查看合并请求
 
 ```bash
-# 查询本周的 MR（createdBefore 为起始时间）
 aliyun devops ListMergeRequests \
   --organizationId <org-id> \
-  --createdBefore "2026-01-06T00:00:00Z" \
   --orderBy created_at \
   --pageSize 50
 ```
@@ -81,11 +117,11 @@ aliyun devops ListMergeRequests \
 ### 查看任务
 
 ```bash
-# 1. 列出所有组织（包括作为成员加入的）
+# 1. 列出组织
 aliyun devops ListOrganizations --minAccessLevel 5
 
-# 2. 列出项目
-aliyun devops ListProjects --organizationId <org-id> --category Project
+# 2. 列出仓库
+aliyun devops ListRepositories --organizationId <org-id>
 
 # 3. 列出任务
 aliyun devops ListWorkitems \
@@ -97,14 +133,14 @@ aliyun devops ListWorkitems \
 
 ## 常见错误
 
-| 错误 | 解决方案 |
-| --- | --- |
-| 混淆 Google repo | 阿里巴巴的 git-repo 是不同的工具，从 [GitHub](https://github.com/alibaba/git-repo-go/releases) 下载 |
-| `git pr` 命令找不到 | 安装后需要配置 git 别名，见 [git-repo.md](references/git-repo.md) |
-| 分支未跟踪远程 | 先运行 `git branch -u origin/<branch>` |
-| 没有新提交 | 先提交更改再运行 `git pr` |
-| OpenAPI "用户未关联云效" | RAM 用户需要添加到云效组织成员 |
-| ListOrganizations 找不到加入的组织 | 添加 `--minAccessLevel 5` 参数 |
+| 错误 | 原因 | 解决方案 |
+|------|------|----------|
+| "Everything up-to-date" | Push Review 无法处理已推送的提交 | 用 aliyun CLI 或 git-repo |
+| "no branches ready for upload" | git-repo 找不到新内容 | 用 `--cbr --dest main` |
+| MR 显示 commit hash | 用了 git-repo | 改用 aliyun CLI API |
+| "MissingsourceProjectId" | API 缺少必需参数 | 添加 sourceProjectId, targetProjectId |
+| "MissingcreateFrom" | API 缺少必需参数 | 添加 `createFrom: "WEB"` |
+| 脚本卡在 (y/N) | git-repo 的确认提示 | 用 `yes \|` 管道 |
 
 ## 详细指南
 

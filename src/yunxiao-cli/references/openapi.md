@@ -107,6 +107,46 @@ aliyun devops CreateTag \
   --message "Release v1.0.0"
 ```
 
+### 创建合并请求（推荐）
+
+当提交已推送到远程分支时，使用此 API 创建分支合并请求：
+
+```bash
+aliyun devops CreateMergeRequest \
+  --organizationId <org-id> \
+  --repositoryId <repo-id> \
+  --body '{
+    "title": "feat: your title",
+    "description": "Description here",
+    "sourceBranch": "<your-branch>",
+    "targetBranch": "main",
+    "sourceProjectId": <repo-id>,
+    "targetProjectId": <repo-id>,
+    "createFrom": "WEB"
+  }'
+```
+
+**必需参数（body 中）:**
+
+| 参数 | 说明 |
+|------|------|
+| `title` | MR 标题 |
+| `sourceBranch` | 源分支名 |
+| `targetBranch` | 目标分支名 |
+| `sourceProjectId` | 源仓库 ID（同 repositoryId） |
+| `targetProjectId` | 目标仓库 ID（同 repositoryId） |
+| `createFrom` | 必须为 `"WEB"` |
+
+**可选参数:**
+
+| 参数 | 说明 |
+|------|------|
+| `description` | MR 描述（支持 Markdown） |
+| `reviewerIds` | 评审人 ID 列表 |
+| `workItemIds` | 关联的工作项 ID |
+
+**与 git-repo 的区别:** 此 API 创建的 MR 会显示分支名（如 "将 feature-branch 合并至 main"），而 git-repo 创建的会显示 commit hash。
+
 ### 列出合并请求
 
 ```bash
@@ -115,7 +155,7 @@ aliyun devops ListMergeRequests \
   --organizationId <org-id> \
   --pageSize 50
 
-# 按时间范围查询（createdBefore 是起始时间，createdAfter 是截止时间）
+# 按时间范围查询
 aliyun devops ListMergeRequests \
   --organizationId <org-id> \
   --createdBefore "2026-01-06T00:00:00Z" \
@@ -127,7 +167,7 @@ aliyun devops ListMergeRequests \
 
 - `--createdBefore`: 起始创建时间 (ISO 8601 格式)
 - `--createdAfter`: 截止创建时间
-- `--authorIds`: 按创建人过滤（阿里云账号 ID，逗号分隔）
+- `--authorIds`: 按创建人过滤
 - `--orderBy`: 排序字段 (`created_at` 或 `updated_at`)
 - `--page` / `--pageSize`: 分页参数
 
