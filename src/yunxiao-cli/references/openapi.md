@@ -180,6 +180,103 @@ aliyun devops CreateWorkitem \
 2. **自定义必填字段**: 项目管理员配置的必填字段必须在 fieldValueList 中提供，否则报错 `字段【xxx】不能为空`
 3. **选项值格式**: priority 等选项字段需要用 identifier（如 `c31cc0589797babd16889232e4`），不是 displayValue（如 `中`）
 
+### 获取工作流状态列表
+
+更新任务状态前，需要获取可用的状态列表：
+
+```bash
+aliyun devops ListWorkItemWorkFlowStatus \
+  --organizationId <org-id> \
+  --spaceIdentifier <project-id> \
+  --spaceType Project \
+  --workitemTypeIdentifier <task-type-id> \
+  --workitemCategoryIdentifier Task
+```
+
+**必需参数:**
+
+| 参数 | 说明 |
+|------|------|
+| `organizationId` | 组织 ID |
+| `spaceIdentifier` | 项目 ID |
+| `spaceType` | 固定为 `"Project"` |
+| `workitemTypeIdentifier` | 工作项类型 ID |
+| `workitemCategoryIdentifier` | 工作项大类：`Task`/`Req`/`Bug` |
+
+**返回示例:**
+
+```json
+{
+  "statuses": [
+    {"identifier": "100005", "name": "待处理"},
+    {"identifier": "100010", "name": "处理中"},
+    {"identifier": "100014", "name": "已完成"}
+  ]
+}
+```
+
+### 更新任务状态
+
+**⚠️ 必须使用 REST API 方式调用**（普通命令行参数方式不支持）：
+
+```bash
+aliyun devops POST /organization/<org-id>/workitems/updateWorkitemField \
+  --body '{
+    "workitemIdentifier": "<workitem-id>",
+    "updateWorkitemPropertyRequest": [
+      {"fieldIdentifier": "status", "fieldValue": "<status-id>"}
+    ]
+  }'
+```
+
+**body 参数:**
+
+| 参数 | 说明 |
+|------|------|
+| `workitemIdentifier` | 工作项 ID |
+| `updateWorkitemPropertyRequest` | **必须是数组**，包含要更新的字段 |
+| `updateWorkitemPropertyRequest[].fieldIdentifier` | 字段标识符（如 `status`） |
+| `updateWorkitemPropertyRequest[].fieldValue` | 字段值（如 `100014` 表示"已完成"） |
+
+**⚠️ 常见陷阱:**
+
+1. **必须用 REST API 方式**: `aliyun devops POST /organization/.../workitems/updateWorkitemField`，不能用 `aliyun devops UpdateWorkitemField`
+2. **数组格式**: `updateWorkitemPropertyRequest` 必须是数组 `[{...}]`，不是对象
+3. **字段名称**: 用 `fieldIdentifier`/`fieldValue`，不是 `propertyKey`/`propertyValue`
+
+### 添加任务评论
+
+```bash
+aliyun devops POST /organization/<org-id>/workitems/comment \
+  --body '{
+    "workitemIdentifier": "<workitem-id>",
+    "content": "评论内容，支持 Markdown",
+    "formatType": "MARKDOWN"
+  }'
+```
+
+**body 参数:**
+
+| 参数 | 说明 |
+|------|------|
+| `workitemIdentifier` | 工作项 ID |
+| `content` | 评论内容 |
+| `formatType` | **必填**，可选值：`MARKDOWN` 或 `RICHTEXT` |
+
+**返回示例:**
+
+```json
+{
+  "success": true,
+  "Comment": {
+    "Id": 19235820,
+    "content": "评论内容",
+    "formatType": "MARKDOWN",
+    "createTime": 1768216995000
+  }
+}
+```
+
 ### 创建 Tag
 
 ```bash
@@ -268,12 +365,18 @@ aliyun devops ListMergeRequests \
 | 错误 | 解决方案 |
 | --- | --- |
 | "用户失败，请确认已关联至云效账号" | RAM 用户需要添加到云效组织成员 |
+| "组织不存在" | organizationId 错误，用 `ListOrganizations --minAccessLevel 5` 获取 |
 | "category is mandatory" | 添加 `--category Project` 参数 |
 | "spaceType is mandatory" | 查看 API 文档确认必需参数 |
 | ListMergeRequests 的 `--repositoryId` 无效 | 该 API 不支持按仓库过滤，使用 `--groupIds` 过滤代码组 |
 | "Missingspace" / "MissingspaceIdentifier" | body 中同时包含 space 和 spaceIdentifier |
 | "MissingworkitemType" | body 中同时包含 workitemType 和 workitemTypeIdentifier |
 | "字段【xxx】不能为空" | 用 ListWorkItemAllFields 获取必填字段，在 fieldValueList 中提供 |
+| "MissingworkitemCategoryIdentifier" | ListWorkItemWorkFlowStatus 加 `--workitemCategoryIdentifier Task` |
+| "MissingfieldIdentifier" | UpdateWorkitemField 用 `fieldIdentifier` 不是 `propertyKey` |
+| "InvalidJSON Array parsing error" | `updateWorkitemPropertyRequest` 必须是数组 `[{...}]` |
+| "MissingformatType" | CreateWorkitemComment 加 `formatType: "MARKDOWN"` |
+| UpdateWorkitemField 参数不识别 | 用 REST API：`aliyun devops POST /organization/.../workitems/updateWorkitemField` |
 
 ## 参考链接
 
