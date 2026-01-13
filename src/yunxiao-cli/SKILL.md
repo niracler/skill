@@ -7,6 +7,66 @@ description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), includ
 
 阿里云云效 DevOps 命令行工具。涵盖代码评审、发布管理和任务跟踪。
 
+---
+
+## 创建 MR 完整流程（最常用）
+
+**一键执行，无需额外查询。** 适用于：用户说"创建 MR"、"提交代码评审"、"推送分支并创建 MR"。
+
+### 步骤 1：提取 ID（从 git remote 自动获取）
+
+```bash
+# 从 git remote 提取组织 ID
+ORG_ID=$(git remote get-url origin | sed -E 's|.*codeup.aliyun.com[:/]([^/]+)/.*|\1|')
+echo "组织 ID: $ORG_ID"
+
+# 从 git remote 提取仓库名
+REPO_NAME=$(basename -s .git $(git remote get-url origin))
+echo "仓库名: $REPO_NAME"
+
+# 获取仓库 ID（⚠️ 注意：字段是大写 Id，不是 id）
+REPO_ID=$(aliyun devops ListRepositories --organizationId $ORG_ID \
+  | jq -r ".result[] | select(.name == \"$REPO_NAME\") | .Id")
+echo "仓库 ID: $REPO_ID"
+```
+
+### 步骤 2：创建分支、提交、推送
+
+```bash
+# 创建并切换分支
+git checkout -b feature/your-feature
+
+# 添加改动并提交
+git add .
+git commit -m "feat: your commit message"
+
+# 推送分支到远程
+git push -u origin feature/your-feature
+```
+
+### 步骤 3：创建 MR
+
+```bash
+aliyun devops CreateMergeRequest \
+  --organizationId $ORG_ID \
+  --repositoryId $REPO_ID \
+  --body '{
+    "title": "feat: your MR title",
+    "description": "## Summary\n\n- Change 1\n- Change 2",
+    "sourceBranch": "feature/your-feature",
+    "targetBranch": "main",
+    "sourceProjectId": '$REPO_ID',
+    "targetProjectId": '$REPO_ID',
+    "createFrom": "WEB"
+  }'
+```
+
+**⚠️ 关键点：**
+- 仓库 ID 字段是 `Id`（大写 I），不是 `id`
+- `sourceProjectId`、`targetProjectId`、`createFrom: "WEB"` 三个字段**必须提供**
+
+---
+
 ## 已知 ID 速查表
 
 **首次使用前必须获取这些 ID，后续可直接复用：**
@@ -193,6 +253,7 @@ git push origin v1.0.0
 | 错误信息 | 原因 | 解决方案 |
 |----------|------|----------|
 | `组织不存在` | organizationId 错误 | 用 `ListOrganizations --minAccessLevel 5` 获取 |
+| 仓库 ID 返回 `null` | jq 用了小写 `id` | 改用大写 `.Id`（API 返回的字段名是大写） |
 | `MissingworkitemCategoryIdentifier` | ListWorkItemWorkFlowStatus 缺参数 | 加 `--workitemCategoryIdentifier Task` |
 | `MissingfieldIdentifier` | UpdateWorkitemField 参数名错误 | 用 `fieldIdentifier` 不是 `propertyKey` |
 | `InvalidJSON Array parsing error` | updateWorkitemPropertyRequest 格式错误 | 必须是数组 `[{...}]` |

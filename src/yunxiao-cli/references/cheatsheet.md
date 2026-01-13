@@ -117,6 +117,28 @@ aliyun devops ListProjects --organizationId <id>
 }
 ```
 
+### 10. 仓库 ID 字段是 `Id`（大写 I）
+
+```bash
+# ✅ 正确 - 使用大写 Id
+aliyun devops ListRepositories --organizationId <org-id> \
+  | jq '.result[] | {Id, name}'
+
+# ❌ 错误 - 小写 id 会返回 null
+aliyun devops ListRepositories --organizationId <org-id> \
+  | jq '.result[] | {id, name}'
+```
+
+### 11. 从 git remote 提取组织 ID
+
+```bash
+# Codeup 仓库的 remote 格式：
+# git@codeup.aliyun.com:<org-id>/<namespace>/<repo>.git
+
+# 提取组织 ID
+git remote get-url origin | sed -E 's|.*codeup.aliyun.com[:/]([^/]+)/.*|\1|'
+```
+
 ---
 
 ## 常用状态 ID
