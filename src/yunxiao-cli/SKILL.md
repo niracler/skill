@@ -1,6 +1,6 @@
 ---
 name: yunxiao-cli
-description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), including Codeup code review (MR/PR), git-repo commands (git pr, git peer-review), push review mode, release tags, or Projex tasks.
+description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), including Codeup code review (MR/PR), release tags, or Projex tasks.
 ---
 
 # 云效 CLI
@@ -118,38 +118,19 @@ aliyun devops POST /organization/${ORG_ID}/workitems/comment \
 
 ## MR 管理
 
-### 创建 MR 决策流程
+### 创建 MR
 
-```
-提交是否已推送到远程?
-├── 否 → Push Review Mode（最简单）
-│         git push -u origin <branch> -o review=new
-│
-└── 是 → 需要显示分支名?
-          ├── 是 → aliyun CLI API（推荐）
-          └── 否 → git-repo
-```
+1. 确保分支已推送：`git push -u origin <branch>`
+2. 使用 aliyun CLI 创建 MR（见 [cheatsheet.md](references/cheatsheet.md) 模板）
 
-### Push Review Mode（提交未推送）
+**快速模板：**
 
 ```bash
-git push -u origin <branch> -o review=new
-```
-
-### aliyun CLI API（提交已推送，推荐）
-
-```bash
-# 获取 Repository ID（首次需要）
-aliyun devops ListRepositories --organizationId <org-id> \
-  | jq '.result[] | {Id, name}'
-
-# 创建 MR
 aliyun devops CreateMergeRequest \
   --organizationId <org-id> \
   --repositoryId <repo-id> \
   --body '{
     "title": "feat: your title",
-    "description": "Description here",
     "sourceBranch": "<your-branch>",
     "targetBranch": "main",
     "sourceProjectId": <repo-id>,
@@ -160,14 +141,6 @@ aliyun devops CreateMergeRequest \
 
 **关键点：** `sourceProjectId`, `targetProjectId`, `createFrom: "WEB"` 都必须提供
 
-### git-repo（备选，显示 commit hash）
-
-```bash
-yes | git-repo upload --single --cbr --dest main \
-  --title "feat: your title" \
-  --no-edit
-```
-
 ### 更新已有 MR
 
 ```bash
@@ -176,12 +149,7 @@ git push origin <branch>  # MR 自动更新
 
 ### 查看 MR 列表
 
-```bash
-aliyun devops ListMergeRequests \
-  --organizationId <org-id> \
-  --orderBy created_at \
-  --pageSize 50
-```
+见 [cheatsheet.md](references/cheatsheet.md) 模板
 
 ---
 
@@ -233,9 +201,6 @@ git push origin v1.0.0
 | `Missingspace` | CreateWorkitem 缺参数 | body 中同时包含 `space` 和 `spaceIdentifier` |
 | `MissingsourceProjectId` | CreateMergeRequest 缺参数 | 加 `sourceProjectId`, `targetProjectId` |
 | `MissingcreateFrom` | CreateMergeRequest 缺参数 | 加 `createFrom: "WEB"` |
-| `Everything up-to-date` | Push Review 无法处理已推送的提交 | 改用 aliyun CLI 或 git-repo |
-| `no branches ready for upload` | git-repo 找不到新内容 | 用 `--cbr --dest main` |
-| 脚本卡在 (y/N) | git-repo 的确认提示 | 用 `yes \|` 管道 |
 
 ---
 
@@ -244,14 +209,12 @@ git push origin v1.0.0
 | 工具 | 用途 | 安装方式 |
 |------|------|----------|
 | Git | 所有操作 | 大多数系统已预装 |
-| aliyun CLI | OpenAPI（推荐） | `brew install aliyun-cli` |
-| git-repo | `git pr` 命令 | 见 [git-repo.md](references/git-repo.md) |
+| aliyun CLI | 云效 API 操作 | `brew install aliyun-cli` |
 
 ---
 
 ## 详细指南
 
 - **AI 助手必读:** 见 [references/cheatsheet.md](references/cheatsheet.md) - 所有必须遵守的规则
-- **git-repo 安装与命令:** 见 [references/git-repo.md](references/git-repo.md)
-- **Push Review Mode 选项:** 见 [references/push-review.md](references/push-review.md)
+- **MR 操作指南:** 见 [references/mr-guide.md](references/mr-guide.md)
 - **OpenAPI 参考:** 见 [references/openapi.md](references/openapi.md)

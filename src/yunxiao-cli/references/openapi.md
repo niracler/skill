@@ -326,7 +326,7 @@ aliyun devops CreateMergeRequest \
 | `reviewerIds` | 评审人 ID 列表 |
 | `workItemIds` | 关联的工作项 ID |
 
-**与 git-repo 的区别:** 此 API 创建的 MR 会显示分支名（如 "将 feature-branch 合并至 main"），而 git-repo 创建的会显示 commit hash。
+**显示效果:** 创建的 MR 会显示分支名（如 "将 feature-branch 合并至 main"）。
 
 ### 列出合并请求
 

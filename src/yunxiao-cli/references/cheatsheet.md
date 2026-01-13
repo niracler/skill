@@ -166,6 +166,44 @@ aliyun devops ListWorkitems \
 
 ---
 
+## MR 操作速查
+
+### 创建 MR（最常用）
+
+复制后替换 `<>` 部分：
+
+```bash
+aliyun devops CreateMergeRequest \
+  --organizationId <ORG_ID> \
+  --repositoryId <REPO_ID> \
+  --body '{
+    "title": "<feat/fix/docs>: <简短描述>",
+    "sourceBranch": "<你的分支名>",
+    "targetBranch": "main",
+    "sourceProjectId": <REPO_ID>,
+    "targetProjectId": <REPO_ID>,
+    "createFrom": "WEB"
+  }'
+```
+
+### 查看 MR 列表
+
+```bash
+aliyun devops ListMergeRequests \
+  --organizationId <ORG_ID> \
+  --orderBy created_at \
+  --pageSize 20
+```
+
+### 获取仓库 ID
+
+```bash
+aliyun devops ListRepositories --organizationId <ORG_ID> \
+  | jq '.result[] | {Id, name}'
+```
+
+---
+
 ## 错误信息 → 修复方案
 
 | 看到这个错误 | 立即这样修复 |
