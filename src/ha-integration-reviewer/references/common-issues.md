@@ -147,3 +147,52 @@
   - 来源: PR review bot
 - **遵守 ADR**: 检查 ADR 文件夹中的架构决策
   - 来源: Review Process - "Comply with architectural decisions documented in the ADR folder"
+
+## Snapshot Testing
+
+HA 测试使用 syrupy 进行 snapshot testing，官方文档未详细说明具体用法。
+
+### 基本模式
+
+```python
+from tests.common import SnapshotAssertion, snapshot_platform
+
+async def test_setup_entry(
+    hass: HomeAssistant,
+    entity_registry: er.EntityRegistry,
+    mock_config_entry: MockConfigEntry,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test entity setup with snapshot verification."""
+    await snapshot_platform(hass, entity_registry, snapshot, mock_config_entry.entry_id)
+```
+
+- 来源: ha-core 测试实践
+
+### TestClass Fixture Override
+
+当同一平台有多种实体类型时，使用 TestClass 隔离：
+
+```python
+class TestEnergySensor:
+    @pytest.fixture
+    def mock_devices(self, mock_light_device: MagicMock) -> list[MagicMock]:
+        """Override fixture for energy sensor tests."""
+        return [mock_light_device]
+
+    async def test_energy_sensor_setup(self, ..., snapshot: SnapshotAssertion):
+        await snapshot_platform(...)
+```
+
+- 来源: sunricher_dali energy sensor 实现
+
+### 更新 Snapshot
+
+```bash
+pytest tests/components/{domain}/test_{platform}.py --snapshot-update
+```
+
+### Snapshot 验证内容
+
+- EntityRegistryEntrySnapshot: unique_id, device_class, entity_category, translation_key 等
+- StateSnapshot: state, attributes

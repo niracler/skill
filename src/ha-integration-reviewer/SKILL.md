@@ -89,6 +89,24 @@ gh api repos/home-assistant/core/contents/homeassistant/components/{integration_
 
 ## Quality Scale 验证要点
 
+### 使用 quality-scale-rule-verifier Agent
+
+ha-core 仓库提供了专门的 Quality Scale 验证 agent：
+
+**位置**: `repos/ha-core/.claude/agents/quality-scale-rule-verifier.md`
+
+**调用方式**:
+
+```text
+# 验证单个规则
+"Check if the {integration} integration follows the {rule_name} rule"
+
+# 验证整个等级
+"Verify that this integration reaches the {tier} quality scale"
+```
+
+该 agent 会动态获取规则文档并验证实现，比静态检查更准确。
+
 ### Done 规则
 
 验证代码是否真正符合规则要求，而非仅仅标记为 done。
