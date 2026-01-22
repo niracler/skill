@@ -150,7 +150,22 @@
 
 ## Snapshot Testing
 
-HA 测试使用 syrupy 进行 snapshot testing，官方文档未详细说明具体用法。
+**强烈建议**：所有 platform 测试都应使用 snapshot testing。这是 HA Core 的最佳实践。
+
+### 为什么必须使用 Snapshot
+
+- 自动验证实体注册信息（unique_id、device_class、translation_key 等）
+- 捕获意外的属性变化
+- 提供可审查的实体状态快照
+- 减少手动断言代码
+
+### 必须添加 Snapshot 的场景
+
+| 场景 | 说明 |
+|------|------|
+| 新增 platform | 每个 `test_{platform}.py` 必须有 `test_setup_entry` 使用 snapshot |
+| 新增实体类型 | 验证 EntityRegistryEntry 和 State 完整 |
+| 修改实体属性 | 运行 `--snapshot-update` 后审查 diff |
 
 ### 基本模式
 
