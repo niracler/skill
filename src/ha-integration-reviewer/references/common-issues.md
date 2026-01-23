@@ -7,6 +7,7 @@
 > - [PR #151479 Review](https://github.com/home-assistant/core/pull/151479) - Add DALI Center integration
 > - [PR #159579 Review](https://github.com/home-assistant/core/pull/159579) - Add sensor platform support
 > - [PR #159576 Review](https://github.com/home-assistant/core/pull/159576) - Upgrade to silver quality scale
+> - [PR #161415 Review](https://github.com/home-assistant/core/pull/161415) - Add energy sensor platform
 > - [copilot-instructions.md](https://github.com/home-assistant/core/blob/dev/.github/copilot-instructions.md)
 
 ## 代码风格
@@ -52,6 +53,19 @@
   - 来源: copilot-instructions.md - "Use device serial numbers, MAC addresses, or config entry IDs—never IP addresses"
 - **设备类型**: 使用合适的 device_class 提供上下文
   - 来源: copilot-instructions.md
+- **Listener 注册模式**: 在 `async_added_to_hass` 中注册，用 `async_on_remove` 包装
+  - 来源: PR #161415 - 确保实体移除时自动清理 listener
+
+```python
+async def async_added_to_hass(self) -> None:
+    """Register listener."""
+    await super().async_added_to_hass()
+    self.async_on_remove(
+        self._device.register_listener(
+            CallbackEventType.XXX, self._handle_update
+        )
+    )
+```
 
 ## Config Flow
 
@@ -184,22 +198,30 @@ async def test_setup_entry(
 
 - 来源: ha-core 测试实践
 
-### TestClass Fixture Override
+### 禁止使用 TestClass
 
-当同一平台有多种实体类型时，使用 TestClass 隔离：
+HA Core 不使用测试类，应使用模块级 fixture override：
 
 ```python
+# ❌ 错误 - 不要使用 TestClass
 class TestEnergySensor:
     @pytest.fixture
-    def mock_devices(self, mock_light_device: MagicMock) -> list[MagicMock]:
-        """Override fixture for energy sensor tests."""
-        return [mock_light_device]
+    def mock_devices(self, ...): ...
 
-    async def test_energy_sensor_setup(self, ..., snapshot: SnapshotAssertion):
-        await snapshot_platform(...)
+# ✅ 正确 - 使用模块级 fixture override
+@pytest.fixture
+def mock_devices(mock_light_device: MagicMock) -> list[MagicMock]:
+    """Override fixture for this test module."""
+    return [mock_light_device]
 ```
 
-- 来源: sunricher_dali energy sensor 实现
+- 来源: PR #161415 - "We don't have test classes like this"
+
+### 合并 Snapshot 测试
+
+每个 platform 只需一个 `test_setup_entry` snapshot 测试，不要为不同实体类型创建多个：
+
+- 来源: PR #161415 - "Can we merge this with the other snapshot test?"
 
 ### 更新 Snapshot
 
