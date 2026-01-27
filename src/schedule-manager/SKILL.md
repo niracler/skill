@@ -1,11 +1,11 @@
 ---
 name: schedule-manager
-description: 通过 osascript 和 icalBuddy 管理 Apple Calendar 和 Reminders，遵循 GTD 方法论。触发场景：用户说「安排会议」「创建提醒」「查看日程」「规划下周」「添加待办」「今天要做什么」「周回顾」「记一下」「别忘了」时触发。
+description: 通过 osascript 和 reminders-cli 管理 Apple Calendar 和 Reminders，遵循 GTD 方法论。触发场景：用户说「安排会议」「创建提醒」「查看日程」「规划下周」「添加待办」「今天要做什么」「周回顾」「记一下」「别忘了」时触发。
 ---
 
 # Schedule Manager
 
-通过 osascript 管理 Apple Calendar 和 Reminders，遵循 GTD 方法论。
+通过 osascript (Calendar) 和 reminders-cli (Reminders) 管理日程，遵循 GTD 方法论。
 
 ## 核心原则（GTD 风格）
 
@@ -41,22 +41,26 @@ osascript -e 'tell application "Calendar" to get name of calendars'
 
 ### 查看今日/本周事件
 
-**推荐使用 icalBuddy（更好的重复事件支持）：**
-
 ```bash
-# 查看今日事件
-icalBuddy -f eventsToday
+osascript <<'EOF'
+set today to current date
+set time of today to 0
+set tomorrow to today + (1 * days)
 
-# 查看本周事件
-icalBuddy eventsFrom:today to:"+7d"
-
-# 指定日历
-icalBuddy -ic "工作" eventsToday
+tell application "Calendar"
+    repeat with cal in calendars
+        set evts to (every event of cal whose start date ≥ today and start date < tomorrow)
+        if (count of evts) > 0 then
+            repeat with e in evts
+                log (summary of e) & " | " & (start date of e)
+            end repeat
+        end if
+    end repeat
+end tell
+EOF
 ```
 
-详见 [icalbuddy-guide.md](references/icalbuddy-guide.md)。
-
-**备选方案（纯 osascript）：** 见 [osascript-calendar.md](references/osascript-calendar.md)。
+详见 [osascript-calendar.md](references/osascript-calendar.md)。
 
 ### 创建事件
 
@@ -90,53 +94,65 @@ end tell'
 
 ## Reminders 操作
 
+> **注意**：osascript 访问 Reminders 非常慢（已知问题），推荐使用 `reminders-cli`。
+>
+> 详见 [reminders-cli-guide.md](references/reminders-cli-guide.md)。
+
 ### 查看提醒列表
 
 ```bash
-osascript -e 'tell application "Reminders" to get name of lists'
+reminders show-lists
 ```
 
 ### 查看待办事项
 
 ```bash
-osascript -e '
-tell application "Reminders"
-    set todoList to {}
-    repeat with reminderList in lists
-        set incompleteReminders to (reminders of reminderList whose completed is false)
-        repeat with r in incompleteReminders
-            set end of todoList to {name of r, name of reminderList}
-        end repeat
-    end repeat
-    return todoList
-end tell'
+# 查看所有未完成提醒
+reminders show-all
+
+# 查看指定列表
+reminders show "工作"
+
+# 按截止日期筛选
+reminders show-all --due-date today
 ```
 
 ### 创建提醒
 
 ```bash
-osascript -e '
-tell application "Reminders"
-    tell list "收件箱"
-        make new reminder with properties {name:"任务名称", body:"任务描述", priority:1}
-    end tell
-end tell'
+# 基础创建
+reminders add "收件箱" "任务名称"
+
+# 带截止日期
+reminders add "工作" "完成报告" --due-date "tomorrow 5pm"
+
+# 带优先级 (low/medium/high)
+reminders add "工作" "紧急任务" --priority high
 ```
-
-**可用属性：** `name`, `body`, `due date`, `allday due date`, `remind me date`, `priority`(0=无, 1=高, 5=中, 9=低), `completed`
-
-详见 [osascript-reminders.md](references/osascript-reminders.md)。
 
 ### 完成提醒
 
 ```bash
-osascript -e '
-tell application "Reminders"
-    tell list "收件箱"
-        set completed of (first reminder whose name is "任务名称") to true
-    end tell
-end tell'
+# 按索引完成（索引通过 show 命令查看）
+reminders complete "收件箱" 0
 ```
+
+### 其他操作
+
+```bash
+# 取消完成
+reminders uncomplete "收件箱" 0
+
+# 编辑提醒
+reminders edit "收件箱" 0 "新的任务名称"
+
+# 删除提醒
+reminders delete "收件箱" 0
+```
+
+### osascript 备选（仅用于复杂操作）
+
+osascript 适合需要批量操作或复杂查询的场景，但速度很慢。详见 [osascript-reminders.md](references/osascript-reminders.md)。
 
 ## 常见工作流
 
@@ -145,24 +161,24 @@ end tell'
 用户说「记一下」「待会做」「别忘了」→ 创建 Reminder 到收件箱
 
 ```bash
-osascript -e 'tell application "Reminders" to tell list "收件箱" to make new reminder with properties {name:"<任务名>"}'
+reminders add "提醒" "<任务名>"
 ```
 
 ### 场景 2: 安排会议
 
-用户说「安排明天下午 2 点的会议」→ 创建 Calendar 事件
+用户说「安排明天下午 2 点的会议」→ 创建 Calendar 事件（使用 osascript）
 
 ### 场景 3: 每日规划
 
-1. 查看今日 Calendar 事件（`icalBuddy eventsToday`）
-2. 查看 Reminders 待办
+1. 查看今日 Calendar 事件（osascript）
+2. 查看 Reminders 待办（`reminders show-all`）
 3. 为重要任务安排 Time Block（Calendar 事件）
 
 ### 场景 4: 周回顾（GTD Weekly Review）
 
 1. 查看本周完成的提醒
-2. 查看下周 Calendar 事件（`icalBuddy eventsFrom:today to:"+7d"`）
-3. 整理 Reminders 列表
+2. 查看下周 Calendar 事件（osascript）
+3. 整理 Reminders 列表（`reminders show-all`）
 
 详见 [gtd-methodology.md](references/gtd-methodology.md)。
 
@@ -170,7 +186,7 @@ osascript -e 'tell application "Reminders" to tell list "收件箱" to make new 
 
 ### 依赖
 
-- **icalBuddy**（推荐）：`brew install ical-buddy`
+- **reminders-cli**（必需）：`brew install keith/formulae/reminders-cli`
 
 ### 权限配置
 
@@ -182,8 +198,11 @@ osascript -e 'tell application "Reminders" to tell list "收件箱" to make new 
 检查权限：
 
 ```bash
+# Calendar 权限
 osascript -e 'tell application "Calendar" to get name of first calendar' 2>&1
-osascript -e 'tell application "Reminders" to get name of first list' 2>&1
+
+# Reminders 权限（使用 reminders-cli）
+reminders show-lists
 ```
 
 ## 常见错误
@@ -191,6 +210,7 @@ osascript -e 'tell application "Reminders" to get name of first list' 2>&1
 | 错误 | 原因 | 解决 |
 |------|------|------|
 | `AppleEvent timed out` | 权限未授予 | 在系统设置中授权 |
-| `Can't get list` | 列表不存在 | 先查看可用列表 |
+| `Can't get list` | 列表不存在 | 先用 `reminders show-lists` 查看可用列表 |
 | `Invalid date` | 日期格式错误 | 使用 `current date` 作为基准 |
-| `icalBuddy: command not found` | 未安装 | `brew install ical-buddy` |
+| `reminders: command not found` | 未安装 | `brew install keith/formulae/reminders-cli` |
+| osascript Reminders 卡顿 | 已知性能问题 | 改用 `reminders-cli` |

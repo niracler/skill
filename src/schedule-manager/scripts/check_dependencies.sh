@@ -14,20 +14,20 @@ fi
 
 echo ""
 
-# Check icalBuddy (optional but recommended)
-echo "Checking icalBuddy..."
-if command -v icalBuddy &> /dev/null; then
-    version=$(icalBuddy --version 2>&1 | head -1)
-    echo "✅ icalBuddy: OK ($version)"
+# Check reminders-cli (required for Reminders)
+echo "Checking reminders-cli..."
+if command -v reminders &> /dev/null; then
+    version=$(reminders --version 2>&1 | head -1 || echo "installed")
+    echo "✅ reminders-cli: OK ($version)"
 else
-    echo "⚠️  icalBuddy: Not installed (optional but recommended)"
-    echo "   Install: brew install ical-buddy"
-    echo "   Benefits: Better recurring event support"
+    echo "❌ reminders-cli: Not installed (required)"
+    echo "   Install: brew install keith/formulae/reminders-cli"
+    echo "   Benefits: Much faster than osascript for Reminders"
 fi
 
 echo ""
 
-# Check Homebrew (needed for icalBuddy installation)
+# Check Homebrew (needed for reminders-cli installation)
 echo "Checking Homebrew..."
 if command -v brew &> /dev/null; then
     echo "✅ Homebrew: OK"
