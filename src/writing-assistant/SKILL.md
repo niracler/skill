@@ -25,10 +25,22 @@ description: 中文写作助手，支持启发式写作引导和文章审校。�
 流程：
 
 ```text
-识别文章类型 → 列出启发问题 → 逐个提问 → 用户回答 → 确认 → 下一个 → 整理成文
+识别文章类型 → 列出启发问题 → 逐个提问 → 用户回答 → 确认 → 下一个 → 整理成文 → 收尾
 ```
 
-详细启发框架见 [inspiration.md](references/inspiration.md)。
+### 日记模式特殊流程
+
+日记模式应**先读取用户的日记模板**，而非使用通用问题：
+
+```text
+1. 询问/确认日记文件路径（或使用 user-config.md 中的约定路径）
+2. 读取今日日记文件，识别模板结构（Journal/Work Log/TIL 等）
+3. 根据模板的实际结构设计启发问题
+4. Work Log 部分可自动从 git/云效获取（见 worklog-automation.md）
+5. 逐个提问 → 整理成文 → 收尾
+```
+
+详见 [inspiration.md](references/inspiration.md)、[worklog-automation.md](references/worklog-automation.md)。
 
 ## 审校模式
 
@@ -113,3 +125,15 @@ description: 中文写作助手，支持启发式写作引导和文章审校。�
 | 加粗 | 只在重要转折/感悟处使用，每标题下 ≤ 3 处 |
 | 数据 | 融入体验，脚注放详细来源                 |
 | 坦诚 | 承认不足、标注未完成，保留思考痕迹       |
+
+## 收尾流程
+
+整理成文后，询问用户是否需要：
+
+1. **创建后续日程** - 调用 `schedule-manager` skill，将「明天要做的事」添加到 Reminders
+2. **生成 Anki 卡片** - 调用 `anki-card-generator` skill，将 TIL 内容转为记忆卡片
+3. **提交到 git** - 如果日记在 git 仓库中，可协助 commit
+
+## 用户配置
+
+见 [user-config.md](references/user-config.md) 配置日记路径等个人偏好。
