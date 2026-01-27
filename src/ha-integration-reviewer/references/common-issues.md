@@ -8,6 +8,7 @@
 > - [PR #159579 Review](https://github.com/home-assistant/core/pull/159579) - Add sensor platform support
 > - [PR #159576 Review](https://github.com/home-assistant/core/pull/159576) - Upgrade to silver quality scale
 > - [PR #161415 Review](https://github.com/home-assistant/core/pull/161415) - Add energy sensor platform
+> - [PR #161463 Review](https://github.com/home-assistant/core/pull/161463) - Add binary sensor platform
 > - [copilot-instructions.md](https://github.com/home-assistant/core/blob/dev/.github/copilot-instructions.md)
 
 ## 代码风格
@@ -65,6 +66,38 @@ async def async_added_to_hass(self) -> None:
             CallbackEventType.XXX, self._handle_update
         )
     )
+```
+
+- **不要冗余设置 translation_key**: 当 `translation_key` 与 `device_class` 名称相同时（如 `motion`、`occupancy`、`temperature` 等），HA 会自动使用标准翻译，**不需要**显式设置 `_attr_translation_key`
+  - 来源: PR #161463 - joostlek 移除了冗余的 `_attr_translation_key = "motion"` 和 `_attr_translation_key = "occupancy"`
+
+```python
+# ❌ 错误 - 冗余设置
+class MyMotionSensor(BinarySensorEntity):
+    _attr_device_class = BinarySensorDeviceClass.MOTION
+    _attr_translation_key = "motion"  # 不需要，会自动使用标准翻译
+
+# ✅ 正确 - 让 HA 自动推断
+class MyMotionSensor(BinarySensorEntity):
+    _attr_device_class = BinarySensorDeviceClass.MOTION
+    # 无需 translation_key，自动使用 device_class 对应的标准翻译
+```
+
+- **初始状态应为 unknown**: 传感器在收到第一次状态更新前，应该显示为 `unknown`（未知），而非假设为 `off` 或 `False`。**不要**在 `__init__` 中设置 `_attr_is_on = False`
+  - 来源: PR #161463 - joostlek 移除了 `_attr_is_on = False`，使初始状态正确显示为 `unknown`
+  - 原理: `unknown` 更准确地表达"传感器尚未收到任何状态报告"的语义
+
+```python
+# ❌ 错误 - 假设初始状态
+class MyBinarySensor(BinarySensorEntity):
+    def __init__(self, device: Device) -> None:
+        self._attr_is_on = False  # 不应该假设初始状态
+
+# ✅ 正确 - 让状态保持 unknown 直到收到真实数据
+class MyBinarySensor(BinarySensorEntity):
+    def __init__(self, device: Device) -> None:
+        # 不设置 _attr_is_on，初始状态为 unknown
+        pass
 ```
 
 ## Config Flow
