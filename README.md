@@ -73,6 +73,17 @@ Generate high-quality Anki flashcards following atomization principles and cogni
 
 [View Documentation](src/anki-card-generator/SKILL.md)
 
+### 📅 schedule-manager
+
+Manage Apple Calendar and Reminders via osascript, following GTD methodology.
+
+- GTD-style workflow (Calendar = fixed commitments, Reminders = tasks)
+- osascript + icalBuddy dual support for better recurring event handling
+- Quick capture, meeting scheduling, daily/weekly planning
+- Permission and dependency check scripts
+
+[View Documentation](src/schedule-manager/SKILL.md)
+
 ### 🎭 zaregoto-miko
 
 Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-year-old with absurd metaphors.
@@ -138,6 +149,10 @@ skill/
 │   ├── yunxiao-cli/
 │   │   ├── SKILL.md
 │   │   └── references/
+│   ├── schedule-manager/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   └── scripts/
 │   └── zaregoto-miko/
 │       ├── SKILL.md
 │       └── references/
