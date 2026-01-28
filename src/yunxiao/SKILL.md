@@ -14,6 +14,7 @@ description: 云效 DevOps CLI，支持代码评审、任务管理和发布。�
 | 任务 | 推荐工具 |
 |------|----------|
 | 创建/查看 MR | 本页工作流 + aliyun CLI |
+| 更新 MR 描述 | `aliyun devops UpdateMergeRequest` |
 | 查询任务列表 | `mcp__yunxiao__search_workitems` |
 | 更新任务状态 | `mcp__yunxiao__update_work_item` 或 REST API |
 | 添加任务评论 | REST API（见下方示例） |
@@ -75,6 +76,38 @@ aliyun devops CreateMergeRequest \
 **⚠️ 关键点：**
 - 仓库 ID 字段是 `Id`（大写 I），不是 `id`
 - `sourceProjectId`、`targetProjectId`、`createFrom: "WEB"` 三个字段**必须提供**
+
+---
+
+## 更新 MR 描述
+
+已创建的 MR 可以通过 `UpdateMergeRequest` 更新标题、描述等信息。
+
+```bash
+aliyun devops UpdateMergeRequest \
+  --organizationId $ORG_ID \
+  --repositoryId $REPO_ID \
+  --localId <mr-local-id> \
+  --body '{
+    "title": "feat: updated title",
+    "description": "## Summary\n\n- Updated description"
+  }'
+```
+
+**参数说明：**
+
+- `--localId`: MR 的本地编号（在 URL 中可见，如 `/mergerequests/56` 中的 `56`）
+- `--body`: 要更新的字段，支持 `title`、`description` 等
+
+**获取 MR localId：**
+
+```bash
+# 列出仓库的 MR
+aliyun devops ListMergeRequests \
+  --organizationId $ORG_ID \
+  --repositoryId $REPO_ID \
+  | jq -r '.result[] | "\(.localId): \(.title) [\(.state)]"'
+```
 
 ---
 
