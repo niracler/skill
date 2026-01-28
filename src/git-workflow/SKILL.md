@@ -15,6 +15,22 @@ Standardized Git workflow for commits, pull requests, and releases using convent
 
 These workflows can be used independently or together as needed.
 
+## Platform Detection
+
+**首先检测仓库类型**，根据 remote URL 选择正确的工作流：
+
+```bash
+git remote get-url origin
+```
+
+| Remote URL 包含        | 平台         | 使用的 Skill               |
+| ---------------------- | ------------ | -------------------------- |
+| `github.com`           | GitHub       | 本 skill（git-workflow）   |
+| `codeup.aliyun.com`    | 云效 Codeup  | **调用 `yunxiao` skill**   |
+| `gitlab.com`           | GitLab       | 本 skill（适配 GitLab CLI）|
+
+**云效仓库检测到后**：立即调用 `yunxiao` skill 处理 MR 创建、代码评审等操作。
+
 ## Quick Reference
 
 ### Commit Format
