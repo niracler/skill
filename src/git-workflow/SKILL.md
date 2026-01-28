@@ -136,3 +136,12 @@ git tag v1.2.0
 git push upstream v1.2.0
 gh release create v1.2.0 -R owner/repo --title "v1.2.0" --notes "..."
 ```
+
+## Common Issues
+
+| 问题 | 原因 | 解决方案 |
+|------|------|----------|
+| Subject line > 72 chars | 描述过长 | 缩短摘要，详情放 body |
+| 多个 type 在同一提交 | 范围过大 | 拆分为多个单一功能的提交 |
+| Merge commits 出现 | 使用了 merge | 改用 `git pull --rebase` |
+| 验证脚本报错 | 格式不符 | 检查 type(scope): 格式 |

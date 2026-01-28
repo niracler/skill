@@ -1,13 +1,44 @@
 #!/usr/bin/env python3
 """
-Quick validation script for skills - minimal version
+Quick validation script for skills - minimal version (no external dependencies)
 """
 
 import sys
-import os
 import re
-import yaml
 from pathlib import Path
+
+# Allowed frontmatter properties
+ALLOWED_PROPERTIES = {'name', 'description', 'license', 'allowed-tools', 'metadata'}
+
+
+def parse_simple_yaml(text):
+    """
+    Parse simple YAML frontmatter without external dependencies.
+    Only handles top-level key: value pairs (sufficient for skill frontmatter).
+    """
+    result = {}
+    current_key = None
+    current_value_lines = []
+
+    for line in text.split('\n'):
+        # Check if line starts a new key (not indented, has colon)
+        key_match = re.match(r'^([a-z][a-z0-9-]*)\s*:\s*(.*)', line)
+        if key_match:
+            # Save previous key if exists
+            if current_key:
+                result[current_key] = '\n'.join(current_value_lines).strip()
+            current_key = key_match.group(1)
+            current_value_lines = [key_match.group(2)]
+        elif current_key and (line.startswith('  ') or line.startswith('\t') or not line.strip()):
+            # Continuation of multi-line value
+            current_value_lines.append(line)
+
+    # Save last key
+    if current_key:
+        result[current_key] = '\n'.join(current_value_lines).strip()
+
+    return result
+
 
 def validate_skill(skill_path):
     """Basic validation of a skill"""
@@ -30,18 +61,13 @@ def validate_skill(skill_path):
 
     frontmatter_text = match.group(1)
 
-    # Parse YAML frontmatter
+    # Parse YAML frontmatter (simple parser, no external deps)
     try:
-        frontmatter = yaml.safe_load(frontmatter_text)
-        if not isinstance(frontmatter, dict):
-            return False, "Frontmatter must be a YAML dictionary"
-    except yaml.YAMLError as e:
-        return False, f"Invalid YAML in frontmatter: {e}"
+        frontmatter = parse_simple_yaml(frontmatter_text)
+    except Exception as e:
+        return False, f"Failed to parse frontmatter: {e}"
 
-    # Define allowed properties
-    ALLOWED_PROPERTIES = {'name', 'description', 'license', 'allowed-tools', 'metadata'}
-
-    # Check for unexpected properties (excluding nested keys under metadata)
+    # Check for unexpected properties
     unexpected_keys = set(frontmatter.keys()) - ALLOWED_PROPERTIES
     if unexpected_keys:
         return False, (
@@ -56,10 +82,7 @@ def validate_skill(skill_path):
         return False, "Missing 'description' in frontmatter"
 
     # Extract name for validation
-    name = frontmatter.get('name', '')
-    if not isinstance(name, str):
-        return False, f"Name must be a string, got {type(name).__name__}"
-    name = name.strip()
+    name = frontmatter.get('name', '').strip()
     if name:
         # Check naming convention (hyphen-case: lowercase with hyphens)
         if not re.match(r'^[a-z0-9-]+$', name):
@@ -71,10 +94,7 @@ def validate_skill(skill_path):
             return False, f"Name is too long ({len(name)} characters). Maximum is 64 characters."
 
     # Extract and validate description
-    description = frontmatter.get('description', '')
-    if not isinstance(description, str):
-        return False, f"Description must be a string, got {type(description).__name__}"
-    description = description.strip()
+    description = frontmatter.get('description', '').strip()
     if description:
         # Check for angle brackets
         if '<' in description or '>' in description:

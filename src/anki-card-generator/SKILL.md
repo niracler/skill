@@ -1,6 +1,6 @@
 ---
 name: anki-card-generator
-description: 生成高质量 Anki 闪卡，遵循原子化原则和认知科学最佳实践。输出 simple-anki-sync 兼容的 markdown 表格。当用户说「生成 Anki 卡片」「做卡片」「帮我记忆」「做闪卡」「学习卡片」「背诵卡」「记忆这个」时触发。
+description: 生成 Anki 闪卡，输出 simple-anki-sync 兼容格式。当用户说「生成 Anki 卡片」「做卡片」「帮我记忆」「做闪卡」「学习卡片」「背诵卡」「记忆这个」时触发。
 ---
 
 # Anki Card Generator
@@ -166,3 +166,16 @@ See [references/examples.md](references/examples.md) for detailed examples:
 4. **Output**: simple-anki-sync markdown format
 
 **Core Philosophy**: Prioritize sustainability and real recall scenarios over comprehensive coverage. Focus on preventing cognitive and motivational barriers.
+
+## When NOT to Use
+
+❌ **不适合卡片化的内容：**
+
+- 需要视觉理解的（图表、流程图）
+- 超过 50 行的代码块
+- 高度情境依赖的知识
+
+✅ **替代方案：**
+
+- 视觉内容 → 配图索引卡片
+- 大代码块 → 代码 Snippet 库

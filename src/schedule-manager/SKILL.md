@@ -188,12 +188,14 @@ reminders add "提醒" "<任务名>"
 
 - **reminders-cli**（必需）：`brew install keith/formulae/reminders-cli`
 
-### 权限配置
+### 权限配置（macOS）
 
-首次运行需要授权：
+首次运行需要授权，进入系统设置 → 隐私与安全性：
 
-1. 系统设置 → 隐私与安全性 → 日历 → 允许终端/Claude
-2. 系统设置 → 隐私与安全性 → 提醒事项 → 允许终端/Claude
+1. **日历** - 勾选 Terminal / iTerm / 你使用的终端应用
+2. **提醒事项** - 同上
+
+⚠️ 修改权限后需重启终端应用
 
 检查权限：
 

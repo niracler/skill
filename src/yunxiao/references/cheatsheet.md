@@ -129,7 +129,30 @@ aliyun devops ListRepositories --organizationId <org-id> \
   | jq '.result[] | {id, name}'
 ```
 
-### 11. 从 git remote 提取组织 ID
+### 11. 创建任务前必须查询必填字段
+
+```bash
+# ✅ 正确 - 先查询字段配置，再创建任务
+# 使用 MCP 工具：
+mcp__yunxiao__get_work_item_type_field_config(
+  organizationId="...", projectId="...", workItemTypeId="..."
+)
+
+# ❌ 错误 - 直接创建任务，遇到「字段【xxx】不能为空」错误
+aliyun devops CreateWorkitem --body '{...}'  # 缺少必填自定义字段
+```
+
+### 12. `assignedTo` 是必填的，需要用户 accountId
+
+```bash
+# 获取用户 accountId
+aliyun devops ListOrganizationMembers --organizationId <org-id> \
+  | jq -r '.members[] | "\(.accountId): \(.organizationMemberName)"'
+
+# ⚠️ 没有「获取当前用户」的 API，必须从成员列表中查找
+```
+
+### 13. 从 git remote 提取组织 ID
 
 ```bash
 # Codeup 仓库的 remote 格式：
@@ -228,14 +251,16 @@ aliyun devops ListRepositories --organizationId <ORG_ID> \
 
 ## 错误信息 → 修复方案
 
-| 看到这个错误 | 立即这样修复 |
-|-------------|-------------|
-| `组织不存在` | 加 `--minAccessLevel 5` 重新获取组织 ID |
-| `MissingworkitemCategoryIdentifier` | 加 `--workitemCategoryIdentifier Task` |
-| `MissingfieldIdentifier` | 用 `fieldIdentifier` 不是 `propertyKey` |
-| `InvalidJSON Array parsing error` | 改成数组 `[{...}]` |
-| `MissingformatType` | 加 `"formatType": "MARKDOWN"` |
-| `category is mandatory` | 加 `--category Project` |
-| `Missingspace` | 同时加 `space` 和 `spaceIdentifier` |
-| `MissingsourceProjectId` | 加 `sourceProjectId` 和 `targetProjectId` |
-| `MissingcreateFrom` | 加 `"createFrom": "WEB"` |
+| 看到这个错误                          | 立即这样修复                                            |
+| ------------------------------------- | ------------------------------------------------------- |
+| `组织不存在`                          | 加 `--minAccessLevel 5` 重新获取组织 ID                 |
+| `MissingworkitemCategoryIdentifier`   | 加 `--workitemCategoryIdentifier Task`                  |
+| `MissingfieldIdentifier`              | 用 `fieldIdentifier` 不是 `propertyKey`                 |
+| `InvalidJSON Array parsing error`     | 改成数组 `[{...}]`                                      |
+| `MissingformatType`                   | 加 `"formatType": "MARKDOWN"`                           |
+| `category is mandatory`               | 加 `--category Project`                                 |
+| `Missingspace`                        | 同时加 `space` 和 `spaceIdentifier`                     |
+| `MissingsourceProjectId`              | 加 `sourceProjectId` 和 `targetProjectId`               |
+| `MissingcreateFrom`                   | 加 `"createFrom": "WEB"`                                |
+| `MissingassignedTo`                   | 加 `assignedTo`（用户 accountId，从成员列表获取）       |
+| `字段【xxx】不能为空`                 | 先用 MCP 查询必填字段配置，再添加到 `fieldValueList`    |
