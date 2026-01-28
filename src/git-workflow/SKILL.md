@@ -15,6 +15,22 @@ Standardized Git workflow for commits, pull requests, and releases using convent
 
 These workflows can be used independently or together as needed.
 
+## Platform Detection
+
+**首先检测仓库类型**，根据 remote URL 选择正确的工作流：
+
+```bash
+git remote get-url origin
+```
+
+| Remote URL 包含        | 平台         | 使用的 Skill               |
+| ---------------------- | ------------ | -------------------------- |
+| `github.com`           | GitHub       | 本 skill（git-workflow）   |
+| `codeup.aliyun.com`    | 云效 Codeup  | **调用 `yunxiao` skill**   |
+| `gitlab.com`           | GitLab       | 本 skill（适配 GitLab CLI）|
+
+**云效仓库检测到后**：立即调用 `yunxiao` skill 处理 MR 创建、代码评审等操作。
+
 ## Quick Reference
 
 ### Commit Format
@@ -136,3 +152,12 @@ git tag v1.2.0
 git push upstream v1.2.0
 gh release create v1.2.0 -R owner/repo --title "v1.2.0" --notes "..."
 ```
+
+## Common Issues
+
+| 问题 | 原因 | 解决方案 |
+|------|------|----------|
+| Subject line > 72 chars | 描述过长 | 缩短摘要，详情放 body |
+| 多个 type 在同一提交 | 范围过大 | 拆分为多个单一功能的提交 |
+| Merge commits 出现 | 使用了 merge | 改用 `git pull --rebase` |
+| 验证脚本报错 | 格式不符 | 检查 type(scope): 格式 |

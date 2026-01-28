@@ -1,11 +1,22 @@
 ---
 name: yunxiao
-description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), including creating MRs, managing Codeup code reviews, updating task status, or creating release tags.
+description: 云效 DevOps CLI，支持代码评审、任务管理和发布。当用户说「创建 MR」「提交评审」「推送代码」「更新任务」「查看任务」「发布版本」「打 tag」时触发。
 ---
 
 # 云效 CLI
 
 阿里云云效 DevOps 命令行工具。涵盖代码评审、发布管理和任务跟踪。
+
+---
+
+## 工具选择
+
+| 任务 | 推荐工具 |
+|------|----------|
+| 创建/查看 MR | 本页工作流 + aliyun CLI |
+| 查询任务列表 | `mcp__yunxiao__search_workitems` |
+| 更新任务状态 | `mcp__yunxiao__update_work_item` 或 REST API |
+| 添加任务评论 | REST API（见下方示例） |
 
 ---
 
@@ -178,6 +189,36 @@ aliyun devops POST /organization/${ORG_ID}/workitems/comment \
 
 ## 创建任务
 
+### 步骤 1：获取必填字段配置
+
+**⚠️ 不同项目可能有不同的必填自定义字段，创建前必须先查询：**
+
+```bash
+# 使用 MCP 工具查询字段配置
+mcp__yunxiao__get_work_item_type_field_config(
+  organizationId="<org-id>",
+  projectId="<project-id>",
+  workItemTypeId="<task-type-id>"
+)
+```
+
+常见必填字段示例：
+- `assignedTo` - 负责人（用户 accountId）
+- `priority` - 优先级（如 `c31cc0589797babd16889232e4` = 中）
+- 自定义字段如「任务类别」「端」等
+
+### 步骤 2：获取用户 accountId
+
+```bash
+# 列出组织成员
+aliyun devops ListOrganizationMembers --organizationId <org-id> \
+  | jq -r '.members[] | "\(.accountId): \(.organizationMemberName)"'
+```
+
+**⚠️ 注意：** 没有直接获取「当前用户」的 API，需要从成员列表中找到对应用户。
+
+### 步骤 3：创建任务
+
 ```bash
 aliyun devops CreateWorkitem \
   --organizationId <org-id> \
@@ -189,9 +230,11 @@ aliyun devops CreateWorkitem \
     "category": "Task",
     "workitemType": "<task-type-id>",
     "workitemTypeIdentifier": "<task-type-id>",
-    "assignedTo": "<user-id>",
+    "assignedTo": "<user-accountId>",
+    "description": "任务描述，支持 Markdown",
     "fieldValueList": [
-      {"fieldIdentifier": "<field-id>", "value": "<value>"}
+      {"fieldIdentifier": "priority", "value": "<priority-id>"},
+      {"fieldIdentifier": "<custom-field-id>", "value": "<value>"}
     ]
   }'
 ```
@@ -199,6 +242,8 @@ aliyun devops CreateWorkitem \
 **关键点：**
 - `space` 和 `spaceIdentifier` 必须**同时提供**，值相同
 - `workitemType` 和 `workitemTypeIdentifier` 必须**同时提供**，值相同
+- `assignedTo` 是**必填**的，值为用户的 `accountId`
+- `fieldValueList` 中需包含项目定义的所有必填自定义字段
 
 ---
 
@@ -225,6 +270,8 @@ git push origin v1.0.0
 | `Missingspace` | CreateWorkitem 缺参数 | body 中同时包含 `space` 和 `spaceIdentifier` |
 | `MissingsourceProjectId` | CreateMergeRequest 缺参数 | 加 `sourceProjectId`, `targetProjectId` |
 | `MissingcreateFrom` | CreateMergeRequest 缺参数 | 加 `createFrom: "WEB"` |
+| `MissingassignedTo` | CreateWorkitem 缺参数 | 用 `ListOrganizationMembers` 获取用户 accountId |
+| `字段【xxx】不能为空` | 项目有必填自定义字段 | 用 MCP 工具查询字段配置后添加到 `fieldValueList` |
 
 ---
 

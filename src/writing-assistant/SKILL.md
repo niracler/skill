@@ -1,6 +1,6 @@
 ---
 name: writing-assistant
-description: 中文写作助手，支持启发式写作引导和文章审校。使用场景：(1) 启发模式 - 用户说「帮我写日记」「不知道写什么」「帮我构思」「写点什么」「记录一下」「今天想写」时触发；(2) 审校模式 - 用户说「帮我改文章」「检查一下」「润色」「帮我改改」「校对一下」「看看文章」时触发。支持文章类型：日记、周记、月记、游记、TIL 技术记录、通用文章。
+description: 中文写作助手，支持启发式写作引导和文章审校。(1) 启发模式 - 当用户说「帮我写日记」「不知道写什么」「帮我构思」「写点什么」「记录一下」「今天想写」时触发；(2) 审校模式 - 当用户说「帮我改文章」「检查一下」「润色」「帮我改改」「校对一下」「看看文章」时触发。
 ---
 
 # Writing Assistant
@@ -28,19 +28,15 @@ description: 中文写作助手，支持启发式写作引导和文章审校。�
 识别文章类型 → 列出启发问题 → 逐个提问 → 用户回答 → 确认 → 下一个 → 整理成文 → 收尾
 ```
 
-### 日记模式特殊流程
+### 日记模式
 
-日记模式应**先读取用户的日记模板**，而非使用通用问题：
+1. **加载模板** - 读取用户日记文件，识别结构（Journal/Work Log/TIL）
+2. **逐项填充** - 根据模板各部分提问、确认
+3. **整理收尾** - 汇总成文，提供后续选项
 
-```text
-1. 询问/确认日记文件路径（或使用 user-config.md 中的约定路径）
-2. 读取今日日记文件，识别模板结构（Journal/Work Log/TIL 等）
-3. 根据模板的实际结构设计启发问题
-4. Work Log 部分可自动从 git/云效获取（见 worklog-automation.md）
-5. 逐个提问 → 整理成文 → 收尾
-```
+Work Log 可自动从 git/云效获取，详见 [worklog-automation.md](references/worklog-automation.md)。
 
-详见 [inspiration.md](references/inspiration.md)、[worklog-automation.md](references/worklog-automation.md)。
+完整流程见 [inspiration.md](references/inspiration.md)。
 
 ## 审校模式
 

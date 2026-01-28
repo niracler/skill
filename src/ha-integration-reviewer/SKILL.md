@@ -31,13 +31,17 @@ Agent 4: 测试覆盖检查
 Agent 5: 文档与 Manifest 检查
 ```
 
-**并行启动示例**:
+**并行执行方式**:
 
-```python
-Task(subagent_type="general-purpose", prompt="检查 Quality Scale 规则...")
-Task(subagent_type="general-purpose", prompt="检查代码风格...")
-Task(subagent_type="general-purpose", prompt="检查 Config Flow...")
-```
+在 Claude Code 中，通过在同一轮对话中发起多个独立检查实现并行：
+
+1. Quality Scale 验证 - 读取 quality_scale.yaml，验证 done 规则
+2. 代码风格检查 - 对照 copilot-instructions.md
+3. Config Flow 检查 - 验证 unique_id 和测试覆盖
+4. 测试覆盖检查 - 确认 >= 95%
+5. 文档检查 - 验证 strings.json 和 README
+
+每个检查独立进行，最后汇总结果。
 
 ### 3. 动态获取最新规范
 

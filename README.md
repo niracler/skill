@@ -20,7 +20,7 @@ Standardized Git workflow for commits, PRs, and releases.
 
 [View Documentation](src/git-workflow/SKILL.md)
 
-### ☁️ yunxiao-cli
+### ☁️ yunxiao
 
 CLI tools for Alibaba Cloud DevOps (Yunxiao/云效).
 
@@ -28,7 +28,7 @@ CLI tools for Alibaba Cloud DevOps (Yunxiao/云效).
 - Push Review Mode (zero-install alternative)
 - aliyun CLI + OpenAPI for Projex tasks
 
-[View Documentation](src/yunxiao-cli/SKILL.md)
+[View Documentation](src/yunxiao/SKILL.md)
 
 ### 🏠 ha-integration-reviewer
 
@@ -146,7 +146,7 @@ skill/
 │   ├── anki-card-generator/
 │   │   ├── SKILL.md
 │   │   └── references/
-│   ├── yunxiao-cli/
+│   ├── yunxiao/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   ├── schedule-manager/
