@@ -1,6 +1,6 @@
 ---
-name: yunxiao-cli
-description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), including Codeup code review (MR/PR), release tags, or Projex tasks.
+name: yunxiao
+description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效), including creating MRs, managing Codeup code reviews, updating task status, or creating release tags.
 ---
 
 # 云效 CLI
@@ -21,7 +21,7 @@ ORG_ID=$(git remote get-url origin | sed -E 's|.*codeup.aliyun.com[:/]([^/]+)/.*
 echo "组织 ID: $ORG_ID"
 
 # 从 git remote 提取仓库名
-REPO_NAME=$(basename -s .git $(git remote get-url origin))
+REPO_NAME=$(git remote get-url origin | sed -E 's|.*/([^/]+?)(\.git)?$|\1|')
 echo "仓库名: $REPO_NAME"
 
 # 获取仓库 ID（⚠️ 注意：字段是大写 Id，不是 id）
@@ -176,43 +176,6 @@ aliyun devops POST /organization/${ORG_ID}/workitems/comment \
 
 ---
 
-## MR 管理
-
-### 创建 MR
-
-1. 确保分支已推送：`git push -u origin <branch>`
-2. 使用 aliyun CLI 创建 MR（见 [cheatsheet.md](references/cheatsheet.md) 模板）
-
-**快速模板：**
-
-```bash
-aliyun devops CreateMergeRequest \
-  --organizationId <org-id> \
-  --repositoryId <repo-id> \
-  --body '{
-    "title": "feat: your title",
-    "sourceBranch": "<your-branch>",
-    "targetBranch": "main",
-    "sourceProjectId": <repo-id>,
-    "targetProjectId": <repo-id>,
-    "createFrom": "WEB"
-  }'
-```
-
-**关键点：** `sourceProjectId`, `targetProjectId`, `createFrom: "WEB"` 都必须提供
-
-### 更新已有 MR
-
-```bash
-git push origin <branch>  # MR 自动更新
-```
-
-### 查看 MR 列表
-
-见 [cheatsheet.md](references/cheatsheet.md) 模板
-
----
-
 ## 创建任务
 
 ```bash
@@ -277,5 +240,4 @@ git push origin v1.0.0
 ## 详细指南
 
 - **AI 助手必读:** 见 [references/cheatsheet.md](references/cheatsheet.md) - 所有必须遵守的规则
-- **MR 操作指南:** 见 [references/mr-guide.md](references/mr-guide.md)
-- **OpenAPI 参考:** 见 [references/openapi.md](references/openapi.md)
+- **OpenAPI 参考:** 见 [references/openapi.md](references/openapi.md) - 完整 API 文档和 MR 操作指南

@@ -17,7 +17,7 @@
       "skills": [
         "./src/git-workflow",
         "./src/ha-integration-reviewer",
-        "./src/yunxiao-cli",
+        "./src/yunxiao",
         "./src/schedule-manager"
       ]
     },

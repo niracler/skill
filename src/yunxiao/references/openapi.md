@@ -328,6 +328,40 @@ aliyun devops CreateMergeRequest \
 
 **显示效果:** 创建的 MR 会显示分支名（如 "将 feature-branch 合并至 main"）。
 
+**指定评审人示例:**
+
+```bash
+aliyun devops CreateMergeRequest \
+  --organizationId <org-id> \
+  --repositoryId <repo-id> \
+  --body '{
+    "title": "feat: your title",
+    "sourceBranch": "<your-branch>",
+    "targetBranch": "main",
+    "sourceProjectId": <repo-id>,
+    "targetProjectId": <repo-id>,
+    "createFrom": "WEB",
+    "reviewerIds": ["<user-id-1>", "<user-id-2>"]
+  }'
+```
+
+**关联工作项示例:**
+
+```bash
+aliyun devops CreateMergeRequest \
+  --organizationId <org-id> \
+  --repositoryId <repo-id> \
+  --body '{
+    "title": "feat: your title",
+    "sourceBranch": "<your-branch>",
+    "targetBranch": "main",
+    "sourceProjectId": <repo-id>,
+    "targetProjectId": <repo-id>,
+    "createFrom": "WEB",
+    "workItemIds": ["<workitem-id>"]
+  }'
+```
+
 ### 列出合并请求
 
 ```bash
