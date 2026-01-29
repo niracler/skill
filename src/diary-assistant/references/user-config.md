@@ -1,6 +1,6 @@
 # 用户配置
 
-writing-assistant 的个人偏好配置。
+diary-assistant 的个人偏好配置。
 
 ## 日记配置
 
@@ -32,9 +32,9 @@ yunxiao_org_id: "623ea833581fc62661c91d9e"
 ```yaml
 # 收尾时可调用的 skill
 related_skills:
-  - schedule-manager  # 创建后续日程
+  - schedule-manager  # 任务回顾 + 创建后续计划
   - anki-card-generator  # 生成记忆卡片
-  - git-workflow  # 提交日记到 git
+  # 注意：日记存储在 Obsidian，不需要 git 提交
 ```
 
 ## 如何使用
@@ -48,5 +48,6 @@ related_skills:
 如果没有配置：
 
 - **日记路径** - 询问用户「今天的日记文件在哪里？」
-- **Work Log** - 询问「要我从 git 自动获取今天的工作记录吗？」
-- **收尾** - 询问「需要创建后续日程吗？」
+- **Work Log** - 工作日自动获取（不询问），周末跳过
+- **任务回顾** - 自动获取今日 Reminders 并批量确认完成情况
+- **收尾** - 检测到 TIL 内容时询问是否生成 Anki 卡片

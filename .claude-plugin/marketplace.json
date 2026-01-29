@@ -23,11 +23,13 @@
     },
     {
       "name": "writing-skills",
-      "description": "Chinese writing assistant with inspiration mode (guided writing) and review mode (structure, language, sources, style checking)",
+      "description": "Chinese writing skills: diary assistant with GTD integration, writing inspiration for travel/TIL/articles, and proofreading workflow",
       "source": "./",
       "strict": false,
       "skills": [
-        "./src/writing-assistant"
+        "./src/diary-assistant",
+        "./src/writing-inspiration",
+        "./src/writing-proofreading"
       ]
     },
     {

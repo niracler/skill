@@ -1,6 +1,0 @@
-{
-  "ignores": ["scripts/**"],
-  "config": {
-    "MD013": false,
-  },
-}

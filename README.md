@@ -41,26 +41,37 @@ Strict Home Assistant integration code reviewer for PR preparation.
 
 [View Documentation](src/ha-integration-reviewer/SKILL.md)
 
-### ✍️ writing-assistant
+### 📔 diary-assistant
 
-Chinese writing assistant with two modes. Designed specifically for **Chinese language writing workflows**.
+Daily journal writing with GTD integration. Designed for **45-minute workflow**.
 
-**Inspiration Mode** - Guided writing for when you don't know what to write
+- Reminders integration for task review and planning
+- Work Log automation on workdays (git/yunxiao)
+- Adaptive questioning (workday vs weekend)
+- Smart follow-up (TIL → Anki cards)
 
-- Diary / Weekly / Monthly journal prompts
-- Travel writing guidance
-- TIL (Today I Learned) technical notes
-- General article brainstorming
+[View Documentation](src/diary-assistant/SKILL.md)
 
-**Review Mode** - Polish and refine articles
+### ✍️ writing-inspiration
+
+Guided writing for travel notes, TIL, and general articles.
+
+- Travel writing framework (departure → journey → reflection)
+- TIL framework (background → process → solution → takeaway)
+- General article framework (trigger → viewpoint → expansion → conclusion)
+
+[View Documentation](src/writing-inspiration/SKILL.md)
+
+### 📝 writing-proofreading
+
+6-step article review workflow for Chinese writing.
 
 - Structure diagnosis & reader context check
 - Chinese style guide (based on Yu Guangzhong's "How to Improve Anglicized Chinese")
 - Source verification & footnotes
 - Personal style consistency
-- Markdown formatting (prettier + markdownlint)
 
-[View Documentation](src/writing-assistant/SKILL.md)
+[View Documentation](src/writing-proofreading/SKILL.md)
 
 ### 🃏 anki-card-generator
 
@@ -139,10 +150,15 @@ skill/
 │   ├── ha-integration-reviewer/
 │   │   ├── SKILL.md
 │   │   └── references/
-│   ├── writing-assistant/
+│   ├── diary-assistant/
 │   │   ├── SKILL.md
-│   │   ├── references/
-│   │   └── scripts/
+│   │   └── references/
+│   ├── writing-inspiration/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── writing-proofreading/
+│   │   ├── SKILL.md
+│   │   └── references/
 │   ├── anki-card-generator/
 │   │   ├── SKILL.md
 │   │   └── references/
