@@ -15,16 +15,29 @@ diary_template: "{date}.md"
 # → ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Archives/日记(Daily)/2026-01-27.md
 ```
 
-## 工作仓库配置
+## 用户身份配置
 
 ```yaml
-# 本地 git 仓库目录（用于 Work Log 自动获取）
-work_repos:
-  - ~/code/azoulalite-dev/repos/azoulalite-backend
-  - ~/code/nini-dev/repos/skill
+# 云效用户名（用于识别"我的"任务和 Bug）
+yunxiao_username: "<your-yunxiao-username>"
 
-# 云效组织 ID（如使用云效）
-yunxiao_org_id: "623ea833581fc62661c91d9e"
+# GitHub 用户名
+github_username: "<your-github-username>"
+```
+
+## Work Log 数据源配置
+
+```yaml
+# Work Log 从以下来源获取（不从本地 git 获取）
+worklog_sources:
+  - yunxiao  # 云效 MR、Bug、任务（通过 yunxiao skill）
+  - github   # GitHub 提交、PR（通过 gh api）
+
+# 云效组织 ID
+yunxiao_org_id: "<your-yunxiao-org-id>"
+
+# GitHub 用户（用于查询 events）
+github_user: "<your-github-username>"
 ```
 
 ## 关联 Skill

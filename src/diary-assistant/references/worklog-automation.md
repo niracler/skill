@@ -1,78 +1,87 @@
 # Work Log 自动化
 
-从版本控制和项目管理工具自动获取今日工作记录，减少手动输入。
+从云效和 GitHub 自动获取今日工作记录，使用 subagent 并行获取提高效率。
+
+## 并行获取策略
+
+**使用 Task tool 启动 subagent 并行获取数据：**
+
+```
+┌─ subagent 1: 云效数据（yunxiao skill）
+│   - MR: 今天创建/合并的 Merge Request
+│   - Bug: 今天新增/关闭的，标注哪些是我的
+│   - 任务: 今天更新的任务
+│
+└─ subagent 2: GitHub 数据（gh api）
+    - 今日所有仓库的提交
+    - PR 活动（如有）
+    ↓
+并行完成后，整理成 Work Log
+```
 
 ## 数据源
 
-### 1. GitHub
+### 1. 云效（通过 yunxiao skill）
 
-```bash
-# 获取用户名
-USERNAME=$(gh api user --jq '.login')
+启动 subagent 调用 yunxiao skill：
 
-# 查看今日 push 事件
-gh api "/users/${USERNAME}/events" --jq '
-  .[] | select(.type == "PushEvent") |
-  {repo: .repo.name, time: .created_at, commits: [.payload.commits[].message]}'
+```
+Task tool:
+- subagent_type: general-purpose
+- prompt: 使用 yunxiao skill 获取今天的 MR、Bug、任务记录
+  组织 ID: <your-yunxiao-org-id>
+  用户: <your-yunxiao-username>
 ```
 
-### 2. 本地 Git 仓库
+### 2. GitHub（通过 gh api）
+
+启动 subagent 或直接查询：
 
 ```bash
-# 查看今日提交（指定仓库目录）
-git -C /path/to/repo log --oneline --since="00:00:00" --until="23:59:59" --all
+# 获取今日所有活动
+gh api "/users/niracler/events?per_page=50" --jq '
+  [.[] | select(.created_at | startswith("YYYY-MM-DD"))]
+'
 
-# 遍历多个仓库
-for repo in ~/code/project/repos/*/; do
-  name=$(basename "$repo")
-  commits=$(cd "$repo" && git log --oneline --since="today" --all 2>/dev/null | head -5)
-  if [ -n "$commits" ]; then
-    echo "=== $name ==="
-    echo "$commits"
-  fi
-done
+# 获取特定仓库的今日提交
+gh api "/repos/niracler/skill/commits?since=YYYY-MM-DDT00:00:00Z" --jq '
+  .[] | {sha: .sha[0:7], message: .commit.message}
+'
 ```
 
-### 3. 云效（Alibaba DevOps）
+### 不使用本地 Git
 
-调用 `yunxiao-cli` skill 获取：
+云效和 GitHub API 已覆盖所有工作记录，不需要从本地 git 仓库获取。
 
-```bash
-# 列出组织
-aliyun devops ListOrganizations --minAccessLevel 5 | jq -r '.result[] | "\(.organizationId): \(.organizationName)"'
+## 输出格式
 
-# 列出项目任务
-aliyun devops ListWorkitems \
-  --organizationId <org-id> \
-  --spaceIdentifier <project-id> \
-  --spaceType Project \
-  --category Task \
-  | jq -r '.workitems[:10] | .[] | "\(.identifier): \(.subject) [\(.status)]"'
-```
-
-## 使用流程
-
-1. **询问用户** - 「要我从 git/云效自动获取今天的工作记录吗？」
-2. **识别数据源** - 根据当前目录或用户配置，判断使用哪些数据源
-3. **汇总展示** - 将获取到的提交/任务整理成 Work Log 格式
-4. **用户确认** - 让用户补充或修正
-
-## 输出格式示例
+使用列表形式，不用表格（参考 2026-01-27 日记格式）：
 
 ```markdown
-### 云效 - AzoulaLite Backend
+### 云效 - Sunlite Backend
 
-- **发布 v0.5.0 / API 1.4.0**
-- feat: OpenAPI 一致性修复
-- fix: python-multipart 安全漏洞
+- **MR #57 合并**: chore: rename AzoulaLite to Sunlite（品牌重命名）
+- **MR #56 合并**: feat(scene): implement Scene API and Node reference consistency
+- **MR #58 待合并**: fix(sr-mesh): unify allocated range validation
 
 ### GitHub
 
-- **niracler/skill**: 新增 schedule-manager Skill
-- **niracler/ha-core**: sunricher-dali-energy-sensor 分支更新
+- **niracler/skill**: refactor: 拆分 writing-assistant 为 3 个独立 skill
+- **niracler/bokushi**: fix
+- **niracler/azoulalite-dev**: 工作仓库同步
+
+### Bug 跟踪
+
+- 我的待处理 (4 个): MYCP-96 (修复中), MYCP-103/104/106 (待确认) → 已规划明天处理
+- 今天关闭: MYCP-91, 95, 97, 98, 100 (5 个)
 ```
+
+## 身份说明
+
+根据 [user-config.md](user-config.md) 中的配置识别用户身份。
 
 ## 注意事项
 
-- 自动获取的是「做了什么」，但用户可能需要补充「为什么做」和「遇到的挑战」
+- 自动获取的是「做了什么」，用户可能需要补充「为什么做」和「遇到的挑战」
+- Bug 部分要区分哪些是我的，哪些是同事的
 - 不要完全依赖自动化，仍需启发用户思考和补充

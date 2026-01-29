@@ -46,15 +46,23 @@ description: Use when user wants to write diary entries or daily logs. Triggers 
   └──────┬──────┘  │
          └────┬────┘
               ▼
+  ┌─────────────────────────────────────────────────────────────┐
+  │ 2. 并行获取数据（subagent）                    (~2-3min)    │
+  │                                                            │
+  │    ┌─ Reminders (今日任务)                                 │
+  │    ├─ subagent: 云效 MR/Bug/任务                           │
+  │    └─ subagent: GitHub 提交                                │
+  │                                                            │
+  └──────┬────────────────────────────────────────────────────┘
+         │
+         ▼
   ┌────────────────────────────────────┐
-  │ 2. 今日任务回顾（简化）    (~2min)   │
-  │    调用 schedule-manager            │
+  │ 3. 今日任务回顾（简化）    (~2min)   │
   │                                    │
   │    「今日计划 5 件事：              │
   │     1.写文档 2.修bug 3.开会...」    │
   │    「哪些完成了？输入序号」          │
-  │                                    │
-  │    → 未完成的默认延期到明天         │
+  │    「未完成的延期到什么时候？」       │
   └──────┬─────────────────────────────┘
          │
          ▼
@@ -64,8 +72,8 @@ description: Use when user wants to write diary entries or daily logs. Triggers 
      是  │      │ 否
          ▼      │
   ┌──────────┐  │
-  │ Work Log │  │  (~2-3min) 自动获取
-  │ git/云效  │  │
+  │ Work Log │  │  整理 subagent 获取的数据
+  │ 云效+GH  │  │
   └────┬─────┘  │
        └───┬────┘
            ▼
@@ -137,9 +145,16 @@ Claude: 「今天的日记是 2026-01-29.md 吗？」
 
 **处理逻辑：**
 
-- 用户说「1,3」→ 标记 1、3 为完成，2、4、5 延期到明天
+- 用户说「1,3」→ 标记 1、3 为完成，追问「2、4、5 延期到什么时候？」
 - 用户说「全部」→ 全部标记完成
-- 用户说「都没完成」→ 全部延期到明天
+- 用户说「都没完成」→ 追问「延期到什么时候？」
+
+**延期时间解析：**
+
+- 「明天」→ tomorrow
+- 「后天」→ 2 days
+- 「周五」→ friday
+- 「下周」→ next monday
 
 **无任务时跳过此步骤。**
 
@@ -152,26 +167,60 @@ reminders show-all --due-date today
 # 完成任务
 reminders complete "<列表名>" <index>
 
-# 延期到明天（删除后重建）
+# 延期到指定日期（删除后重建）
 reminders delete "<列表名>" <index>
-reminders add "<列表名>" "<任务名>" --due-date "tomorrow"
+reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 ```
 
 ## 3. Work Log 自动化
 
 **工作日（周一至周五）自动执行，不询问。**
 
-### 数据源
+### 数据源（并行获取）
 
-1. **本地 Git 仓库**
+**使用 subagent 并行获取云效和 GitHub 数据，提高效率：**
+
+```
+┌─ subagent: 云效 MR/Bug/任务 (yunxiao skill)
+└─ subagent: GitHub 提交/PR (gh api)
+    ↓ 并行完成后
+整理成 Work Log 格式
+```
+
+1. **云效**（通过 yunxiao skill）
+   - MR: 今天创建/合并的 Merge Request
+   - Bug: 今天新增/关闭的 Bug，标注哪些是我的
+   - 任务: 今天更新的任务状态
+
+2. **GitHub**（通过 gh api）
+
    ```bash
-   git -C ~/code/project log --oneline --since="00:00:00" --all
+   gh api "/users/niracler/events?per_page=50" --jq '[.[] | select(.created_at | startswith("YYYY-MM-DD"))]'
    ```
 
-2. **云效（可选）**
-   ```bash
-   # 调用 yunxiao skill 获取
-   ```
+**不从本地 git 仓库获取**（云效和 GitHub 已覆盖所有工作记录）
+
+### 输出格式
+
+参考列表形式，不用表格：
+
+```markdown
+### 云效 - Sunlite Backend
+
+- **MR #57 合并**: chore: rename AzoulaLite to Sunlite
+- **MR #56 合并**: feat(scene): implement Scene API
+- feat(scene): extend color field to support CSS hex formats
+
+### GitHub
+
+- **niracler/skill**: refactor: 拆分 writing-assistant 为 3 个独立 skill
+- **niracler/bokushi**: fix
+
+### Bug 跟踪
+
+- 我的待处理 (4 个): MYCP-96 (修复中), MYCP-103/104/106 (待确认)
+- 今天关闭: MYCP-91, 95, 97, 98, 100 (5 个)
+```
 
 ### 周末跳过
 
