@@ -2,3 +2,4 @@ node_modules/
 .mypy_cache/
 __pycache__/
 *.pyc
+scripts/sync-to-company.sh
