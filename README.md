@@ -33,6 +33,7 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  Groups:                                             │
 │    Workflow  git-workflow · yunxiao · schedule-mgr    │
 │             ha-integration-reviewer · markdown-lint  │
+│             skill-reviewer                           │
 │    Writing  diary-assistant · writing-proofreading   │
 │             writing-inspiration                      │
 │    Learning anki-card-generator                      │
@@ -126,6 +127,17 @@ Configure markdown formatting and linting for any repository.
 
 [View Documentation](skills/markdown-lint/SKILL.md)
 
+### 🔍 skill-reviewer
+
+Audit Claude Code skills for quality and cross-platform/cross-agent compatibility.
+
+- Delegates structure checks to `validate.sh`, quality checks to `superpowers:writing-skills`
+- Platform compatibility scan (macOS-only commands, Windows incompatibilities)
+- Agent compatibility check (MCP tools, Claude Code exclusive features vs Codex CLI)
+- npx skills ecosystem validation (marketplace.json, symlink safety, cross-skill dependencies)
+
+[View Documentation](skills/skill-reviewer/SKILL.md)
+
 ### 📅 schedule-manager
 
 Manage Apple Calendar and Reminders via osascript, following GTD methodology.
@@ -208,6 +220,9 @@ skill/
 │   │   ├── SKILL.md
 │   │   ├── references/
 │   │   └── scripts/
+│   ├── skill-reviewer/
+│   │   ├── SKILL.md
+│   │   └── references/
 │   ├── writing-inspiration/
 │   │   ├── SKILL.md
 │   │   └── references/

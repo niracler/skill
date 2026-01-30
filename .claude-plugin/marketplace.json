@@ -19,7 +19,8 @@
         "./skills/ha-integration-reviewer",
         "./skills/markdown-lint",
         "./skills/yunxiao",
-        "./skills/schedule-manager"
+        "./skills/schedule-manager",
+        "./skills/skill-reviewer"
       ]
     },
     {
