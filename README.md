@@ -16,42 +16,31 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 
 ## Skills
 
-```mermaid
-graph TD
-    subgraph writing ["✍️ Writing"]
-        WI[writing-inspiration]
-        WP[writing-proofreading]
-        DA[diary-assistant]
-    end
-
-    subgraph workflow ["🔄 Workflow"]
-        GW[git-workflow]
-        YX[yunxiao]
-        SM[schedule-manager]
-        HA[ha-integration-reviewer]
-    end
-
-    subgraph learning ["📚 Learning"]
-        AC[anki-card-generator]
-    end
-
-    subgraph fun ["🎭 Fun"]
-        ZM[zaregoto-miko]
-    end
-
-    subgraph infra ["🛠️ Infrastructure"]
-        ML[markdown-lint]
-    end
-
-    DA -->|任务回顾| SM
-    DA -->|Work Log| YX
-    DA -->|TIL → 闪卡| AC
-    WP -->|步骤6 格式化| ML
-    GW -.->|codeup remote| YX
-    WI -.->|日记请用| DA
+```text
+╭──────────────────────────────────────────────────────╮
+│  $ skill architecture                                │
+│                                                      │
+│  Dependencies:                                       │
+│    diary-assistant                                   │
+│    ├──▶ schedule-manager        task review           │
+│    ├──▶ yunxiao                 work log              │
+│    └──▶ anki-card-generator     TIL → flashcards     │
+│    writing-proofreading                              │
+│    └──▶ markdown-lint           step 6 formatting    │
+│    git-workflow                                      │
+│    └╌╌▶ yunxiao                 codeup.aliyun.com    │
+│                                                      │
+│  Groups:                                             │
+│    Workflow  git-workflow · yunxiao · schedule-mgr    │
+│             ha-integration-reviewer · markdown-lint  │
+│    Writing  diary-assistant · writing-proofreading   │
+│             writing-inspiration                      │
+│    Learning anki-card-generator                      │
+│    Fun      zaregoto-miko                            │
+│                                                      │
+│  ──▶ dependency  ╌╌▶ conditional routing             │
+╰──────────────────────────────────────────────────────╯
 ```
-
-> 实线 = 功能依赖（流程中调用），虚线 = 条件路由/边界说明
 
 ### 🔄 git-workflow
 
