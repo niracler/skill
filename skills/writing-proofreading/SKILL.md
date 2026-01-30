@@ -17,7 +17,7 @@ description: Use when user wants to review, polish, or proofread articles. Trigg
 
 ## 6 步审校流程
 
-```
+```text
 1. 结构诊断 → 2. 读者 Context → 3. 语言规范 → 4. 信源查证 → 5. 风格检查 → 6. Markdown 格式
 ```
 
@@ -64,6 +64,7 @@ description: Use when user wants to review, polish, or proofread articles. Trigg
 **信源优先级**：政府官方 > 权威媒体 > 行业媒体 > 避免个人博客
 
 数据使用原则：
+
 - 不能只扔数据，要融入体验
 - 体感判断需要脚注支撑推算逻辑
 - 科普精简，详细放脚注
@@ -84,6 +85,7 @@ description: Use when user wants to review, polish, or proofread articles. Trigg
 | 加粗克制 | 每标题下 ≤ 3 处 |
 
 **避免**：
+
 - 「不是……而是……」句型（AI 味）
 - 加引号的「幽默」比喻
 - emoji 或序号开头
@@ -93,20 +95,24 @@ description: Use when user wants to review, polish, or proofread articles. Trigg
 
 ### 步骤 6: Markdown 格式化
 
-运行格式化脚本（如有）：
+自动化格式检查（需仓库已配置 markdown-lint skill）：
 
 ```bash
-./scripts/format_markdown.sh article.md
+npx markdownlint-cli2 article.md          # 检查
+npx markdownlint-cli2 --fix article.md    # 自动修复
 ```
 
-检查：
-- 标题层级是否合理
-- 列表格式是否一致
+> 仓库未配置？使用 markdown-lint skill 完成初始化。
+
+自动化工具无法覆盖的内容审查：
+
+- 标题层级是否合理（H2→H3，不跳级）
+- 列表格式是否一致（全用 `-` 或全用 `*`）
 - 代码块是否正确标记语言
 
 ## Review 节奏
 
-```
+```text
 ┌─────────────────────────────────────────────────┐
 │  每个标题下的审校流程                             │
 │                                                 │

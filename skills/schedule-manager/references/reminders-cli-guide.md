@@ -2,7 +2,7 @@
 
 reminders-cli 是一个原生 macOS CLI 工具，通过 EventKit 框架访问 Reminders，比 osascript 快得多。
 
-GitHub: https://github.com/keith/reminders-cli
+GitHub: <https://github.com/keith/reminders-cli>
 
 ## 安装
 
@@ -179,5 +179,5 @@ reminders add "收件箱" "新想法"
 
 ## 更多信息
 
-- GitHub: https://github.com/keith/reminders-cli
+- GitHub: <https://github.com/keith/reminders-cli>
 - 版本: 2.5.1+

@@ -6,7 +6,7 @@
 
 **使用 Task tool 启动 subagent 并行获取数据：**
 
-```
+```text
 ┌─ subagent 1: 云效数据（yunxiao skill）
 │   - MR: 今天创建/合并的 Merge Request
 │   - Bug: 今天新增/关闭的，标注哪些是我的
@@ -25,7 +25,7 @@
 
 启动 subagent 调用 yunxiao skill：
 
-```
+```text
 Task tool:
 - subagent_type: general-purpose
 - prompt: 使用 yunxiao skill 获取今天的 MR、Bug、任务记录

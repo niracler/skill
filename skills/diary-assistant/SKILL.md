@@ -18,7 +18,7 @@ description: Use when user wants to write diary entries or daily logs. Triggers 
 
 ## 完整流程
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────┐
 │          diary-assistant 完整流程（目标 ≤45min）                     │
 └─────────────────────────────────────────────────────────────────────┘
@@ -180,7 +180,7 @@ reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 
 **使用 subagent 并行获取云效和 GitHub 数据，提高效率：**
 
-```
+```text
 ┌─ subagent: 云效 MR/Bug/任务 (yunxiao skill)
 └─ subagent: GitHub 提交/PR (gh api)
     ↓ 并行完成后
