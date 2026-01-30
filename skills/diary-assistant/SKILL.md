@@ -47,11 +47,11 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
          └────┬────┘
               ▼
   ┌─────────────────────────────────────────────────────────────┐
-  │ 2. 并行获取数据                              (~2-3min)    │
-  │    （以下任务相互独立，可同时进行）                        │
+  │ 2. 并行获取数据（subagent）                    (~2-3min)    │
+  │                                                            │
   │    ┌─ Reminders (今日任务)                                 │
-  │    ├─ 独立获取: 云效 MR/Bug/任务                           │
-  │    └─ 独立获取: GitHub 提交                                │
+  │    ├─ subagent: 云效 MR/Bug/任务                           │
+  │    └─ subagent: GitHub 提交                                │
   │                                                            │
   └──────┬────────────────────────────────────────────────────┘
          │
@@ -72,7 +72,7 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
      是  │      │ 否
          ▼      │
   ┌──────────┐  │
-  │ Work Log │  │  整理并行获取的数据
+  │ Work Log │  │  整理 subagent 获取的数据
   │ 云效+GH  │  │
   └────┬─────┘  │
        └───┬────┘
@@ -178,12 +178,14 @@ reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 
 ### 数据源（并行获取）
 
-**以下两个数据源相互独立，可并行获取以提高效率：**
+**使用 subagent 并行获取云效和 GitHub 数据，提高效率：**
+
+> 其他 Agent 环境：以下两个数据源相互独立，可按顺序获取。
 
 ```text
-┌─ 数据源 1: 云效 MR/Bug/任务 (yunxiao skill)（独立）
-└─ 数据源 2: GitHub 提交/PR (gh api)（独立）
-    ↓ 全部完成后
+┌─ subagent: 云效 MR/Bug/任务 (yunxiao skill)
+└─ subagent: GitHub 提交/PR (gh api)
+    ↓ 并行完成后
 整理成 Work Log 格式
 ```
 

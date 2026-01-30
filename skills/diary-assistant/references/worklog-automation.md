@@ -1,32 +1,43 @@
 # Work Log 自动化
 
-从云效和 GitHub 自动获取今日工作记录，两个数据源相互独立，可并行获取以提高效率。
+从云效和 GitHub 自动获取今日工作记录，使用 subagent 并行获取提高效率。
+
+> 其他 Agent 环境：两个数据源相互独立，可按顺序获取。
 
 ## 并行获取策略
 
-**以下两个数据源相互独立，可并行获取：**
+**使用 Task tool 启动 subagent 并行获取数据：**
+
+> 其他 Agent 环境：以下两个数据源相互独立，可按顺序获取。
 
 ```text
-┌─ 数据源 1: 云效数据（yunxiao skill）（独立，不依赖 GitHub 数据）
+┌─ subagent 1: 云效数据（yunxiao skill）
 │   - MR: 今天创建/合并的 Merge Request
 │   - Bug: 今天新增/关闭的，标注哪些是我的
 │   - 任务: 今天更新的任务
 │
-└─ 数据源 2: GitHub 数据（gh api）（独立，不依赖云效数据）
+└─ subagent 2: GitHub 数据（gh api）
     - 今日所有仓库的提交
     - PR 活动（如有）
     ↓
-全部完成后，整理成 Work Log
+并行完成后，整理成 Work Log
 ```
 
 ## 数据源
 
 ### 1. 云效（通过 yunxiao skill）
 
-独立获取云效数据（不依赖 GitHub 数据的结果）：
+启动 subagent 调用 yunxiao skill：
 
-如果 yunxiao skill 可用，按其指令获取今天的 MR、Bug、任务记录；
-否则使用 aliyun CLI 手动查询（见 yunxiao skill 的 references/openapi.md）。
+```text
+Task tool:
+- subagent_type: general-purpose
+- prompt: 使用 yunxiao skill 获取今天的 MR、Bug、任务记录
+  组织 ID: 见 user-config.md
+  用户: 见 user-config.md
+```
+
+> 其他环境：如果 yunxiao skill 不可用，使用 aliyun CLI 手动查询（见 yunxiao skill 的 references/openapi.md）。
 
 配置参数：
 
@@ -35,7 +46,7 @@
 
 ### 2. GitHub（通过 gh api）
 
-独立获取 GitHub 数据：
+启动 subagent 或直接查询：
 
 ```bash
 # 获取今日所有活动

@@ -41,7 +41,7 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 
 **3c. npx skills 生态兼容性** — 校验 marketplace.json 注册、symlink 可用性、跨 skill 依赖。
 
-**3d. Agent-agnostic 表述规范** — 检查是否使用了工具名称硬编码（如 `WebFetch:`、`Task tool`），而非自然语言意图表述。详见 checklist 的 "Agent-Agnostic Wording" 部分。
+**3d. 工具引用规范** — 检查是否保留了 Claude Code 工具术语并提供了其他环境的 fallback 备注。详见 checklist 的 "Tool Reference Best Practices" 部分。
 
 详见 `references/compatibility-checklist.md`。
 

@@ -19,16 +19,18 @@ git diff --name-only dev     # 与 dev 分支的差异（ha-core 主分支）
 
 或用户指定的目录/文件。
 
-### 2. 并行检查（独立维度）
+### 2. 并行启动检查 Agent
 
-以下检查相互独立、无共享状态，可并行执行以提高效率；若不支持并行，按顺序依次执行即可。详见 [review-workflow.md](references/review-workflow.md)。
+使用 Task 工具并行启动多个专项检查，详见 [review-workflow.md](references/review-workflow.md)。
+
+> 其他 Agent 环境：以下检查相互独立，可按顺序依次执行。
 
 ```text
-检查 1: Quality Scale 规则检查（独立）
-检查 2: 代码风格检查（独立）
-检查 3: Config Flow 检查（独立）
-检查 4: 测试覆盖检查（独立）
-检查 5: 文档与 Manifest 检查（独立）
+Agent 1: Quality Scale 规则检查
+Agent 2: 代码风格检查
+Agent 3: Config Flow 检查
+Agent 4: 测试覆盖检查
+Agent 5: 文档与 Manifest 检查
 ```
 
 1. Quality Scale 验证 - 读取 quality_scale.yaml，验证 done 规则
@@ -45,25 +47,25 @@ git diff --name-only dev     # 与 dev 分支的差异（ha-core 主分支）
 
 #### Quality Scale 规则
 
-获取以下 URL 的规则文档内容：
+```text
+WebFetch: https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md
+```
 
-`https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md`
-
-> 如果你的环境没有内置的网页获取工具，使用 `curl -sL <URL>` 作为替代。
+> 其他环境：`curl -sL <URL>` 作为替代。
 
 #### 编码规范
 
-获取以下 URL 的编码规范文档：
+```text
+WebFetch: https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md
+```
 
-`https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md`
-
-> 同上，可使用 `curl -sL` 作为替代。
+> 其他环境：`curl -sL <URL>` 作为替代。
 
 #### 开发者文档
 
-查询最新的 Home Assistant 开发者文档。
+使用 Context7 获取最新的 Home Assistant 开发者文档。
 
-> 推荐安装 [Context7 MCP](https://github.com/upstash/context7) 以获取最新文档。若不可用，从 GitHub 仓库直接获取：
+> 若未安装 Context7 MCP，从 GitHub 仓库直接获取：
 > `curl -sL https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/...`
 
 ### 4. 参考其他集成

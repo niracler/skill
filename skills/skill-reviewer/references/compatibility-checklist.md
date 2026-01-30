@@ -92,36 +92,28 @@ skill 使用了 Claude Code 专属功能但未提供替代方案：
 - 无 WebFetch 时的 bash curl 替代
 - 无 Task 并行时的顺序执行方案
 
-### Agent-Agnostic Wording Best Practices
+### Tool Reference Best Practices
 
-skill 指令应使用自然语言描述意图，而非硬编码工具名称。遵循三层策略：
+skill 指令优先使用 Claude Code 工具术语（便于 Claude Code 直接理解），同时用 `>` blockquote 提供其他环境的 fallback。
 
-**Layer 1: 自然语言意图（首选）**
+**原则：Claude Code-first，fallback 补充**
 
-| 避免 | 建议 |
-|------|------|
-| `WebFetch: <URL>` | "获取以下 URL 的内容：`<URL>`" |
-| `使用 Task 工具并行启动` | "以下检查相互独立，可并行执行以提高效率" |
-| `使用 Context7 获取文档` | "查询最新的官方文档" |
-| `调用 Skill tool` | "如果 xxx skill 可用，按其指令执行" |
-| `subagent_type: general-purpose` | "独立获取以下数据（不依赖其他任务的结果）" |
+| Claude Code 术语 | fallback 备注 |
+|------------------|--------------|
+| `WebFetch: <URL>` | `> 其他环境：curl -sL <URL>` |
+| `使用 Task 工具并行启动` | `> 其他 Agent 环境：以下检查相互独立，可按顺序执行` |
+| `使用 Context7 获取文档` | `> 若未安装 Context7 MCP，从 GitHub 仓库直接获取` |
+| `subagent: 云效数据` | `> 其他环境：直接调用 yunxiao skill 或 aliyun CLI` |
 
-**Layer 2: 条件降级（必须提供）**
-
-每个非通用工具引用都应附带降级方案：
+**模板：**
 
 ```text
-获取以下 URL 的内容：<URL>
+使用 Task 工具并行启动多个检查 Agent。
 
-> 如果你的环境没有内置的网页获取工具，使用 `curl -sL <URL>` 作为替代。
+> 其他 Agent 环境：以下检查相互独立，可按顺序依次执行。
 ```
 
-**Layer 3: 独立性标记（用于并行场景）**
-
-对可并行执行的任务，标注"（独立任务，不依赖其他检查的结果）"，
-让任何 agent 都能理解这些任务可以同时进行。
-
-### 通用工具（无需标记）
+### 通用工具（无需 fallback）
 
 以下工具在主流 Agent 中通用：
 
