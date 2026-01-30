@@ -17,6 +17,7 @@
       "skills": [
         "./skills/git-workflow",
         "./skills/ha-integration-reviewer",
+        "./skills/markdown-lint",
         "./skills/yunxiao",
         "./skills/schedule-manager"
       ]

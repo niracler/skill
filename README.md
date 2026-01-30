@@ -16,6 +16,43 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 
 ## Skills
 
+```mermaid
+graph TD
+    subgraph writing ["✍️ Writing"]
+        WI[writing-inspiration]
+        WP[writing-proofreading]
+        DA[diary-assistant]
+    end
+
+    subgraph workflow ["🔄 Workflow"]
+        GW[git-workflow]
+        YX[yunxiao]
+        SM[schedule-manager]
+        HA[ha-integration-reviewer]
+    end
+
+    subgraph learning ["📚 Learning"]
+        AC[anki-card-generator]
+    end
+
+    subgraph fun ["🎭 Fun"]
+        ZM[zaregoto-miko]
+    end
+
+    subgraph infra ["🛠️ Infrastructure"]
+        ML[markdown-lint]
+    end
+
+    DA -->|任务回顾| SM
+    DA -->|Work Log| YX
+    DA -->|TIL → 闪卡| AC
+    WP -->|步骤6 格式化| ML
+    GW -.->|codeup remote| YX
+    WI -.->|日记请用| DA
+```
+
+> 实线 = 功能依赖（流程中调用），虚线 = 条件路由/边界说明
+
 ### 🔄 git-workflow
 
 Standardized Git workflow for commits, PRs, and releases.
@@ -90,6 +127,16 @@ Generate high-quality Anki flashcards following atomization principles and cogni
 
 [View Documentation](skills/anki-card-generator/SKILL.md)
 
+### 🔧 markdown-lint
+
+Configure markdown formatting and linting for any repository.
+
+- markdownlint + pre-commit hook setup
+- Horizontal rule ban (outside YAML frontmatter)
+- Batch fix and validation workflow
+
+[View Documentation](skills/markdown-lint/SKILL.md)
+
 ### 📅 schedule-manager
 
 Manage Apple Calendar and Reminders via osascript, following GTD methodology.
@@ -149,36 +196,43 @@ git push
 skill/
 ├── .claude-plugin/
 │   └── marketplace.json
+├── .markdownlint.json
+├── .pre-commit-config.yaml
 ├── skills/
-│   ├── git-workflow/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── ha-integration-reviewer/
+│   ├── anki-card-generator/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   ├── diary-assistant/
 │   │   ├── SKILL.md
 │   │   └── references/
+│   ├── git-workflow/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   └── scripts/
+│   ├── ha-integration-reviewer/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── markdown-lint/
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   ├── schedule-manager/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   └── scripts/
 │   ├── writing-inspiration/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   ├── writing-proofreading/
 │   │   ├── SKILL.md
 │   │   └── references/
-│   ├── anki-card-generator/
-│   │   ├── SKILL.md
-│   │   └── references/
 │   ├── yunxiao/
 │   │   ├── SKILL.md
 │   │   └── references/
-│   ├── schedule-manager/
-│   │   ├── SKILL.md
-│   │   ├── references/
-│   │   └── scripts/
 │   └── zaregoto-miko/
 │       ├── SKILL.md
 │       └── references/
 └── scripts/
+    ├── check-horizontal-rules.sh
     ├── init_skill.py
     ├── quick_validate.py
     └── validate.sh
