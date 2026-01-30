@@ -29,6 +29,8 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    └──▶ markdown-lint           step 6 formatting    │
 │    git-workflow                                      │
 │    └╌╌▶ yunxiao                 codeup.aliyun.com    │
+│    skill-reviewer                                    │
+│    └╌╌▶ writing-skills          quality audit (ext)   │
 │                                                      │
 │  Groups:                                             │
 │    Workflow  git-workflow · yunxiao · schedule-mgr    │
@@ -131,9 +133,9 @@ Configure markdown formatting and linting for any repository.
 
 Audit Claude Code skills for quality and cross-platform/cross-agent compatibility.
 
-- Delegates structure checks to `validate.sh`, quality checks to `superpowers:writing-skills`
+- Delegates structure checks to bundled `validate.sh`, quality checks to `writing-skills`
 - Platform compatibility scan (macOS-only commands, Windows incompatibilities)
-- Agent compatibility check (MCP tools, Claude Code exclusive features vs Codex CLI)
+- Agent compatibility check (Claude Code-first with fallback annotations)
 - npx skills ecosystem validation (marketplace.json, symlink safety, cross-skill dependencies)
 
 [View Documentation](skills/skill-reviewer/SKILL.md)
@@ -222,7 +224,8 @@ skill/
 │   │   └── scripts/
 │   ├── skill-reviewer/
 │   │   ├── SKILL.md
-│   │   └── references/
+│   │   ├── references/
+│   │   └── scripts/
 │   ├── writing-inspiration/
 │   │   ├── SKILL.md
 │   │   └── references/
@@ -240,6 +243,17 @@ skill/
     ├── init_skill.py
     ├── quick_validate.py
     └── validate.sh
+```
+
+## Recommended External Skills
+
+| Skill | Source | Purpose |
+|-------|--------|---------|
+| `writing-skills` | [obra/superpowers](https://github.com/obra/superpowers) | Deep quality audit for skill-reviewer |
+| `brainstorming` | [obra/superpowers](https://github.com/obra/superpowers) | Structured brainstorming before creative work |
+
+```bash
+npx skills add https://github.com/obra/superpowers --skill writing-skills
 ```
 
 ## Resources

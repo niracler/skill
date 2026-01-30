@@ -1,6 +1,6 @@
 ---
 name: diary-assistant
-description: Use when user wants to write diary entries or daily logs. Triggers include「帮我写日记」「记录今天」「写日记」「今天的日记」. Integrates with Reminders for task review and planning.
+description: (macOS, requires schedule-manager) Use when user wants to write diary entries or daily logs. Triggers include「帮我写日记」「记录今天」「写日记」「今天的日记」. Integrates with Reminders for task review and planning.
 ---
 
 # Diary Assistant
@@ -180,6 +180,8 @@ reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 
 **使用 subagent 并行获取云效和 GitHub 数据，提高效率：**
 
+> 其他 Agent 环境：以下两个数据源相互独立，可按顺序获取。
+
 ```text
 ┌─ subagent: 云效 MR/Bug/任务 (yunxiao skill)
 └─ subagent: GitHub 提交/PR (gh api)
@@ -313,6 +315,11 @@ reminders add "提醒" "开会" --due-date "friday"
 见 [user-config.md](references/user-config.md) 配置日记路径和工作仓库。
 
 ## 依赖 Skill
+
+> **完整功能需要安装多个 plugin group。** 如果通过 `npx skills add` 单独安装了 writing-skills，
+> 请确保同时安装 workflow-skills（含 schedule-manager、yunxiao）和 learning-skills（含 anki-card-generator）。
+>
+> 以下 skill 通过功能名称引用。若对应 skill 未安装，可根据其核心功能手动执行等效操作。
 
 | Skill | 用途 | 触发时机 |
 |-------|------|----------|

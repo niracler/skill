@@ -11,21 +11,25 @@ description: Use when reviewing, auditing, or validating Claude Code skills for 
 
 ### Step 1: 结构校验（委托）
 
-运行仓库校验脚本，汇总 YAML frontmatter、name 格式、description 格式等结果：
+运行 skill-reviewer 自带的校验脚本，汇总 YAML frontmatter、name 格式、description 格式等结果：
 
 ```bash
-./scripts/validate.sh
+bash <skill-reviewer-dir>/scripts/validate.sh
 ```
 
-### Step 2: 内容质量（委托）
+> 若脚本不可用（如未通过 npx skills 安装），手动检查每个 SKILL.md 的 YAML frontmatter：name（hyphen-case，≤64 字符）、description（无尖括号，≤1024 字符）。
 
-若已安装 `superpowers:writing-skills`，调用该 skill 进行深度质量审查（token 效率、渐进式披露、反模式、TDD 方法论等）。
+### Step 2: 内容质量（委托，推荐）
 
-若未安装，提示用户：
+**推荐执行**：若已安装 `superpowers:writing-skills`，调用该 skill 进行深度质量审查（token 效率、渐进式披露、反模式、TDD 方法论等）。
+
+若未安装，提示用户可选安装：
 
 ```bash
 npx skills add https://github.com/obra/superpowers --skill writing-skills
 ```
+
+> 跳过此步骤时应明确告知用户，避免静默省略。
 
 ### Step 3: 兼容性审计（自身核心）
 
@@ -36,6 +40,8 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 **3b. 跨 Agent 兼容性** — 检测 Claude Code 专属工具引用和 MCP 依赖。
 
 **3c. npx skills 生态兼容性** — 校验 marketplace.json 注册、symlink 可用性、跨 skill 依赖。
+
+**3d. 工具引用规范** — 检查是否保留了 Claude Code 工具术语并提供了其他环境的 fallback 备注。详见 checklist 的 "Tool Reference Best Practices" 部分。
 
 详见 `references/compatibility-checklist.md`。
 
@@ -68,6 +74,7 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 ```
 
 严重度分级：
+
 - **Critical** — 功能不可用或分发失败，必须修复
 - **High** — 显著影响可用范围，建议修复
 - **Medium** — 可改进项，不影响核心功能

@@ -2,9 +2,13 @@
 
 从云效和 GitHub 自动获取今日工作记录，使用 subagent 并行获取提高效率。
 
+> 其他 Agent 环境：两个数据源相互独立，可按顺序获取。
+
 ## 并行获取策略
 
 **使用 Task tool 启动 subagent 并行获取数据：**
+
+> 其他 Agent 环境：以下两个数据源相互独立，可按顺序获取。
 
 ```text
 ┌─ subagent 1: 云效数据（yunxiao skill）
@@ -29,9 +33,16 @@
 Task tool:
 - subagent_type: general-purpose
 - prompt: 使用 yunxiao skill 获取今天的 MR、Bug、任务记录
-  组织 ID: <your-yunxiao-org-id>
-  用户: <your-yunxiao-username>
+  组织 ID: 见 user-config.md
+  用户: 见 user-config.md
 ```
+
+> 其他环境：如果 yunxiao skill 不可用，使用 aliyun CLI 手动查询（见 yunxiao skill 的 references/openapi.md）。
+
+配置参数：
+
+- 组织 ID: 见 [user-config.md](user-config.md)
+- 用户: 见 [user-config.md](user-config.md)
 
 ### 2. GitHub（通过 gh api）
 

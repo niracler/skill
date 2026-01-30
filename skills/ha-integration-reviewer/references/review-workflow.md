@@ -6,6 +6,8 @@
 
 使用 Task 工具启动多个 subagent 并行检查：
 
+> 其他 Agent 环境：以下检查维度相互独立，可按顺序依次执行。
+
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    主审查流程                                │
@@ -101,13 +103,15 @@
 
 ### WebFetch
 
-```python
-# 获取 quality scale 规则
-url = f"https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md"
+```text
+# Quality Scale 规则
+WebFetch: https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md
 
-# 获取 copilot-instructions
-url = "https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md"
+# 编码规范
+WebFetch: https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md
 ```
+
+> 其他环境：`curl -sL <URL>` 作为替代。
 
 ### Context7
 
@@ -116,6 +120,8 @@ url = "https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot
 - Review process
 - Development checklist
 - Integration quality scale
+
+> 若未安装 Context7 MCP，从 GitHub 仓库直接获取相关文档。
 
 ### 参考其他集成
 

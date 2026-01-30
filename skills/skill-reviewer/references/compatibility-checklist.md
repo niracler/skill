@@ -92,9 +92,31 @@ skill 使用了 Claude Code 专属功能但未提供替代方案：
 - 无 WebFetch 时的 bash curl 替代
 - 无 Task 并行时的顺序执行方案
 
-### 通用工具（无需标记）
+### Tool Reference Best Practices
+
+skill 指令优先使用 Claude Code 工具术语（便于 Claude Code 直接理解），同时用 `>` blockquote 提供其他环境的 fallback。
+
+**原则：Claude Code-first，fallback 补充**
+
+| Claude Code 术语 | fallback 备注 |
+|------------------|--------------|
+| `WebFetch: <URL>` | `> 其他环境：curl -sL <URL>` |
+| `使用 Task 工具并行启动` | `> 其他 Agent 环境：以下检查相互独立，可按顺序执行` |
+| `使用 Context7 获取文档` | `> 若未安装 Context7 MCP，从 GitHub 仓库直接获取` |
+| `subagent: 云效数据` | `> 其他环境：直接调用 yunxiao skill 或 aliyun CLI` |
+
+**模板：**
+
+```text
+使用 Task 工具并行启动多个检查 Agent。
+
+> 其他 Agent 环境：以下检查相互独立，可按顺序依次执行。
+```
+
+### 通用工具（无需 fallback）
 
 以下工具在主流 Agent 中通用：
+
 - `Bash` — 命令执行
 - `Read` / `Write` / `Edit` — 文件操作
 - `Grep` / `Glob` — 搜索

@@ -21,7 +21,9 @@ git diff --name-only dev     # 与 dev 分支的差异（ha-core 主分支）
 
 ### 2. 并行启动检查 Agent
 
-使用 Task 工具并行启动多个专项检查，详见 [review-workflow.md](references/review-workflow.md)：
+使用 Task 工具并行启动多个专项检查，详见 [review-workflow.md](references/review-workflow.md)。
+
+> 其他 Agent 环境：以下检查相互独立，可按顺序依次执行。
 
 ```text
 Agent 1: Quality Scale 规则检查
@@ -31,17 +33,13 @@ Agent 4: 测试覆盖检查
 Agent 5: 文档与 Manifest 检查
 ```
 
-**并行执行方式**:
-
-在 Claude Code 中，通过在同一轮对话中发起多个独立检查实现并行：
-
 1. Quality Scale 验证 - 读取 quality_scale.yaml，验证 done 规则
 2. 代码风格检查 - 对照 copilot-instructions.md
 3. Config Flow 检查 - 验证 unique_id 和测试覆盖
 4. 测试覆盖检查 - 确认 >= 95%
 5. 文档检查 - 验证 strings.json 和 README
 
-每个检查独立进行，最后汇总结果。
+所有检查完成后，汇总结果生成统一报告。
 
 ### 3. 动态获取最新规范
 
@@ -53,15 +51,22 @@ Agent 5: 文档与 Manifest 检查
 WebFetch: https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md
 ```
 
+> 其他环境：`curl -sL <URL>` 作为替代。
+
 #### 编码规范
 
 ```text
 WebFetch: https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md
 ```
 
+> 其他环境：`curl -sL <URL>` 作为替代。
+
 #### 开发者文档
 
 使用 Context7 获取最新的 Home Assistant 开发者文档。
+
+> 若未安装 Context7 MCP，从 GitHub 仓库直接获取：
+> `curl -sL https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/...`
 
 ### 4. 参考其他集成
 

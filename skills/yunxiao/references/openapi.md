@@ -19,6 +19,8 @@ brew install aliyun-cli
 ```bash
 # macOS
 brew install jq
+# Ubuntu/Debian: sudo apt-get install jq
+# Windows: winget install jqlang.jq (或 scoop install jq)
 ```
 
 ### 第 2 步：创建 AccessKey
