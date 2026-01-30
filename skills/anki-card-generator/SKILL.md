@@ -1,6 +1,6 @@
 ---
 name: anki-card-generator
-description: 生成 Anki 闪卡，输出 simple-anki-sync 兼容格式。当用户说「生成 Anki 卡片」「做卡片」「帮我记忆」「做闪卡」「学习卡片」「背诵卡」「记忆这个」时触发。
+description: 生成 Anki 闪卡，输出 simple-anki-sync 兼容格式。Triggers on "anki", "flashcard", "memorize", "study cards". 当用户说「生成 Anki 卡片」「做卡片」「帮我记忆」「做闪卡」「学习卡片」「背诵卡」「记忆这个」时触发。
 ---
 
 # Anki Card Generator
