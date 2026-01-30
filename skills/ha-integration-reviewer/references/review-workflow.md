@@ -4,7 +4,7 @@
 
 ## 并行检查架构
 
-使用 Task 工具启动多个 subagent 并行检查：
+以下检查维度相互独立，可并行执行以提高效率；若不支持并行，按顺序依次执行即可：
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -99,23 +99,29 @@
 
 使用以下方式获取最新文档，而非静态嵌入：
 
-### WebFetch
+### 动态获取规则文档
 
-```python
-# 获取 quality scale 规则
-url = f"https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md"
+获取以下 URL 的内容，确保使用最新规范而非过时的静态文档：
 
-# 获取 copilot-instructions
-url = "https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md"
+```text
+# Quality Scale 规则
+https://raw.githubusercontent.com/home-assistant/developers.home-assistant/refs/heads/master/docs/core/integration-quality-scale/rules/{rule_name}.md
+
+# 编码规范
+https://raw.githubusercontent.com/home-assistant/core/dev/.github/copilot-instructions.md
 ```
 
-### Context7
+> 如果你的环境没有内置的网页获取工具，使用 `curl -sL <URL>` 作为替代。
 
-用于获取 Home Assistant 开发者文档的最新内容：
+### 开发者文档查询
+
+查询最新的 Home Assistant 开发者文档，重点关注：
 
 - Review process
 - Development checklist
 - Integration quality scale
+
+> 推荐安装 [Context7 MCP](https://github.com/upstash/context7) 以获取最新文档内容。若不可用，从 GitHub 仓库直接获取相关文档。
 
 ### 参考其他集成
 

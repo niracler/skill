@@ -1,6 +1,6 @@
 ---
 name: diary-assistant
-description: Use when user wants to write diary entries or daily logs. Triggers include「帮我写日记」「记录今天」「写日记」「今天的日记」. Integrates with Reminders for task review and planning.
+description: (macOS, requires schedule-manager) Use when user wants to write diary entries or daily logs. Triggers include「帮我写日记」「记录今天」「写日记」「今天的日记」. Integrates with Reminders for task review and planning.
 ---
 
 # Diary Assistant
@@ -47,11 +47,11 @@ description: Use when user wants to write diary entries or daily logs. Triggers 
          └────┬────┘
               ▼
   ┌─────────────────────────────────────────────────────────────┐
-  │ 2. 并行获取数据（subagent）                    (~2-3min)    │
-  │                                                            │
+  │ 2. 并行获取数据                              (~2-3min)    │
+  │    （以下任务相互独立，可同时进行）                        │
   │    ┌─ Reminders (今日任务)                                 │
-  │    ├─ subagent: 云效 MR/Bug/任务                           │
-  │    └─ subagent: GitHub 提交                                │
+  │    ├─ 独立获取: 云效 MR/Bug/任务                           │
+  │    └─ 独立获取: GitHub 提交                                │
   │                                                            │
   └──────┬────────────────────────────────────────────────────┘
          │
@@ -72,7 +72,7 @@ description: Use when user wants to write diary entries or daily logs. Triggers 
      是  │      │ 否
          ▼      │
   ┌──────────┐  │
-  │ Work Log │  │  整理 subagent 获取的数据
+  │ Work Log │  │  整理并行获取的数据
   │ 云效+GH  │  │
   └────┬─────┘  │
        └───┬────┘
@@ -178,12 +178,12 @@ reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 
 ### 数据源（并行获取）
 
-**使用 subagent 并行获取云效和 GitHub 数据，提高效率：**
+**以下两个数据源相互独立，可并行获取以提高效率：**
 
 ```text
-┌─ subagent: 云效 MR/Bug/任务 (yunxiao skill)
-└─ subagent: GitHub 提交/PR (gh api)
-    ↓ 并行完成后
+┌─ 数据源 1: 云效 MR/Bug/任务 (yunxiao skill)（独立）
+└─ 数据源 2: GitHub 提交/PR (gh api)（独立）
+    ↓ 全部完成后
 整理成 Work Log 格式
 ```
 
@@ -313,6 +313,11 @@ reminders add "提醒" "开会" --due-date "friday"
 见 [user-config.md](references/user-config.md) 配置日记路径和工作仓库。
 
 ## 依赖 Skill
+
+> **完整功能需要安装多个 plugin group。** 如果通过 `npx skills add` 单独安装了 writing-skills，
+> 请确保同时安装 workflow-skills（含 schedule-manager、yunxiao）和 learning-skills（含 anki-card-generator）。
+>
+> 以下 skill 通过功能名称引用。若对应 skill 未安装，可根据其核心功能手动执行等效操作。
 
 | Skill | 用途 | 触发时机 |
 |-------|------|----------|
