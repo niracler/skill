@@ -21,7 +21,14 @@ description: Use when setting up or running markdown formatting and linting in a
 ## 前置条件
 
 ```bash
-brew install pre-commit   # 全局安装一次
+# 安装 pre-commit（git hooks 需要持久安装，选择一种方式）
+uv tool install pre-commit --with pre-commit-uv  # 推荐，跨平台最快
+pipx install pre-commit                           # 备选，跨平台
+brew install pre-commit                           # macOS/Linux
+
+# 一次性运行检查（不需要安装）
+uvx pre-commit run --all-files
+
 node --version             # 需要 Node.js（markdownlint 依赖）
 ```
 
@@ -84,6 +91,8 @@ repos:
 **`scripts/check-horizontal-rules.sh`：**
 
 从 [scripts/check-horizontal-rules.sh](scripts/check-horizontal-rules.sh) 复制，然后 `chmod +x`。
+
+> **Windows 用户**：`.sh` 脚本需要在 Git Bash 或 WSL 中运行。
 
 **`.gitignore`**（如果没有）：
 
@@ -148,7 +157,8 @@ bash scripts/check-horizontal-rules.sh **/*.md  # HR 检查
 
 | 问题 | 原因 | 修复 |
 |------|------|------|
-| `pre-commit: command not found` | 未安装 | `brew install pre-commit` |
+| `pre-commit: command not found` | 未安装 | `uv tool install pre-commit --with pre-commit-uv`（推荐）或 `pipx install pre-commit` / `brew install pre-commit` |
 | markdownlint 大量 MD060 错误 | 表格管道符间距 | `.markdownlint.json` 中 `"MD060": false` |
+| `.sh` 脚本在 Windows 无法执行 | Windows 不原生支持 Bash | 使用 Git Bash 或 WSL |
 | frontmatter `---` 被误删 | awk 脚本问题 | 确认文件第 1 行是 `---` 且紧接 YAML 内容 |
 | `--fix` 未修复所有问题 | 部分规则无法自动修复 | 手动修复（通常是 MD040 缺少代码块语言） |
