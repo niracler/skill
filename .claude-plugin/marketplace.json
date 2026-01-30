@@ -15,10 +15,10 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./src/git-workflow",
-        "./src/ha-integration-reviewer",
-        "./src/yunxiao",
-        "./src/schedule-manager"
+        "./skills/git-workflow",
+        "./skills/ha-integration-reviewer",
+        "./skills/yunxiao",
+        "./skills/schedule-manager"
       ]
     },
     {
@@ -27,9 +27,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./src/diary-assistant",
-        "./src/writing-inspiration",
-        "./src/writing-proofreading"
+        "./skills/diary-assistant",
+        "./skills/writing-inspiration",
+        "./skills/writing-proofreading"
       ]
     },
     {
@@ -38,7 +38,7 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./src/anki-card-generator"
+        "./skills/anki-card-generator"
       ]
     },
     {
@@ -47,7 +47,7 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./src/zaregoto-miko"
+        "./skills/zaregoto-miko"
       ]
     }
   ]

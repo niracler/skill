@@ -5,6 +5,12 @@ My personal Claude Code skills collection.
 ## Installation
 
 ```bash
+npx skills add niracler/skill
+```
+
+Or via Claude Code marketplace:
+
+```bash
 claude plugin marketplace add https://github.com/niracler/skill.git
 ```
 
@@ -18,7 +24,7 @@ Standardized Git workflow for commits, PRs, and releases.
 - Pull Request templates
 - Release workflow with CHANGELOG
 
-[View Documentation](src/git-workflow/SKILL.md)
+[View Documentation](skills/git-workflow/SKILL.md)
 
 ### ☁️ yunxiao
 
@@ -28,7 +34,7 @@ CLI tools for Alibaba Cloud DevOps (Yunxiao/云效).
 - Push Review Mode (zero-install alternative)
 - aliyun CLI + OpenAPI for Projex tasks
 
-[View Documentation](src/yunxiao/SKILL.md)
+[View Documentation](skills/yunxiao/SKILL.md)
 
 ### 🏠 ha-integration-reviewer
 
@@ -39,7 +45,7 @@ Strict Home Assistant integration code reviewer for PR preparation.
 - Dynamic fetching of latest HA developer documentation
 - Common issues checklist from real PR reviews
 
-[View Documentation](src/ha-integration-reviewer/SKILL.md)
+[View Documentation](skills/ha-integration-reviewer/SKILL.md)
 
 ### 📔 diary-assistant
 
@@ -50,7 +56,7 @@ Daily journal writing with GTD integration. Designed for **45-minute workflow**.
 - Adaptive questioning (workday vs weekend)
 - Smart follow-up (TIL → Anki cards)
 
-[View Documentation](src/diary-assistant/SKILL.md)
+[View Documentation](skills/diary-assistant/SKILL.md)
 
 ### ✍️ writing-inspiration
 
@@ -60,7 +66,7 @@ Guided writing for travel notes, TIL, and general articles.
 - TIL framework (background → process → solution → takeaway)
 - General article framework (trigger → viewpoint → expansion → conclusion)
 
-[View Documentation](src/writing-inspiration/SKILL.md)
+[View Documentation](skills/writing-inspiration/SKILL.md)
 
 ### 📝 writing-proofreading
 
@@ -71,7 +77,7 @@ Guided writing for travel notes, TIL, and general articles.
 - Source verification & footnotes
 - Personal style consistency
 
-[View Documentation](src/writing-proofreading/SKILL.md)
+[View Documentation](skills/writing-proofreading/SKILL.md)
 
 ### 🃏 anki-card-generator
 
@@ -82,7 +88,7 @@ Generate high-quality Anki flashcards following atomization principles and cogni
 - Standardized question templates
 - Domain examples (history, programming, language, psychology)
 
-[View Documentation](src/anki-card-generator/SKILL.md)
+[View Documentation](skills/anki-card-generator/SKILL.md)
 
 ### 📅 schedule-manager
 
@@ -93,7 +99,7 @@ Manage Apple Calendar and Reminders via osascript, following GTD methodology.
 - Quick capture, meeting scheduling, daily/weekly planning
 - Permission and dependency check scripts
 
-[View Documentation](src/schedule-manager/SKILL.md)
+[View Documentation](skills/schedule-manager/SKILL.md)
 
 ### 🎭 zaregoto-miko
 
@@ -104,7 +110,7 @@ Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-yea
 - Material → Style conversion workflow
 - Tone markers and rhythm guide
 
-[View Documentation](src/zaregoto-miko/SKILL.md)
+[View Documentation](skills/zaregoto-miko/SKILL.md)
 
 ## Development
 
@@ -112,7 +118,7 @@ Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-yea
 
 ```bash
 # Initialize
-python3 scripts/init_skill.py your-skill-name --path src
+python3 scripts/init_skill.py your-skill-name --path skills
 
 # Edit files
 # - your-skill-name/SKILL.md
@@ -120,7 +126,7 @@ python3 scripts/init_skill.py your-skill-name --path src
 # - your-skill-name/scripts/
 
 # Update .claude-plugin/marketplace.json
-# Add "./src/your-skill-name" to skills array
+# Add "./skills/your-skill-name" to skills array
 
 # Validate
 ./scripts/validate.sh
@@ -143,7 +149,7 @@ git push
 skill/
 ├── .claude-plugin/
 │   └── marketplace.json
-├── src/
+├── skills/
 │   ├── git-workflow/
 │   │   ├── SKILL.md
 │   │   └── references/
