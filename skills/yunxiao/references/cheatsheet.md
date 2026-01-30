@@ -2,8 +2,6 @@
 
 **本文档专为 AI 助手设计，包含所有必须遵守的规则，避免踩坑。**
 
----
-
 ## 黄金法则
 
 ### 1. 获取组织 ID 必须加 `--minAccessLevel 5`
@@ -162,9 +160,43 @@ aliyun devops ListOrganizationMembers --organizationId <org-id> \
 git remote get-url origin | sed -E 's|.*codeup.aliyun.com[:/]([^/]+)/.*|\1|'
 ```
 
----
+### 14. `get_work_item` 支持 serialNumber
+
+```bash
+# ✅ 正确 - 直接用 serialNumber
+mcp__yunxiao__get_work_item(workItemId="MYCP-106")
+
+# ✅ 也正确 - 用完整 hash ID
+mcp__yunxiao__get_work_item(workItemId="ecfa20663d570c7438420a3c98")
+
+# 不需要先查询完整 ID，serialNumber（如 MYCP-106）可直接使用
+```
+
+### 15. Bug 状态流转受工作流限制
+
+```bash
+# ✅ 正确 - 先查询工作流，再按允许的路径流转
+mcp__yunxiao__get_work_item_workflow(
+  organizationId="...", projectId="...", workItemTypeId="..."
+)
+
+# ❌ 错误 - 直接跳到目标状态，可能报"当前状态:X不能流转到目标状态:Y"
+# Bug 的"待确认"可以直接到"已修复"，但不能到"开发完成"
+```
+
+### 16. 获取仓库 ID 优先用 MCP 工具
+
+```bash
+# ✅ 推荐 - MCP 工具更可靠
+mcp__yunxiao__list_repositories(organizationId="...", search="repo-name")
+
+# ⚠️ CLI 可能报 SYSTEM_UNAUTHORIZED_ERROR
+aliyun devops ListRepositories --organizationId <org-id>
+```
 
 ## 常用状态 ID
+
+### Task（通用）
 
 | 状态 | identifier |
 |------|------------|
@@ -172,95 +204,36 @@ git remote get-url origin | sed -E 's|.*codeup.aliyun.com[:/]([^/]+)/.*|\1|'
 | 处理中 | `100010` |
 | 已完成 | `100014` |
 
----
+### Bug（因项目而异，建议用 `get_work_item_workflow` 查询）
 
-## 完整命令模板
-
-### 更新任务为已完成
-
-```bash
-aliyun devops POST /organization/<ORG_ID>/workitems/updateWorkitemField \
-  --body '{
-    "workitemIdentifier": "<WORKITEM_ID>",
-    "updateWorkitemPropertyRequest": [
-      {"fieldIdentifier": "status", "fieldValue": "100014"}
-    ]
-  }'
-```
-
-### 添加 Markdown 评论
-
-```bash
-aliyun devops POST /organization/<ORG_ID>/workitems/comment \
-  --body '{
-    "workitemIdentifier": "<WORKITEM_ID>",
-    "content": "评论内容",
-    "formatType": "MARKDOWN"
-  }'
-```
-
-### 列出任务
-
-```bash
-aliyun devops ListWorkitems \
-  --organizationId <ORG_ID> \
-  --spaceIdentifier <PROJECT_ID> \
-  --spaceType Project \
-  --category Task
-```
-
----
-
-## MR 操作速查
-
-### 创建 MR（最常用）
-
-复制后替换 `<>` 部分：
-
-```bash
-aliyun devops CreateMergeRequest \
-  --organizationId <ORG_ID> \
-  --repositoryId <REPO_ID> \
-  --body '{
-    "title": "<feat/fix/docs>: <简短描述>",
-    "sourceBranch": "<你的分支名>",
-    "targetBranch": "main",
-    "sourceProjectId": <REPO_ID>,
-    "targetProjectId": <REPO_ID>,
-    "createFrom": "WEB"
-  }'
-```
-
-### 查看 MR 列表
-
-```bash
-aliyun devops ListMergeRequests \
-  --organizationId <ORG_ID> \
-  --orderBy created_at \
-  --pageSize 20
-```
-
-### 获取仓库 ID
-
-```bash
-aliyun devops ListRepositories --organizationId <ORG_ID> \
-  | jq '.result[] | {Id, name}'
-```
-
----
+| 状态 | identifier |
+|------|------------|
+| 待确认 | `28` |
+| 已修复 | `29` |
+| 再次打开 | `30` |
+| 暂不修复 | `31` |
+| 已关闭 | `100085` |
 
 ## 错误信息 → 修复方案
 
-| 看到这个错误                          | 立即这样修复                                            |
-| ------------------------------------- | ------------------------------------------------------- |
-| `组织不存在`                          | 加 `--minAccessLevel 5` 重新获取组织 ID                 |
-| `MissingworkitemCategoryIdentifier`   | 加 `--workitemCategoryIdentifier Task`                  |
-| `MissingfieldIdentifier`              | 用 `fieldIdentifier` 不是 `propertyKey`                 |
-| `InvalidJSON Array parsing error`     | 改成数组 `[{...}]`                                      |
-| `MissingformatType`                   | 加 `"formatType": "MARKDOWN"`                           |
-| `category is mandatory`               | 加 `--category Project`                                 |
-| `Missingspace`                        | 同时加 `space` 和 `spaceIdentifier`                     |
-| `MissingsourceProjectId`              | 加 `sourceProjectId` 和 `targetProjectId`               |
-| `MissingcreateFrom`                   | 加 `"createFrom": "WEB"`                                |
-| `MissingassignedTo`                   | 加 `assignedTo`（用户 accountId，从成员列表获取）       |
-| `字段【xxx】不能为空`                 | 先用 MCP 查询必填字段配置，再添加到 `fieldValueList`    |
+| 看到这个错误 | 立即这样修复 |
+|-------------|-------------|
+| `组织不存在` | 加 `--minAccessLevel 5` 重新获取组织 ID |
+| 仓库 ID 返回 `null` | jq 改用大写 `.Id`（不是 `.id`） |
+| `用户失败，请确认已关联至云效账号` | RAM 用户需要添加到云效组织成员 |
+| `category is mandatory` | 加 `--category Project` |
+| `spaceType is mandatory` | 加 `--spaceType Project` |
+| `Missingspace` / `MissingspaceIdentifier` | body 中同时加 `space` 和 `spaceIdentifier` |
+| `MissingworkitemType` | body 中同时加 `workitemType` 和 `workitemTypeIdentifier` |
+| `MissingworkitemCategoryIdentifier` | 加 `--workitemCategoryIdentifier Task` |
+| `MissingfieldIdentifier` | 用 `fieldIdentifier` 不是 `propertyKey` |
+| `InvalidJSON Array parsing error` | `updateWorkitemPropertyRequest` 改成数组 `[{...}]` |
+| `MissingformatType` | 加 `"formatType": "MARKDOWN"` |
+| `MissingsourceProjectId` | 加 `sourceProjectId` 和 `targetProjectId` |
+| `MissingcreateFrom` | 加 `"createFrom": "WEB"` |
+| `MissingassignedTo` | 加 `assignedTo`（用户 accountId，从成员列表获取） |
+| `字段【xxx】不能为空` | 先用 MCP 查询必填字段配置，再添加到 `fieldValueList` |
+| ListMergeRequests 的 `--repositoryId` 无效 | 该 API 不支持按仓库过滤，使用 `--groupIds` |
+| UpdateWorkitemField 参数不识别 | 用 REST API：`aliyun devops POST /organization/.../workitems/updateWorkitemField` |
+| `当前状态:X不能流转到目标状态:Y` | 先用 `get_work_item_workflow` 查询允许的状态流转路径 |
+| `SYSTEM_UNAUTHORIZED_ERROR` (ListRepositories) | 改用 MCP 工具 `mcp__yunxiao__list_repositories` |
