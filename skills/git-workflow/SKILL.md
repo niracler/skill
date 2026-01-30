@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: 个人 Git 工作流，遵循 conventional commits 和语义化版本。用于创建提交、PR 和发布版本。当用户说「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」「写 commit message」「推代码」时触发。
+description: Use when creating commits, pull requests, releases, or tags. Triggers on「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」「写 commit message」「推代码」
 ---
 
 # Git Workflow
@@ -17,19 +17,13 @@ These workflows can be used independently or together as needed.
 
 ## Platform Detection
 
-**首先检测仓库类型**，根据 remote URL 选择正确的工作流：
+Check `git remote get-url origin` to select workflow:
 
-```bash
-git remote get-url origin
-```
-
-| Remote URL 包含        | 平台         | 使用的 Skill               |
-| ---------------------- | ------------ | -------------------------- |
-| `github.com`           | GitHub       | 本 skill（git-workflow）   |
-| `codeup.aliyun.com`    | 云效 Codeup  | **调用 `yunxiao` skill**   |
-| `gitlab.com`           | GitLab       | 本 skill（适配 GitLab CLI）|
-
-**云效仓库检测到后**：立即调用 `yunxiao` skill 处理 MR 创建、代码评审等操作。
+| Remote URL contains | Commits/Tags/Releases | PR/MR                            |
+| ------------------- | --------------------- | -------------------------------- |
+| `github.com`        | This skill            | This skill (`gh pr create`)      |
+| `codeup.aliyun.com` | This skill            | **Switch to `yunxiao` skill**    |
+| `gitlab.com`        | This skill            | This skill (adapt for GitLab CLI) |
 
 ## Quick Reference
 
@@ -43,8 +37,6 @@ type(scope): concise summary
 ```
 
 **Types**: feat, fix, refactor, docs, test, chore
-
-**Important**: NO Claude Code signatures or AI markers in commits.
 
 ### Branch Naming
 
@@ -62,13 +54,17 @@ type(scope): concise summary
 4. Tag: `git tag v{version} && git push upstream v{version}`
 5. Create GitHub release with `gh release create`
 
+## Default Behaviors
+
+- **Keep messages concise**: Commit messages and PR titles must be short and to the point. Omit filler words. The diff shows "what" — the message explains "why".
+- **No AI signatures**: Never include `Co-Authored-By: Claude`, `Generated with Claude Code`, or any AI markers in commits or PRs.
+- **Commit always pushes**: After commit, always push immediately. Do not ask.
+  - Has upstream tracking → `git push`
+  - No upstream tracking → `git push -u origin <branch>`
+
 ## Detailed Guides
 
-For comprehensive guidelines and examples:
-
-- **Commits**: See [commit-guide.md](references/commit-guide.md) for detailed format, principles, and examples
-- **Pull Requests**: See [pr-guide.md](references/pr-guide.md) for PR process, structure, and templates
-- **Releases**: See [release-guide.md](references/release-guide.md) for complete release workflow and CHANGELOG format
+See [examples-and-templates.md](references/examples-and-templates.md) for commit examples (good/bad), PR body template, and CHANGELOG format.
 
 ## Validation
 
@@ -89,75 +85,36 @@ The validator checks:
 
 ## Common Workflows
 
-### Independent Commit
+### Commit (default: commit + push)
 
 ```bash
-# Make changes
-git add .
-# Create commit following format
-git commit -m "feat(component): add new feature"
+git add <files>
+git commit -m "feat(component): add new feature" && git push
 ```
 
-### Pull Request Workflow
+### Pull Request
 
 ```bash
-# Create feature branch
 git checkout -b feature/new-feature
-
-# Make changes and commit
-git add .
-git commit -m "feat(component): add new feature"
-
-# Push and create PR
-git push origin feature/new-feature
+# ... make changes, commit (auto-pushes per default behavior) ...
 gh pr create --title "feat(component): add new feature" --body "..."
 ```
 
-### Release Workflow
+### Release
 
 ```bash
-# Update version files (manifest.json, pyproject.toml, etc.)
-# Update CHANGELOG.md with release notes
-
-# Commit release
+# Update version files + CHANGELOG.md
 git add .
-git commit -m "chore(release): bump version to 1.2.0"
-
-# Create tag and push
-git tag v1.2.0
-git push upstream v1.2.0
-
-# Create GitHub release
-gh release create v1.2.0 -R owner/repo --title "v1.2.0" --notes "..."
-```
-
-### Combined PR and Release
-
-Sometimes you'll create a PR for the release:
-
-```bash
-# On release branch
-# Update versions and CHANGELOG
-git add .
-git commit -m "chore(release): bump version to 1.2.0"
-
-# Create PR for review
-git push origin release/v1.2.0
-gh pr create --title "chore(release): bump version to 1.2.0" --body "..."
-
-# After merge to main
-git checkout main
-git pull
-git tag v1.2.0
-git push upstream v1.2.0
+git commit -m "chore(release): bump version to 1.2.0" && git push
+git tag v1.2.0 && git push upstream v1.2.0
 gh release create v1.2.0 -R owner/repo --title "v1.2.0" --notes "..."
 ```
 
 ## Common Issues
 
-| 问题 | 原因 | 解决方案 |
-|------|------|----------|
-| Subject line > 72 chars | 描述过长 | 缩短摘要，详情放 body |
-| 多个 type 在同一提交 | 范围过大 | 拆分为多个单一功能的提交 |
-| Merge commits 出现 | 使用了 merge | 改用 `git pull --rebase` |
-| 验证脚本报错 | 格式不符 | 检查 type(scope): 格式 |
+| Issue | Cause | Fix |
+| ----- | ----- | --- |
+| Subject line > 72 chars | Description too long | Shorten summary, put details in body |
+| Multiple types in one commit | Scope too large | Split into single-purpose commits |
+| Merge commits appear | Used merge | Use `git pull --rebase` |
+| Validator script errors | Format mismatch | Check type(scope): format |
