@@ -45,14 +45,14 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 ╰──────────────────────────────────────────────────────╯
 ```
 
-Scope: 🍎 = macOS only · 🔒 = personal/niche
+Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 
 ### Workflow
 
 | Skill | Description | Scope |
 |-------|-------------|-------|
-| [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | |
-| [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | |
+| [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | 🌐 |
+| [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | 🌐 |
 | [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | |
 | [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | |
 | [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | |
@@ -71,7 +71,7 @@ Scope: 🍎 = macOS only · 🔒 = personal/niche
 
 | Skill | Description | Scope |
 |-------|-------------|-------|
-| [anki-card-generator](skills/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | |
+| [anki-card-generator](skills/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | 🌐 |
 
 ### Fun
 
