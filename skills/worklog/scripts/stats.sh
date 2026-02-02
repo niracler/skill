@@ -36,7 +36,13 @@ next_day() {
     date -j -v+1d -f "%Y-%m-%d" "$1" "+%Y-%m-%d" 2>/dev/null || \
         date -d "$1 + 1 day" "+%Y-%m-%d" 2>/dev/null
 }
-GIT_UNTIL=$(next_day "$UNTIL")
+# Append local timezone offset to bare dates so git interprets them correctly.
+# Without this, git --since/--until with bare "YYYY-MM-DD" can misparse the timezone.
+TZ_OFFSET=$(date '+%z')
+TZ_OFFSET_ISO="${TZ_OFFSET:0:3}:${TZ_OFFSET:3:2}"
+
+GIT_SINCE="${SINCE}T00:00:00${TZ_OFFSET_ISO}"
+GIT_UNTIL="$(next_day "$UNTIL")T00:00:00${TZ_OFFSET_ISO}"
 
 # --- Helpers ---
 
@@ -76,7 +82,7 @@ for dir in "${candidates[@]}"; do
     repos_scanned=$((repos_scanned + 1))
 
     # Build git log filter args
-    log_args=(--since="$SINCE" --until="$GIT_UNTIL")
+    log_args=(--since="$GIT_SINCE" --until="$GIT_UNTIL")
     [[ -n "$AUTHOR" ]] && log_args+=(--author="$AUTHOR")
 
     # Commit count
