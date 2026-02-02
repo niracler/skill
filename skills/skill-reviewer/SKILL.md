@@ -21,7 +21,7 @@ bash <skill-reviewer-dir>/scripts/validate.sh
 
 ### Step 2: 内容质量（委托，推荐）
 
-**推荐执行**：若已安装 `superpowers:writing-skills`，调用该 skill 进行深度质量审查（token 效率、渐进式披露、反模式、TDD 方法论等）。
+**推荐执行**：若已安装 `writing-skills`，调用该 skill 进行深度质量审查（token 效率、渐进式披露、反模式、TDD 方法论等）。
 
 若未安装，提示用户可选安装：
 

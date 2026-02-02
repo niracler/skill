@@ -35,7 +35,7 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  Groups:                                             │
 │    Workflow  git-workflow · yunxiao · schedule-mgr    │
 │             ha-integration-reviewer · markdown-lint  │
-│             skill-reviewer                           │
+│             skill-reviewer · code-sync               │
 │    Writing  diary-assistant · writing-proofreading   │
 │             writing-inspiration                      │
 │    Learning anki-card-generator                      │
@@ -45,205 +45,39 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 ╰──────────────────────────────────────────────────────╯
 ```
 
-### 🔄 git-workflow
+Scope: 🍎 = macOS only · 🔒 = personal/niche
 
-Standardized Git workflow for commits, PRs, and releases.
+### Workflow
 
-- Conventional Commits format (no AI signatures)
-- Pull Request templates
-- Release workflow with CHANGELOG
+| Skill | Description | Scope |
+|-------|-------------|-------|
+| [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | |
+| [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | |
+| [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | |
+| [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | |
+| [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | 🔒 |
+| [ha-integration-reviewer](skills/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | 🔒 |
+| [schedule-manager](skills/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | 🍎 |
 
-[View Documentation](skills/git-workflow/SKILL.md)
+### Writing
 
-### ☁️ yunxiao
+| Skill | Description | Scope |
+|-------|-------------|-------|
+| [writing-inspiration](skills/writing-inspiration/SKILL.md) | Guided writing for travel notes, TIL, and articles | |
+| [writing-proofreading](skills/writing-proofreading/SKILL.md) | 6-step Chinese article review workflow | |
+| [diary-assistant](skills/diary-assistant/SKILL.md) | Daily journal with GTD task review and work log automation | 🍎 🔒 |
 
-CLI tools for Alibaba Cloud DevOps (Yunxiao/云效).
+### Learning
 
-- git-repo installation and commands (git pr)
-- Push Review Mode (zero-install alternative)
-- aliyun CLI + OpenAPI for Projex tasks
+| Skill | Description | Scope |
+|-------|-------------|-------|
+| [anki-card-generator](skills/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | |
 
-[View Documentation](skills/yunxiao/SKILL.md)
+### Fun
 
-### 🏠 ha-integration-reviewer
-
-Strict Home Assistant integration code reviewer for PR preparation.
-
-- Quality Scale rules verification (Bronze/Silver/Gold/Platinum)
-- Parallel checking with multiple agents (code style, config flow, tests, docs)
-- Dynamic fetching of latest HA developer documentation
-- Common issues checklist from real PR reviews
-
-[View Documentation](skills/ha-integration-reviewer/SKILL.md)
-
-### 📔 diary-assistant
-
-Daily journal writing with GTD integration. Designed for **45-minute workflow**.
-
-- Reminders integration for task review and planning
-- Work Log automation on workdays (git/yunxiao)
-- Adaptive questioning (workday vs weekend)
-- Smart follow-up (TIL → Anki cards)
-
-[View Documentation](skills/diary-assistant/SKILL.md)
-
-### ✍️ writing-inspiration
-
-Guided writing for travel notes, TIL, and general articles.
-
-- Travel writing framework (departure → journey → reflection)
-- TIL framework (background → process → solution → takeaway)
-- General article framework (trigger → viewpoint → expansion → conclusion)
-
-[View Documentation](skills/writing-inspiration/SKILL.md)
-
-### 📝 writing-proofreading
-
-6-step article review workflow for Chinese writing.
-
-- Structure diagnosis & reader context check
-- Chinese style guide (based on Yu Guangzhong's "How to Improve Anglicized Chinese")
-- Source verification & footnotes
-- Personal style consistency
-
-[View Documentation](skills/writing-proofreading/SKILL.md)
-
-### 🃏 anki-card-generator
-
-Generate high-quality Anki flashcards following atomization principles and cognitive science best practices.
-
-- simple-anki-sync compatible markdown output
-- Atomization rules (word limits, one concept per card)
-- Standardized question templates
-- Domain examples (history, programming, language, psychology)
-
-[View Documentation](skills/anki-card-generator/SKILL.md)
-
-### 🔧 markdown-lint
-
-Configure markdown formatting and linting for any repository.
-
-- markdownlint + pre-commit hook setup
-- Horizontal rule ban (outside YAML frontmatter)
-- Batch fix and validation workflow
-
-[View Documentation](skills/markdown-lint/SKILL.md)
-
-### 🔍 skill-reviewer
-
-Audit Claude Code skills for quality and cross-platform/cross-agent compatibility.
-
-- Delegates structure checks to bundled `validate.sh`, quality checks to `writing-skills`
-- Platform compatibility scan (macOS-only commands, Windows incompatibilities)
-- Agent compatibility check (Claude Code-first with fallback annotations)
-- npx skills ecosystem validation (marketplace.json, symlink safety, cross-skill dependencies)
-
-[View Documentation](skills/skill-reviewer/SKILL.md)
-
-### 📅 schedule-manager
-
-Manage Apple Calendar and Reminders via osascript, following GTD methodology.
-
-- GTD-style workflow (Calendar = fixed commitments, Reminders = tasks)
-- osascript + icalBuddy dual support for better recurring event handling
-- Quick capture, meeting scheduling, daily/weekly planning
-- Permission and dependency check scripts
-
-[View Documentation](skills/schedule-manager/SKILL.md)
-
-### 🎭 zaregoto-miko
-
-Convert text to Zaregoto series Miko Aoi's speaking style - the energetic 19-year-old with absurd metaphors.
-
-- Core pattern: `就好像『A，可是B』耶！`
-- Original quotes reference from the novel
-- Material → Style conversion workflow
-- Tone markers and rhythm guide
-
-[View Documentation](skills/zaregoto-miko/SKILL.md)
-
-## Development
-
-### Add New Skill
-
-```bash
-# Initialize
-python3 scripts/init_skill.py your-skill-name --path skills
-
-# Edit files
-# - your-skill-name/SKILL.md
-# - your-skill-name/references/
-# - your-skill-name/scripts/
-
-# Update .claude-plugin/marketplace.json
-# Add "./skills/your-skill-name" to skills array
-
-# Validate
-./scripts/validate.sh
-
-# Commit
-git add .
-git commit -m "feat: add your-skill-name"
-git push
-```
-
-### Validate Skills
-
-```bash
-./scripts/validate.sh
-```
-
-## Structure
-
-```text
-skill/
-├── .claude-plugin/
-│   └── marketplace.json
-├── .markdownlint.json
-├── .pre-commit-config.yaml
-├── skills/
-│   ├── anki-card-generator/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── diary-assistant/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── git-workflow/
-│   │   ├── SKILL.md
-│   │   ├── references/
-│   │   └── scripts/
-│   ├── ha-integration-reviewer/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── markdown-lint/
-│   │   ├── SKILL.md
-│   │   └── scripts/
-│   ├── schedule-manager/
-│   │   ├── SKILL.md
-│   │   ├── references/
-│   │   └── scripts/
-│   ├── skill-reviewer/
-│   │   ├── SKILL.md
-│   │   ├── references/
-│   │   └── scripts/
-│   ├── writing-inspiration/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── writing-proofreading/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── yunxiao/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   └── zaregoto-miko/
-│       ├── SKILL.md
-│       └── references/
-└── scripts/
-    ├── check-horizontal-rules.sh
-    ├── init_skill.py
-    ├── quick_validate.py
-    └── validate.sh
-```
+| Skill | Description | Scope |
+|-------|-------------|-------|
+| [zaregoto-miko](skills/zaregoto-miko/SKILL.md) | Convert text to Zaregoto series Miko Aoi's speaking style | 🔒 |
 
 ## Recommended External Skills
 
@@ -252,12 +86,10 @@ skill/
 | `writing-skills` | [obra/superpowers](https://github.com/obra/superpowers) | Deep quality audit for skill-reviewer |
 | `brainstorming` | [obra/superpowers](https://github.com/obra/superpowers) | Structured brainstorming before creative work |
 
-```bash
-npx skills add https://github.com/obra/superpowers --skill writing-skills
-```
-
 ## Resources
 
+- [skills.sh](https://skills.sh/) - Community-driven marketplace for AI agent skills. Browse by popularity and category, discover quality skills (React best practices, web design standards, security guides, etc.). Supports Claude Code, Cursor, Copilot, and 30+ agents.
+- [skills CLI](https://github.com/vercel-labs/skills) - Agent skills management CLI by Vercel. `npx skills add <owner/repo>` to install. Supports global/project-level installation, auto-detects local agents, and batch updates. Pairs with skills.sh for a complete discover → install → manage workflow.
 - [Agent Skills Documentation](https://code.claude.com/docs/en/skills)
 - [How to Create Custom Skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
 - [Conventional Commits](https://www.conventionalcommits.org/)
