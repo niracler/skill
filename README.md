@@ -55,7 +55,7 @@ Scope: 🍎 = macOS only · 🔒 = personal/niche
 | [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | |
 | [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | |
 | [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | |
-| [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | 🔒 |
+| [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | |
 | [ha-integration-reviewer](skills/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | 🔒 |
 | [schedule-manager](skills/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | 🍎 |
 
