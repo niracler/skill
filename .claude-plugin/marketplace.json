@@ -20,7 +20,8 @@
         "./skills/markdown-lint",
         "./skills/yunxiao",
         "./skills/schedule-manager",
-        "./skills/skill-reviewer"
+        "./skills/skill-reviewer",
+        "./skills/code-sync"
       ]
     },
     {
