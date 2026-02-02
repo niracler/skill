@@ -21,7 +21,8 @@
         "./skills/yunxiao",
         "./skills/schedule-manager",
         "./skills/skill-reviewer",
-        "./skills/code-sync"
+        "./skills/code-sync",
+        "./skills/worklog"
       ]
     },
     {

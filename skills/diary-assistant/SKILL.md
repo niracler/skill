@@ -50,8 +50,7 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
   │ 2. 并行获取数据（subagent）                    (~2-3min)    │
   │                                                            │
   │    ┌─ Reminders (今日任务)                                 │
-  │    ├─ subagent: 云效 MR/Bug/任务                           │
-  │    └─ subagent: GitHub 提交                                │
+  │    └─ subagent: worklog skill (daily, 仅工作日)            │
   │                                                            │
   └──────┬────────────────────────────────────────────────────┘
          │
@@ -174,61 +173,15 @@ reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 
 ## 3. Work Log 自动化
 
-**工作日（周一至周五）自动执行，不询问。**
+**工作日（周一至周五）自动执行，不询问。周末跳过，直接进入启发提问。**
 
-### 数据源（并行获取）
+调用 `worklog` skill（daily 模式）获取当日工作回顾，将输出直接嵌入日记的 Work Log 部分。
 
-**使用 subagent 并行获取云效和 GitHub 数据，提高效率：**
+> 在步骤 2 中已通过 subagent 并行启动 worklog skill，此处使用其结果。
 
-> 其他 Agent 环境：以下两个数据源相互独立，可按顺序获取。
+worklog skill 会自动整合本地 git 统计、GitHub 和云效数据，输出结构化 Markdown（概览 + 按项目明细 + Bug 跟踪）。
 
-```text
-┌─ subagent: 云效 MR/Bug/任务 (yunxiao skill)
-└─ subagent: GitHub 提交/PR (gh api)
-    ↓ 并行完成后
-整理成 Work Log 格式
-```
-
-1. **云效**（通过 yunxiao skill）
-   - MR: 今天创建/合并的 Merge Request
-   - Bug: 今天新增/关闭的 Bug，标注哪些是我的
-   - 任务: 今天更新的任务状态
-
-2. **GitHub**（通过 gh api）
-
-   ```bash
-   gh api "/users/niracler/events?per_page=50" --jq '[.[] | select(.created_at | startswith("YYYY-MM-DD"))]'
-   ```
-
-**不从本地 git 仓库获取**（云效和 GitHub 已覆盖所有工作记录）
-
-### 输出格式
-
-参考列表形式，不用表格：
-
-```markdown
-### 云效 - Sunlite Backend
-
-- **MR #57 合并**: chore: rename AzoulaLite to Sunlite
-- **MR #56 合并**: feat(scene): implement Scene API
-- feat(scene): extend color field to support CSS hex formats
-
-### GitHub
-
-- **niracler/skill**: refactor: 拆分 writing-assistant 为 3 个独立 skill
-- **niracler/bokushi**: fix
-
-### Bug 跟踪
-
-- 我的待处理 (4 个): MYCP-96 (修复中), MYCP-103/104/106 (待确认)
-- 今天关闭: MYCP-91, 95, 97, 98, 100 (5 个)
-```
-
-### 周末跳过
-
-周六、周日不获取 Work Log，直接进入启发提问。
-
-详见 [worklog-automation.md](references/worklog-automation.md)。
+> 如果 worklog skill 不可用，可手动回顾当天的工作内容。
 
 ## 4. 启发提问（适应性）
 
@@ -326,4 +279,4 @@ reminders add "提醒" "开会" --due-date "friday"
 | `schedule-manager` | 获取今日任务 | 日记开始时 |
 | `schedule-manager` | 处理延期任务 + 写入新计划 | 任务回顾后 + 启发提问结束后 |
 | `anki-card-generator` | 生成记忆卡片 | 检测到 TIL 内容 |
-| `yunxiao` | 获取云效工作记录 | Work Log 自动化（仅云效仓库） |
+| `worklog` | 获取工作回顾（git 统计 + GitHub + 云效） | Work Log 自动化（工作日） |

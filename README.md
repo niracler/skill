@@ -23,7 +23,8 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  Dependencies:                                       │
 │    diary-assistant                                   │
 │    ├──▶ schedule-manager        task review           │
-│    ├──▶ yunxiao                 work log              │
+│    ├──▶ worklog                 work log              │
+│    │    └╌╌▶ yunxiao            云效 data             │
 │    └──▶ anki-card-generator     TIL → flashcards     │
 │    writing-proofreading                              │
 │    └──▶ markdown-lint           step 6 formatting    │
@@ -35,7 +36,7 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  Groups:                                             │
 │    Workflow  git-workflow · yunxiao · schedule-mgr    │
 │             ha-integration-reviewer · markdown-lint  │
-│             skill-reviewer · code-sync               │
+│             skill-reviewer · code-sync · worklog     │
 │    Writing  diary-assistant · writing-proofreading   │
 │             writing-inspiration                      │
 │    Learning anki-card-generator                      │
@@ -53,6 +54,7 @@ Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 |-------|-------------|-------|
 | [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | 🌐 |
 | [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | 🌐 |
+| [worklog](skills/worklog/SKILL.md) | Personal work review with git stats, GitHub & Yunxiao integration | 🔒 |
 | [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | |
 | [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | |
 | [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | |

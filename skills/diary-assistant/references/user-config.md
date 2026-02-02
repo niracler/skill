@@ -15,37 +15,13 @@ diary_template: "{date}.md"
 # → ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Archives/日记(Daily)/2026-01-27.md
 ```
 
-## 用户身份配置
-
-```yaml
-# 云效用户名（用于识别"我的"任务和 Bug）
-yunxiao_username: "<your-yunxiao-username>"
-
-# GitHub 用户名
-github_username: "<your-github-username>"
-```
-
-## Work Log 数据源配置
-
-```yaml
-# Work Log 从以下来源获取（不从本地 git 获取）
-worklog_sources:
-  - yunxiao  # 云效 MR、Bug、任务（通过 yunxiao skill）
-  - github   # GitHub 提交、PR（通过 gh api）
-
-# 云效组织 ID
-yunxiao_org_id: "<your-yunxiao-org-id>"
-
-# GitHub 用户（用于查询 events）
-github_user: "<your-github-username>"
-```
-
 ## 关联 Skill
 
 ```yaml
-# 收尾时可调用的 skill
+# 日记流程中调用的 skill
 related_skills:
   - schedule-manager  # 任务回顾 + 创建后续计划
+  - worklog  # Work Log 自动化（身份配置见 worklog skill 的 user-config.md）
   - anki-card-generator  # 生成记忆卡片
   # 注意：日记存储在 Obsidian，不需要 git 提交
 ```
