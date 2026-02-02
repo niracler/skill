@@ -54,7 +54,7 @@ Output: JSON array with fields `path`, `name`, `branch`, `remote`, `remote_url`,
 
 | Situation | Steps |
 |-----------|-------|
-| **Dirty repo** (push) | `git diff --stat` + `git status` → describe to user → ask: **commit**, **stash**, or **skip**. If committed, push. |
+| **Dirty repo** (push) | `git diff --stat` + `git status` → describe to user → ask: **commit**, **stash**, or **skip**. If commit, use **git-workflow** skill to commit and push. |
 | **No upstream** (push) | Report → ask: **set upstream and push** (`git push -u origin <branch>`), or **skip** |
 | **ff-only fails** (pull) | `git log --oneline HEAD..@{u}` + `@{u}..HEAD` → explain divergence → suggest: **rebase**, **merge**, or **skip** |
 | **Dirty + behind** (pull) | Report both issues → ask: **stash and pull** (stash, pull --ff-only, pop), or **skip** |
