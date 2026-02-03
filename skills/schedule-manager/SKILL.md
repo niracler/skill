@@ -7,6 +7,23 @@ description: (macOS only) 通过 osascript 和 reminders-cli 管理 Apple Calend
 
 通过 osascript (Calendar) 和 reminders-cli (Reminders) 管理日程，遵循 GTD 方法论。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| macOS | system | Yes | This skill requires macOS |
+| osascript | cli | Yes | Built-in on macOS |
+| reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
+
+### 权限配置
+
+首次运行需要授权，进入系统设置 → 隐私与安全性：
+
+1. **日历** - 勾选 Terminal / iTerm / 你使用的终端应用
+2. **提醒事项** - 同上
+
+⚠️ 修改权限后需重启终端应用
+
 ## 核心原则（GTD 风格）
 
 | 工具 | 用途 | 示例 |
@@ -181,31 +198,6 @@ reminders add "提醒" "<任务名>"
 3. 整理 Reminders 列表（`reminders show-all`）
 
 详见 [gtd-methodology.md](references/gtd-methodology.md)。
-
-## 依赖与权限
-
-### 依赖
-
-- **reminders-cli**（必需）：`brew install keith/formulae/reminders-cli`
-
-### 权限配置（macOS）
-
-首次运行需要授权，进入系统设置 → 隐私与安全性：
-
-1. **日历** - 勾选 Terminal / iTerm / 你使用的终端应用
-2. **提醒事项** - 同上
-
-⚠️ 修改权限后需重启终端应用
-
-检查权限：
-
-```bash
-# Calendar 权限
-osascript -e 'tell application "Calendar" to get name of first calendar' 2>&1
-
-# Reminders 权限（使用 reminders-cli）
-reminders show-lists
-```
 
 ## 常见错误
 

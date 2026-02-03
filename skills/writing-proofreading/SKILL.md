@@ -7,6 +7,13 @@ description: Use when user wants to review, polish, or proofread articles. Trigg
 
 文章审校助手，提供 6 步审校流程，帮助打磨中文文章。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| markdownlint-cli2 | cli | No | `npx markdownlint-cli2` (no install needed, used in step 6) |
+| markdown-lint | skill | No | Included in `npx skills add niracler/skill` (for repo setup) |
+
 ## 核心原则
 
 | 原则 | 说明 |

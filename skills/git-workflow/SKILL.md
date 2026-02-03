@@ -7,6 +7,13 @@ description: Use when creating commits, pull requests, releases, or tags. Trigge
 
 Standardized Git workflow for commits, pull requests, and releases using conventional commits format and semantic versioning.
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
+| gh | cli | No | `brew install gh` then `gh auth login` (required for PR and Release) |
+
 ## When to Use
 
 - **Creating commits**: Follow conventional commits with concise, imperative messages
