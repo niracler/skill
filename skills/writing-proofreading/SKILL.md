@@ -14,6 +14,8 @@ description: Use when user wants to review, polish, or proofread articles. Trigg
 | markdownlint-cli2 | cli | No | `npx markdownlint-cli2` (no install needed, used in step 6) |
 | markdown-lint | skill | No | Included in `npx skills add niracler/skill` (for repo setup) |
 
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## 核心原则
 
 | 原则 | 说明 |

@@ -13,7 +13,9 @@ description: 严格的 Home Assistant 集成代码审查。用于提交 PR 前�
 |------|------|----------|---------|
 | git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
 | gh | cli | No | `brew install gh` then `gh auth login` (for referencing other integrations) |
-| Context7 MCP | mcp | No | Configure MCP server (for HA developer docs) |
+| Context7 MCP | mcp | No | `npx -y @upstash/context7-mcp` — add to Claude Code MCP settings (for HA developer docs) |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
 ## 审查流程
 

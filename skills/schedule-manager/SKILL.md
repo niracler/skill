@@ -15,6 +15,8 @@ description: (macOS only) 通过 osascript 和 reminders-cli 管理 Apple Calend
 | osascript | cli | Yes | Built-in on macOS |
 | reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
 
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ### 权限配置
 
 首次运行需要授权，进入系统设置 → 隐私与安全性：

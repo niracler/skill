@@ -13,6 +13,8 @@ description: Use when reviewing, auditing, or validating Claude Code skills for 
 |------|------|----------|---------|
 | writing-skills | skill | No | `npx skills add https://github.com/obra/superpowers --skill writing-skills` (for deep quality audit) |
 
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## 审计流程
 
 ### Step 1: 结构校验（委托）
@@ -55,6 +57,8 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 - Prerequisites 必须是 body 中第一个 `##` 章节
 - 章节内 MUST 包含 4 列表格：Tool / Type / Required / Install
 - Type 列 MUST 使用标准值：`cli`, `mcp`, `skill`, `system`
+- 表格后 MUST 有被动检查说明（blockquote），明确要求在执行失败时直接引导用户完成安装配置，而非指向外部文档
+- 需要配置的工具（如 MCP 服务器、需要 auth 的 CLI）SHOULD 在 Install 列提供可执行的安装命令和配置步骤，或引用 skill 自带的 references/ 文档
 - 无外部依赖的 skill 不需要此章节
 
 详见 `references/compatibility-checklist.md`。

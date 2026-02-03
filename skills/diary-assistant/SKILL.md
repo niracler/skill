@@ -17,6 +17,8 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
 | worklog | skill | No | Included in `npx skills add niracler/skill` |
 | anki-card-generator | skill | No | Included in `npx skills add niracler/skill` |
 
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## 核心原则
 
 | 原则 | 说明 |

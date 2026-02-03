@@ -15,6 +15,8 @@ description: Use when setting up or running markdown formatting and linting in a
 | markdownlint-cli2 | cli | Yes | `npx markdownlint-cli2` (no install needed) |
 | pre-commit | cli | No | `uv tool install pre-commit --with pre-commit-uv` or `pipx install pre-commit` or `brew install pre-commit` |
 
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## When to Use
 
 - **新仓库初始化**：第一次为仓库添加 markdown 格式标准

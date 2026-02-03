@@ -15,7 +15,9 @@ description: Use when user wants work review or work summary. Triggers on「工�
 | gh | cli | No | `brew install gh` then `gh auth login` |
 | jq | cli | No | `brew install jq` |
 | yunxiao | skill | No | Included in `npx skills add niracler/skill` |
-| yunxiao MCP | mcp | No | See yunxiao skill for MCP config |
+| yunxiao MCP | mcp | No | See yunxiao skill for setup |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
 ## Mode Selection
 
