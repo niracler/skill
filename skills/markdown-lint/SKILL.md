@@ -7,6 +7,16 @@ description: Use when setting up or running markdown formatting and linting in a
 
 为仓库配置 markdown 格式检查（markdownlint + 水平线禁止）和 pre-commit hook。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| Node.js | cli | Yes | `brew install node` or [nodejs.org](https://nodejs.org/) |
+| markdownlint-cli2 | cli | Yes | `npx markdownlint-cli2` (no install needed) |
+| pre-commit | cli | No | `uv tool install pre-commit --with pre-commit-uv` or `pipx install pre-commit` or `brew install pre-commit` |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## When to Use
 
 - **新仓库初始化**：第一次为仓库添加 markdown 格式标准
@@ -17,20 +27,6 @@ description: Use when setting up or running markdown formatting and linting in a
 
 - **单文件检查**：直接运行 `npx markdownlint-cli2 file.md`，不需要走 setup 流程
 - **文章内容审校**：使用 writing-proofreading skill（步骤 6 会引用本 skill）
-
-## 前置条件
-
-```bash
-# 安装 pre-commit（git hooks 需要持久安装，选择一种方式）
-uv tool install pre-commit --with pre-commit-uv  # 推荐，跨平台最快
-pipx install pre-commit                           # 备选，跨平台
-brew install pre-commit                           # macOS/Linux
-
-# 一次性运行检查（不需要安装）
-uvx pre-commit run --all-files
-
-node --version             # 需要 Node.js（markdownlint 依赖）
-```
 
 ## Setup 流程
 

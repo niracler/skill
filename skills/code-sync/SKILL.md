@@ -7,6 +7,15 @@ description: Use when syncing all git repos under ~/code across machines, typica
 
 Batch sync all git repos under `~/code` — push (end-of-day) or pull (start-of-day).
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
+| git-workflow | skill | No | Included in `npx skills add niracler/skill` (used for dirty repo commits) |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## Mode Selection
 
 | User says | Mode |

@@ -7,6 +7,14 @@ description: Use when reviewing, auditing, or validating Claude Code skills for 
 
 审计 Claude Code skills 的质量和兼容性。作为编排器，委托已有工具处理结构/质量检查，自身专注兼容性审计。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| writing-skills | skill | No | `npx skills add https://github.com/obra/superpowers --skill writing-skills` (for deep quality audit) |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## 审计流程
 
 ### Step 1: 结构校验（委托）
@@ -43,6 +51,16 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 
 **3d. 工具引用规范** — 检查是否保留了 Claude Code 工具术语并提供了其他环境的 fallback 备注。详见 checklist 的 "Tool Reference Best Practices" 部分。
 
+**3e. Prerequisites 声明** — 检查 SKILL.md 是否声明了外部依赖：
+
+- 如果 skill 使用了外部 CLI 工具（`git`, `gh`, `reminders-cli` 等）、MCP 服务器、或其他 skill，MUST 有 `## Prerequisites` 章节
+- Prerequisites 必须是 body 中第一个 `##` 章节
+- 章节内 MUST 包含 4 列表格：Tool / Type / Required / Install
+- Type 列 MUST 使用标准值：`cli`, `mcp`, `skill`, `system`
+- 表格后 MUST 有被动检查说明（blockquote），明确要求在执行失败时直接引导用户完成安装配置，而非指向外部文档
+- 需要配置的工具（如 MCP 服务器、需要 auth 的 CLI）SHOULD 在 Install 列提供可执行的安装命令和配置步骤，或引用 skill 自带的 references/ 文档
+- 无外部依赖的 skill 不需要此章节
+
 详见 `references/compatibility-checklist.md`。
 
 ### Step 4: 输出报告
@@ -60,6 +78,7 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 | 平台兼容性 | PASS / FAIL (N issues) | 自查 |
 | Agent 兼容性 | PASS / FAIL (N issues) | 自查 |
 | npx skills 生态 | PASS / FAIL (N issues) | 自查 |
+| Prerequisites 声明 | PASS / WARN / N/A | 自查 |
 
 ### Critical
 - **[维度]** 问题描述

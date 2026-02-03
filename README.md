@@ -17,69 +17,77 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 ## Skills
 
 ```text
-╭──────────────────────────────────────────────────────╮
-│  $ skill architecture                                │
-│                                                      │
-│  Dependencies:                                       │
-│    diary-assistant                                   │
-│    ├──▶ schedule-manager        task review           │
-│    ├──▶ worklog                 work log              │
-│    │    └╌╌▶ yunxiao            云效 data             │
-│    └──▶ anki-card-generator     TIL → flashcards     │
-│    writing-proofreading                              │
-│    └──▶ markdown-lint           step 6 formatting    │
-│    git-workflow                                      │
-│    └╌╌▶ yunxiao                 codeup.aliyun.com    │
-│    skill-reviewer                                    │
-│    └╌╌▶ writing-skills          quality audit (ext)   │
-│                                                      │
-│  Groups:                                             │
-│    Workflow  git-workflow · yunxiao · schedule-mgr    │
-│             ha-integration-reviewer · markdown-lint  │
-│             skill-reviewer · code-sync · worklog     │
-│    Writing  diary-assistant · writing-proofreading   │
-│             writing-inspiration                      │
-│    Learning anki-card-generator                      │
-│    Fun      zaregoto-miko                            │
-│                                                      │
-│  ──▶ dependency  ╌╌▶ conditional routing             │
-╰──────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────╮
+│  $ skill architecture                                    │
+│                                                          │
+│  External Dependencies:                                  │
+│    CLI: git(6) · gh(3) · reminders-cli(2) · jq(2)       │
+│         markdownlint-cli2(2) · osascript(2)              │
+│         aliyun-cli(1) · pre-commit(1)                    │
+│    MCP: yunxiao(3) · context7(1)                         │
+│                                                          │
+│  Skill Dependencies:                                     │
+│    diary-assistant                                       │
+│    ├──▶ schedule-manager        task review               │
+│    ├──▶ worklog                 work log                  │
+│    │    └╌╌▶ yunxiao            云效 data                 │
+│    └──▶ anki-card-generator     TIL → flashcards         │
+│    writing-proofreading                                  │
+│    └╌╌▶ markdown-lint           step 6 formatting        │
+│    code-sync                                             │
+│    └╌╌▶ git-workflow            dirty repo commits       │
+│    git-workflow                                          │
+│    └╌╌▶ yunxiao                 codeup.aliyun.com        │
+│    skill-reviewer                                        │
+│    └╌╌▶ writing-skills          quality audit (ext)       │
+│                                                          │
+│  Groups:                                                 │
+│    Workflow  git-workflow · yunxiao · schedule-mgr        │
+│             ha-integration-reviewer · markdown-lint      │
+│             skill-reviewer · code-sync · worklog         │
+│    Writing  diary-assistant · writing-proofreading       │
+│             writing-inspiration                          │
+│    Learning anki-card-generator                          │
+│    Fun      zaregoto-miko                                │
+│                                                          │
+│  ──▶ dependency  ╌╌▶ conditional/optional                │
+╰──────────────────────────────────────────────────────────╯
 ```
 
 Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 
 ### Workflow
 
-| Skill | Description | Scope |
-|-------|-------------|-------|
-| [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | 🌐 |
-| [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | 🌐 |
-| [worklog](skills/worklog/SKILL.md) | Personal work review with git stats, GitHub & Yunxiao integration | 🔒 |
-| [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | |
-| [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | |
-| [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | |
-| [ha-integration-reviewer](skills/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | 🔒 |
-| [schedule-manager](skills/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | 🍎 |
+| Skill | Description | Dependencies | Scope |
+|-------|-------------|--------------|-------|
+| [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | git, gh | 🌐 |
+| [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | git | 🌐 |
+| [worklog](skills/worklog/SKILL.md) | Personal work review with git stats, GitHub & Yunxiao integration | git, gh, jq, yunxiao MCP | 🔒 |
+| [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | Node.js, markdownlint-cli2 | |
+| [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | — | |
+| [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | git, yunxiao MCP / aliyun CLI | |
+| [ha-integration-reviewer](skills/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | git, gh, Context7 MCP | 🔒 |
+| [schedule-manager](skills/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | reminders-cli | 🍎 |
 
 ### Writing
 
-| Skill | Description | Scope |
-|-------|-------------|-------|
-| [writing-inspiration](skills/writing-inspiration/SKILL.md) | Guided writing for travel notes, TIL, and articles | |
-| [writing-proofreading](skills/writing-proofreading/SKILL.md) | 6-step Chinese article review workflow | |
-| [diary-assistant](skills/diary-assistant/SKILL.md) | Daily journal with GTD task review and work log automation | 🍎 🔒 |
+| Skill | Description | Dependencies | Scope |
+|-------|-------------|--------------|-------|
+| [writing-inspiration](skills/writing-inspiration/SKILL.md) | Guided writing for travel notes, TIL, and articles | — | |
+| [writing-proofreading](skills/writing-proofreading/SKILL.md) | 6-step Chinese article review workflow | markdownlint-cli2 | |
+| [diary-assistant](skills/diary-assistant/SKILL.md) | Daily journal with GTD task review and work log automation | reminders-cli | 🍎 🔒 |
 
 ### Learning
 
-| Skill | Description | Scope |
-|-------|-------------|-------|
-| [anki-card-generator](skills/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | 🌐 |
+| Skill | Description | Dependencies | Scope |
+|-------|-------------|--------------|-------|
+| [anki-card-generator](skills/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | — | 🌐 |
 
 ### Fun
 
-| Skill | Description | Scope |
-|-------|-------------|-------|
-| [zaregoto-miko](skills/zaregoto-miko/SKILL.md) | Convert text to Zaregoto series Miko Aoi's speaking style | 🔒 |
+| Skill | Description | Dependencies | Scope |
+|-------|-------------|--------------|-------|
+| [zaregoto-miko](skills/zaregoto-miko/SKILL.md) | Convert text to Zaregoto series Miko Aoi's speaking style | — | 🔒 |
 
 ## Recommended External Skills
 

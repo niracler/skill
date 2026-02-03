@@ -7,6 +7,18 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
 
 日记写作助手，提供完整的日记工作流，包含任务回顾、Work Log 自动化、启发提问和任务捕获。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| macOS | system | Yes | This skill requires macOS |
+| reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
+| schedule-manager | skill | Yes | Included in `npx skills add niracler/skill` |
+| worklog | skill | No | Included in `npx skills add niracler/skill` |
+| anki-card-generator | skill | No | Included in `npx skills add niracler/skill` |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## 核心原则
 
 | 原则 | 说明 |
@@ -266,17 +278,3 @@ reminders add "提醒" "开会" --due-date "friday"
 ## 用户配置
 
 见 [user-config.md](references/user-config.md) 配置日记路径和工作仓库。
-
-## 依赖 Skill
-
-> **完整功能需要安装多个 plugin group。** 如果通过 `npx skills add` 单独安装了 writing-skills，
-> 请确保同时安装 workflow-skills（含 schedule-manager、yunxiao）和 learning-skills（含 anki-card-generator）。
->
-> 以下 skill 通过功能名称引用。若对应 skill 未安装，可根据其核心功能手动执行等效操作。
-
-| Skill | 用途 | 触发时机 |
-|-------|------|----------|
-| `schedule-manager` | 获取今日任务 | 日记开始时 |
-| `schedule-manager` | 处理延期任务 + 写入新计划 | 任务回顾后 + 启发提问结束后 |
-| `anki-card-generator` | 生成记忆卡片 | 检测到 TIL 内容 |
-| `worklog` | 获取工作回顾（git 统计 + GitHub + 云效） | Work Log 自动化（工作日） |

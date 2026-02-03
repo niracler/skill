@@ -7,6 +7,19 @@ description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效) or code
 
 阿里云云效 DevOps 命令行工具。记录了云效 API 的非显而易见的陷阱和必填字段规则，帮助一次调用成功。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| yunxiao MCP | mcp | No | Configure in Claude Code MCP settings (preferred over CLI) |
+| aliyun CLI | cli | No | `brew install aliyun-cli` then `aliyun configure` — see [openapi.md](references/openapi.md) for full setup |
+| git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
+| jq | cli | No | `brew install jq` (for JSON parsing in CLI mode) |
+
+> At least one of yunxiao MCP or aliyun CLI is required. MCP is preferred.
+>
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## When to Use
 
 - **创建/管理 MR**：在 codeup.aliyun.com 仓库上创建合并请求、更新描述、查看列表

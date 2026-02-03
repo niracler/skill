@@ -7,6 +7,18 @@ description: Use when user wants work review or work summary. Triggers on「工�
 
 个人工作回顾，整合本地 git 统计、GitHub 和云效数据，输出结构化 Markdown 报告。
 
+## Prerequisites
+
+| Tool | Type | Required | Install |
+|------|------|----------|---------|
+| git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
+| gh | cli | No | `brew install gh` then `gh auth login` |
+| jq | cli | No | `brew install jq` |
+| yunxiao | skill | No | Included in `npx skills add niracler/skill` |
+| yunxiao MCP | mcp | No | See yunxiao skill for setup |
+
+> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+
 ## Mode Selection
 
 | User says | Mode |
@@ -120,14 +132,6 @@ Render using [template.md](references/template.md).
 | stats.sh empty repos | Check date range and `--author` filter |
 | github.sh fails / 401 | Run `gh auth login` |
 | 云效 MCP not connected | Check MCP server configuration |
-
-## Dependencies
-
-> If a dependency is unavailable, the corresponding data source is skipped with a note.
-
-| Skill | Purpose | When |
-|-------|---------|------|
-| `yunxiao` | 云效 MR/Bug/Task data | Step 2c |
 
 ## Identity Detection
 
