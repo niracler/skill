@@ -8,8 +8,8 @@
 ├─────────────────────────────────────────────┤
 │  主题 A                                      │
 │    叙事段落 (做了什么、为什么)                  │
-│    MR/PR 表格 (按主题合并行)                   │
-│    Bug 表格 (逐条列)                          │
+│    活动表格 (MR/Bug/Task/PR 合并单表)         │
+│    代码统计行                                 │
 ├─────────────────────────────────────────────┤
 │  主题 B ...                                  │
 ├─────────────────────────────────────────────┤
@@ -30,19 +30,14 @@
 
 {叙事段落：1-3 句话概述这个主题下做了什么、解决了什么问题或推进了什么目标。}
 
-**MR / PR**
-
-| 类型 | 编号 | 主题 | 状态 |
+| 类型 | 编号 | 内容 | 状态 |
 |------|------|------|------|
 | MR | #52-#55 | 功能 A 整合 | 已合并 |
 | PR | #3 | Skill improvements | merged |
+| Bug | MYCP-131 | xxx 显示异常 | 修复中 |
+| Task | MYCP-114 | yyy 重构 | 已完成 |
 
-**Bug**
-
-| 编号 | 标题 | 状态 |
-|------|------|------|
-| MYCP-131 | xxx 显示异常 | 修复中 |
-| MYCP-106 | yyy 逻辑错误 | 已修复 |
+{repo_a} {n} commits +{ins}/-{del} · {repo_b} {n} commits +{ins}/-{del}
 
 ### 其他
 
@@ -66,18 +61,17 @@ Group by **work theme** (not by data source). A theme is a logical unit of work,
 
 Merge data from all sources (stats.sh + github.sh + 云效) under the same theme. For example, if `azoulalite-backend` in 云效 corresponds to the same project as local git repo `sunlite`, group them together.
 
-### MR / PR Grouping
+### Activity Table
+
+One unified table per theme with columns `类型 | 编号 | 内容 | 状态`. Row ordering: MR → PR → Bug → Task.
 
 - **Related MRs** that belong to the same logical change go on **one row** (e.g., `#52-#55 功能 A 整合`).
 - **Unrelated MRs** get separate rows.
-- **GitHub PRs** follow the same rule: related PRs (e.g., core + docs for the same feature) share a row.
-- Goal: reduce noise. 9 individual MRs → 3-5 themed rows.
-
-### Bug Listing
-
-- Each bug gets its **own row** (bugs are usually few and each has a distinct status).
-- Include: identifier, title, current status.
-- Only show bug table if bug data is available.
+- **GitHub PRs** follow the same rule: related PRs share a row.
+- Each **Bug** gets its own row (each has a distinct status).
+- Each **Task** gets its own row.
+- Goal: reduce noise. 9 individual items → 3-5 themed rows.
+- Omit the table entirely if no MR/Bug/Task/PR data for the theme (git-only themes show only narrative + stats line).
 
 ### "其他" Aggregation
 
@@ -87,7 +81,8 @@ Merge data from all sources (stats.sh + github.sh + 云效) under the same theme
 
 ### Section Omission
 
-- Omit any section with no data (no MR table if no MRs, no Bug table if no bugs, no "其他" if no low-activity repos).
+- Omit the activity table if no MR/Bug/Task/PR data for the theme.
+- Omit the "其他" section if no low-activity repos.
 - If a remote source failed, add a note: `> ⚠ {source} 数据未获取`
 
 ## Weekly Template

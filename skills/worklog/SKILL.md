@@ -58,7 +58,7 @@ bash scripts/github.sh --since YYYY-MM-DD --until YYYY-MM-DD
 
 Output: JSON with `period`, `prs[]` (repo, number, title, state, created_at, merged_at), `issues[]` (repo, number, title, state, created_at), and `totals` (prs_merged, prs_open, issues_opened, issues_closed).
 
-Optionally pass `--username` from [user-config.md](references/user-config.md). Without it, defaults to `gh api user`.
+Username is auto-detected via `gh api user`. No manual configuration needed.
 
 > Other agent environments: run this command directly via shell.
 
@@ -70,10 +70,12 @@ Start subagent to invoke yunxiao skill with specific MCP queries:
 Task tool:
 - subagent_type: general-purpose
 - prompt: 使用 yunxiao skill 获取 {since} 到 {until} 的工作记录
-  组织 ID: {从 user-config.md 读取 yunxiao_org_id}
-  用户名: {从 user-config.md 读取 yunxiao_username}
 
-  需要获取:
+  先通过 MCP 自动获取身份：
+  - get_current_user → 用户名
+  - get_current_organization_info → 组织 ID
+
+  然后查询：
   1. MR: list_change_requests — state=all, authorCodeupIdList=[user_id]
      返回: id, title, state, sourceRef, targetRef, createTime, mergeTime
   2. Bug: search_workitems — category=Bug, space=..., conditions=[assignee=username]
@@ -127,6 +129,6 @@ Render using [template.md](references/template.md).
 |-------|---------|------|
 | `yunxiao` | 云效 MR/Bug/Task data | Step 2c |
 
-## User Configuration
+## Identity Detection
 
-See [user-config.md](references/user-config.md) for identity and data source settings.
+All user identities are auto-detected at runtime. See [user-config.md](references/user-config.md) for detection sources and prerequisites.
