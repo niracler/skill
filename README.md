@@ -32,6 +32,8 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    ├──▶ worklog                 work log                  │
 │    │    └╌╌▶ yunxiao            云效 data                 │
 │    └──▶ anki-card-generator     TIL → flashcards         │
+│    note-to-blog                                          │
+│    └╌╌▶ writing-proofreading    draft proofreading       │
 │    writing-proofreading                                  │
 │    └╌╌▶ markdown-lint           step 6 formatting        │
 │    code-sync                                             │
@@ -45,8 +47,8 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    Workflow  git-workflow · yunxiao · schedule-mgr        │
 │             ha-integration-reviewer · markdown-lint      │
 │             skill-reviewer · code-sync · worklog         │
-│    Writing  diary-assistant · writing-proofreading       │
-│             writing-inspiration                          │
+│    Writing  diary-assistant · note-to-blog               │
+│             writing-proofreading · writing-inspiration   │
 │    Learning anki-card-generator                          │
 │    Fun      zaregoto-miko                                │
 │                                                          │
@@ -73,6 +75,7 @@ Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 
 | Skill | Description | Dependencies | Scope |
 |-------|-------------|--------------|-------|
+| [note-to-blog](skills/note-to-blog/SKILL.md) | Scan Obsidian notes, evaluate blog-readiness, convert and create draft | writing-proofreading | 🔒 |
 | [writing-inspiration](skills/writing-inspiration/SKILL.md) | Guided writing for travel notes, TIL, and articles | — | |
 | [writing-proofreading](skills/writing-proofreading/SKILL.md) | 6-step Chinese article review workflow | markdownlint-cli2 | |
 | [diary-assistant](skills/diary-assistant/SKILL.md) | Daily journal with GTD task review and work log automation | reminders-cli | 🍎 🔒 |

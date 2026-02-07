@@ -32,6 +32,7 @@
       "strict": false,
       "skills": [
         "./skills/diary-assistant",
+        "./skills/note-to-blog",
         "./skills/writing-inspiration",
         "./skills/writing-proofreading"
       ]
