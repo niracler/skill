@@ -11,7 +11,7 @@ description: Use when reviewing, auditing, or validating Claude Code skills for 
 
 | Tool | Type | Required | Install |
 |------|------|----------|---------|
-| writing-skills | skill | No | `npx skills add https://github.com/obra/superpowers --skill writing-skills` (for deep quality audit) |
+| writing-skills | skill | Yes | `npx skills add https://github.com/obra/superpowers --skill writing-skills` |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
@@ -27,17 +27,17 @@ bash <skill-reviewer-dir>/scripts/validate.sh
 
 > 若脚本不可用（如未通过 npx skills 安装），手动检查每个 SKILL.md 的 YAML frontmatter：name（hyphen-case，≤64 字符）、description（无尖括号，≤1024 字符）。
 
-### Step 2: 内容质量（委托，推荐）
+### Step 2: 内容质量（委托）
 
-**推荐执行**：若已安装 `writing-skills`，调用该 skill 进行深度质量审查（token 效率、渐进式披露、反模式、TDD 方法论等）。
+**MUST 执行**：调用 `writing-skills` skill 进行深度质量审查（token 效率、渐进式披露、反模式、CSO 等）。
 
-若未安装，提示用户可选安装：
+若 `writing-skills` 不可用，**MUST 停下并引导用户安装**，不得跳过：
 
 ```bash
 npx skills add https://github.com/obra/superpowers --skill writing-skills
 ```
 
-> 跳过此步骤时应明确告知用户，避免静默省略。
+> 此步骤不可跳过。没有 writing-skills 的审计是不完整的。
 
 ### Step 3: 兼容性审计（自身核心）
 
@@ -74,7 +74,7 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 | 维度 | 状态 | 方式 |
 |------|------|------|
 | 结构与元数据 | PASS / FAIL | validate.sh |
-| 内容质量 | 建议使用 writing-skills | 委托 |
+| 内容质量 | PASS / FAIL (N issues) | writing-skills |
 | 平台兼容性 | PASS / FAIL (N issues) | 自查 |
 | Agent 兼容性 | PASS / FAIL (N issues) | 自查 |
 | npx skills 生态 | PASS / FAIL (N issues) | 自查 |
