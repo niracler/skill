@@ -11,48 +11,48 @@
   "plugins": [
     {
       "name": "workflow-skills",
-      "description": "Collection of workflow automation skills including Git workflow for commits, PRs, and releases, and HA integration code review",
-      "source": "./",
+      "description": "Workflow automation: Git, sync, devops, linting",
+      "source": "./skills/workflow",
       "strict": false,
       "skills": [
-        "./skills/git-workflow",
-        "./skills/ha-integration-reviewer",
-        "./skills/markdown-lint",
-        "./skills/yunxiao",
-        "./skills/schedule-manager",
-        "./skills/skill-reviewer",
-        "./skills/code-sync",
-        "./skills/worklog"
+        "./git-workflow",
+        "./ha-integration-reviewer",
+        "./markdown-lint",
+        "./yunxiao",
+        "./schedule-manager",
+        "./skill-reviewer",
+        "./code-sync",
+        "./worklog"
       ]
     },
     {
       "name": "writing-skills",
-      "description": "Chinese writing skills: diary assistant with GTD integration, writing inspiration for travel/TIL/articles, and proofreading workflow",
-      "source": "./",
+      "description": "Chinese writing: diary, blog, inspiration, proofreading",
+      "source": "./skills/writing",
       "strict": false,
       "skills": [
-        "./skills/diary-assistant",
-        "./skills/note-to-blog",
-        "./skills/writing-inspiration",
-        "./skills/writing-proofreading"
+        "./diary-assistant",
+        "./note-to-blog",
+        "./writing-inspiration",
+        "./writing-proofreading"
       ]
     },
     {
       "name": "learning-skills",
-      "description": "Learning and study tools including Anki card generation with atomization principles and cognitive science best practices",
-      "source": "./",
+      "description": "Learning tools: Anki card generation",
+      "source": "./skills/learning",
       "strict": false,
       "skills": [
-        "./skills/anki-card-generator"
+        "./anki-card-generator"
       ]
     },
     {
       "name": "fun-skills",
-      "description": "Fun and creative skills for entertainment and roleplay, including character voice style conversion",
-      "source": "./",
+      "description": "Fun and creative: character voice style conversion",
+      "source": "./skills/fun",
       "strict": false,
       "skills": [
-        "./skills/zaregoto-miko"
+        "./zaregoto-miko"
       ]
     }
   ]

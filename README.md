@@ -62,35 +62,35 @@ Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 
 | Skill | Description | Dependencies | Scope |
 |-------|-------------|--------------|-------|
-| [git-workflow](skills/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | git, gh | 🌐 |
-| [code-sync](skills/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | git | 🌐 |
-| [worklog](skills/worklog/SKILL.md) | Personal work review with git stats, GitHub & Yunxiao integration | git, gh, jq, yunxiao MCP | 🔒 |
-| [markdown-lint](skills/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | Node.js, markdownlint-cli2 | |
-| [skill-reviewer](skills/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | — | |
-| [yunxiao](skills/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | git, yunxiao MCP / aliyun CLI | |
-| [ha-integration-reviewer](skills/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | git, gh, Context7 MCP | 🔒 |
-| [schedule-manager](skills/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | reminders-cli | 🍎 |
+| [git-workflow](skills/workflow/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | git, gh | 🌐 |
+| [code-sync](skills/workflow/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | git | 🌐 |
+| [worklog](skills/workflow/worklog/SKILL.md) | Personal work review with git stats, GitHub & Yunxiao integration | git, gh, jq, yunxiao MCP | 🔒 |
+| [markdown-lint](skills/workflow/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | Node.js, markdownlint-cli2 | |
+| [skill-reviewer](skills/workflow/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | — | |
+| [yunxiao](skills/workflow/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | git, yunxiao MCP / aliyun CLI | |
+| [ha-integration-reviewer](skills/workflow/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | git, gh, Context7 MCP | 🔒 |
+| [schedule-manager](skills/workflow/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | reminders-cli | 🍎 |
 
 ### Writing
 
 | Skill | Description | Dependencies | Scope |
 |-------|-------------|--------------|-------|
-| [note-to-blog](skills/note-to-blog/SKILL.md) | Scan Obsidian notes, evaluate blog-readiness, convert and create draft | writing-proofreading | 🔒 |
-| [writing-inspiration](skills/writing-inspiration/SKILL.md) | Guided writing for travel notes, TIL, and articles | — | |
-| [writing-proofreading](skills/writing-proofreading/SKILL.md) | 6-step Chinese article review workflow | markdownlint-cli2 | |
-| [diary-assistant](skills/diary-assistant/SKILL.md) | Daily journal with GTD task review and work log automation | reminders-cli | 🍎 🔒 |
+| [note-to-blog](skills/writing/note-to-blog/SKILL.md) | Scan Obsidian notes, evaluate blog-readiness, convert and create draft | writing-proofreading | 🔒 |
+| [writing-inspiration](skills/writing/writing-inspiration/SKILL.md) | Guided writing for travel notes, TIL, and articles | — | |
+| [writing-proofreading](skills/writing/writing-proofreading/SKILL.md) | 6-step Chinese article review workflow | markdownlint-cli2 | |
+| [diary-assistant](skills/writing/diary-assistant/SKILL.md) | Daily journal with GTD task review and work log automation | reminders-cli | 🍎 🔒 |
 
 ### Learning
 
 | Skill | Description | Dependencies | Scope |
 |-------|-------------|--------------|-------|
-| [anki-card-generator](skills/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | — | 🌐 |
+| [anki-card-generator](skills/learning/anki-card-generator/SKILL.md) | Generate Anki flashcards with atomization principles | — | 🌐 |
 
 ### Fun
 
 | Skill | Description | Dependencies | Scope |
 |-------|-------------|--------------|-------|
-| [zaregoto-miko](skills/zaregoto-miko/SKILL.md) | Convert text to Zaregoto series Miko Aoi's speaking style | — | 🔒 |
+| [zaregoto-miko](skills/fun/zaregoto-miko/SKILL.md) | Convert text to Zaregoto series Miko Aoi's speaking style | — | 🔒 |
 
 ## Recommended External Skills
 
