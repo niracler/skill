@@ -7,11 +7,15 @@ LLM evaluation prompt template and scoring rules for note-to-blog.
 Use the following prompt for the single-call LLM evaluation in Phase 2:
 
 ````markdown
-你是一个博客选题顾问。根据以下候选笔记、已发布博文和近期活跃信号，推荐 5~8 篇最适合发布为博客的笔记。
+你是一个博客选题顾问。根据以下候选笔记、主题簇、已发布博文和近期活跃信号，推荐 5~8 条最适合发布为博客的选题。推荐可以是单篇笔记（type: single）或主题簇（type: cluster）的混合。
 
 ## 候选笔记
 
 {candidate_list}
+
+## 主题簇（wikilink 关联发现）
+
+{cluster_list}
 
 ## 已发布博文
 
@@ -48,6 +52,25 @@ Use the following prompt for the single-call LLM evaluation in Phase 2:
    - 15-20: 结构基本清晰，需要少量整理
    - 5-10: 流水账或缺乏结构
    - 0: 纯粹的信息堆砌
+
+## 主题簇评估维度
+
+对主题簇（type: cluster）使用不同的评分维度（各 25 分，满分 100）：
+
+1. **主题深度**（25 分）：多篇笔记是否围绕有意义的核心主题？
+   - 25: 明确的核心主题，多篇笔记从不同角度深入探讨
+   - 15-20: 有共同主题但关联松散
+   - 5-10: 仅因引用同一篇笔记而关联，实际主题分散
+   - 0: 纯粹的结构性引用（如日记引用模板）
+
+2. **素材充足度**（25 分）：关联笔记的内容量是否足以支撑一篇博文？
+   - 25: 总字数 5000+ 且有实质内容，足以整合为完整文章
+   - 15-20: 总字数 2000-5000，需要适量补充
+   - 5-10: 内容碎片化，需要大量补充
+   - 0: 几乎空白
+
+3. **独特性**（25 分）：同单篇评估规则
+4. **时效性**（25 分）：同单篇评估规则
 
 ## Session 活跃度加分规则
 
@@ -92,11 +115,12 @@ Use the following prompt for the single-call LLM evaluation in Phase 2:
 
 ## 输出格式
 
-返回 JSON 数组，按 score 降序排列：
+返回 JSON 数组，按 score 降序排列。每条推荐须标注 `type` 字段（`single` 或 `cluster`）：
 
 ```json
 [
   {
+    "type": "single",
     "path": "Areas/大模型(LLM)/关于后 LLM 时代的代码 Review 的看法.md",
     "title": "关于后 LLM 时代的代码 Review 的看法",
     "score": 92,
@@ -105,11 +129,26 @@ Use the following prompt for the single-call LLM evaluation in Phase 2:
     "session_activity": "★★★",
     "duplicate_risk": "none",
     "reason": "结构完整、有真实案例、观点独特，且近期 session 高度活跃"
+  },
+  {
+    "type": "cluster",
+    "hub_title": "优雅的哲学",
+    "hub_path": "Areas/生活(Life)/优雅的哲学-v2.0.md",
+    "related_count": 9,
+    "score": 88,
+    "collection": "blog",
+    "effort": "大",
+    "session_activity": "★",
+    "duplicate_risk": "none",
+    "theme_summary": "关于如何优雅地生活的哲学思考，散落在多篇笔记中",
+    "reason": "主题深度足够，需要整合多篇笔记"
   }
 ]
 ```
 
-必须包含以上全部字段。score 为整数 0-100。返回 5~8 条推荐。
+- `single` 类型：必须包含 path, title, score, collection, effort, session_activity, duplicate_risk, reason
+- `cluster` 类型：必须包含 hub_title, hub_path, related_count, score, collection, effort, session_activity, duplicate_risk, theme_summary, reason
+- score 为整数 0-100。返回 5~8 条推荐，单篇和主题簇混排。
 ````
 
 ## Input Format
@@ -121,10 +160,23 @@ Each candidate is formatted as:
 ```yaml
 - path: Areas/网络安全(Cyber Security)/SSH私钥加密.md
   title: 用三分钟对你个人电脑上的 SSH 私钥进行加密吧
-  word_count: 1200
+  char_count: 1200
   summary: |
     SSH 私钥是你登录服务器的钥匙...
     (first 20 non-empty, non-frontmatter lines)
+```
+
+### cluster_list
+
+Each cluster is formatted as:
+
+```yaml
+- hub_title: 优雅的哲学-v2.0
+  hub_path: Areas/生活(Life)/优雅的哲学-v2.0.md
+  link_count: 9
+  related:
+    - Areas/生活(Life)/思考、创作与反思.md
+    - Areas/杂谈(Essay)/关于我.md
 ```
 
 ### published_list
