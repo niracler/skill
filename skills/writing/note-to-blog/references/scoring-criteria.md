@@ -4,7 +4,7 @@ LLM evaluation prompt template and scoring rules for note-to-blog.
 
 ## Prompt Template
 
-Use the following prompt for the single-call LLM evaluation in Phase 2:
+Use the following prompt for the single-call LLM evaluation (Level 2 and Level 3):
 
 ````markdown
 你是一个博客选题顾问。根据以下候选笔记、主题簇、已发布博文和近期活跃信号，推荐 5~8 条最适合发布为博客的选题。推荐可以是单篇笔记（type: single）或主题簇（type: cluster）的混合。
@@ -150,6 +150,32 @@ Use the following prompt for the single-call LLM evaluation in Phase 2:
 - `cluster` 类型：必须包含 hub_title, hub_path, related_count, score, collection, effort, session_activity, duplicate_risk, theme_summary, reason
 - score 为整数 0-100。返回 5~8 条推荐，单篇和主题簇混排。
 ````
+
+## Level 3: Hub Note Full Text Input
+
+When running at Level 3 (Deep Explore), append the following section to the prompt **after** `{cluster_list}` and **before** `## 已发布博文`:
+
+````markdown
+## Hub 笔记全文（Level 3 深探模式）
+
+以下是各主题簇 hub 笔记的完整内容，供更准确的主题评估：
+
+### {hub_title}
+
+{hub_note_full_text}
+
+### {hub_title_2}
+
+{hub_note_full_text_2}
+````
+
+Only include hub notes where `hub_path` is not null. If a hub note cannot be read (file missing or encoding error), skip it silently and note in the prompt that the content was unavailable.
+
+This additional context allows more accurate scoring of:
+
+- **主题深度**: LLM can assess the actual depth of the hub note, not just link count
+- **素材充足度**: LLM can gauge real content volume and quality
+- **建议大纲**: LLM can suggest more concrete outlines based on actual content
 
 ## Input Format
 

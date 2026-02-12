@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+# 将本仓库的 skills 同步到 ~/.claude/skills/ (via ~/.agents/skills/ + symlink)。
+#
+# Usage:
+#   ./scripts/sync                  # 同步全部 skills
+#   ./scripts/sync note-to-blog     # 只同步指定 skill
+#   ./scripts/sync --dry-run        # 预览模式
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SOURCE_DIR="$REPO_ROOT/skills"
+AGENTS_DIR="$HOME/.agents/skills"
+CLAUDE_DIR="$HOME/.claude/skills"
+
+RSYNC_EXCLUDES=(--exclude='.DS_Store' --exclude='__pycache__/' --exclude='*.pyc')
+
+DRY_RUN=false
+SINGLE_SKILL=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --dry-run|-n) DRY_RUN=true; shift ;;
+        --help|-h) sed -n '2,/^$/p' "$0" | sed 's/^# \?//'; exit 0 ;;
+        -*) echo "未知选项: $1" >&2; exit 1 ;;
+        *) SINGLE_SKILL="$1"; shift ;;
+    esac
+done
+
+# ── 发现 skills（嵌套：skills/category/skill-name/SKILL.md）─────────
+# 用两个平行数组代替关联数组（兼容 bash 3.x / macOS）
+SKILL_NAMES=()
+SKILL_DIRS=()
+
+for md in "$SOURCE_DIR"/*/*/SKILL.md; do
+    [[ -f "$md" ]] || continue
+    dir="$(dirname "$md")"
+    SKILL_NAMES+=("$(basename "$dir")")
+    SKILL_DIRS+=("$dir")
+done
+
+if [[ ${#SKILL_NAMES[@]} -eq 0 ]]; then
+    echo "错误: 未发现任何 skill" >&2; exit 1
+fi
+
+# 根据 skill name 查找源目录
+find_src() {
+    local target="$1"
+    for i in "${!SKILL_NAMES[@]}"; do
+        if [[ "${SKILL_NAMES[$i]}" == "$target" ]]; then
+            echo "${SKILL_DIRS[$i]}"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# 指定单个 skill
+if [[ -n "$SINGLE_SKILL" ]]; then
+    if ! find_src "$SINGLE_SKILL" >/dev/null; then
+        echo "错误: '$SINGLE_SKILL' 不存在。可用:" >&2
+        echo "  ${SKILL_NAMES[*]}" >&2; exit 1
+    fi
+    TO_SYNC=("$SINGLE_SKILL")
+else
+    TO_SYNC=("${SKILL_NAMES[@]}")
+fi
+
+# ── 同步 ─────────────────────────────────────────────────────────────
+[[ "$DRY_RUN" == false ]] && mkdir -p "$AGENTS_DIR" "$CLAUDE_DIR"
+
+synced=0
+for name in "${TO_SYNC[@]}"; do
+    printf "  %-25s " "$name"
+    src="$(find_src "$name")"
+
+    rsync_args=(-a --checksum --delete "${RSYNC_EXCLUDES[@]}")
+    [[ "$DRY_RUN" == true ]] && rsync_args+=(--dry-run)
+
+    if ! rsync "${rsync_args[@]}" "$src/" "$AGENTS_DIR/$name/" >/dev/null 2>&1; then
+        echo "FAIL"; continue
+    fi
+
+    # symlink: ~/.claude/skills/name → ../../.agents/skills/name
+    if [[ "$DRY_RUN" == false ]]; then
+        link="$CLAUDE_DIR/$name"
+        target="../../.agents/skills/$name"
+        if [[ -L "$link" ]]; then
+            [[ "$(readlink "$link")" != "$target" ]] && ln -sf "$target" "$link"
+        elif [[ ! -e "$link" ]]; then
+            ln -s "$target" "$link"
+        fi
+    fi
+
+    echo "ok"
+    ((synced++)) || true
+done
+
+echo ""
+if [[ "$DRY_RUN" == true ]]; then
+    echo "预览完成 ($synced/${#TO_SYNC[@]})"
+else
+    echo "同步完成 ($synced/${#TO_SYNC[@]}) → $CLAUDE_DIR"
+fi
