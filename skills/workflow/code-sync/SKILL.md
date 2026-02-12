@@ -12,7 +12,7 @@ Batch sync all git repos under `~/code` — push (end-of-day) or pull (start-of-
 | Tool | Type | Required | Install |
 |------|------|----------|---------|
 | git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
-| git-workflow | skill | No | Included in `npx skills add niracler/skill` (used for dirty repo commits) |
+| git-workflow | skill | Yes | Included in `npx skills add niracler/skill` — **must** be invoked via `Skill` tool for all commits |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
@@ -63,7 +63,7 @@ Output: JSON array with fields `path`, `name`, `branch`, `remote`, `remote_url`,
 
 | Situation | Steps |
 |-----------|-------|
-| **Dirty repo** (push) | `git diff --stat` + `git status` → describe to user → ask: **commit**, **stash**, or **skip**. If commit, use **git-workflow** skill to commit and push. |
+| **Dirty repo** (push) | `git diff --stat` + `git status` → describe to user → ask: **commit**, **stash**, or **skip**. If commit, **MUST invoke `git-workflow` skill via `Skill` tool** — never run `git commit` directly. |
 | **No upstream** (push) | Report → ask: **set upstream and push** (`git push -u origin <branch>`), or **skip** |
 | **ff-only fails** (pull) | `git log --oneline HEAD..@{u}` + `@{u}..HEAD` → explain divergence → suggest: **rebase**, **merge**, or **skip** |
 | **Dirty + behind** (pull) | Report both issues → ask: **stash and pull** (stash, pull --ff-only, pop), or **skip** |
