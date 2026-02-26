@@ -22,7 +22,8 @@
         "./schedule-manager",
         "./skill-reviewer",
         "./code-sync",
-        "./worklog"
+        "./worklog",
+        "./pinboard-manager"
       ]
     },
     {
