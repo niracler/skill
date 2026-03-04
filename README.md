@@ -70,7 +70,7 @@ Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 | [skill-reviewer](skills/workflow/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | — | |
 | [yunxiao](skills/workflow/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | git, yunxiao MCP / aliyun CLI | |
 | [ha-integration-reviewer](skills/workflow/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | git, gh, Context7 MCP | 🔒 |
-| [pinboard-manager](skills/workflow/pinboard-manager/SKILL.md) | Pinboard bookmark tag audit and dead link detection | curl, Pinboard API | 🔒 |
+| [pinboard-manager](skills/workflow/pinboard-manager/SKILL.md) | Pinboard bookmark tag audit, dead link detection, and timeliness check | curl, Pinboard API | 🔒 |
 | [schedule-manager](skills/workflow/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | reminders-cli | 🍎 |
 
 ### Writing
