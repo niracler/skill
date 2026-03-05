@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-03-05
+
+### Changed
+
+- **pinboard-manager** — Generalized for public use: renamed personal `tag-convention.md` to `.example.md`, added first-time setup flow for tag convention generation (#5)
+
+### Added
+
+- **ClawHub CI workflow** — Auto-publish 10 public skills to [ClawHub](https://clawhub.ai) on GitHub Release (#6)
+- **OpenClaw metadata** — Added `metadata.openclaw` (emoji, required bins/env) to all 10 public skills
+
 ## [0.1.0] - 2026-03-05
 
 First tagged release. All skills that existed before this point are included.
@@ -49,4 +60,5 @@ First tagged release. All skills that existed before this point are included.
 - Standardized Prerequisites section across all skills
 - Architecture diagram in README showing skill dependencies and external tool requirements
 
+[0.1.1]: https://github.com/niracler/skill/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/niracler/skill/releases/tag/v0.1.0
