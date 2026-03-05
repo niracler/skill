@@ -1,5 +1,6 @@
 ---
 name: workspace-planning
+metadata: {"openclaw":{"emoji":"📅"}}
 description: >-
   Manage project schedules stored as YAML in the workspace planning/ directory.
   Use whenever the user asks about project delivery progress, module status,

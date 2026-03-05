@@ -1,6 +1,7 @@
 ---
 name: skill-reviewer
 description: Use when reviewing, auditing, or validating Claude Code skills for quality and cross-platform/cross-agent compatibility. Triggers on「审查 skill」「review skill」「检查 skill 质量」「skill 兼容性检查」「review 兼容性」
+metadata: {"openclaw":{"emoji":"🔍"}}
 ---
 
 # Skill Reviewer
