@@ -21,9 +21,10 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  $ skill architecture                                    │
 │                                                          │
 │  External Dependencies:                                  │
-│    CLI: git(6) · gh(3) · reminders-cli(2) · jq(2)       │
-│         markdownlint-cli2(2) · osascript(2)              │
+│    CLI: git(6) · gh(3) · curl(1) · reminders-cli(2)     │
+│         jq(2) · markdownlint-cli2(2) · osascript(2)     │
 │         aliyun-cli(1) · pre-commit(1)                    │
+│    API: Pinboard(1)                                      │
 │    MCP: yunxiao(3) · context7(1)                         │
 │                                                          │
 │  Skill Dependencies:                                     │
@@ -44,6 +45,7 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    └╌╌▶ writing-skills          quality audit (ext)       │
 │    workspace-init ◇ dev-config-template                  │
 │    workspace-planning ◇ dev-config-template              │
+│    pinboard-manager ◆ Pinboard API                       │
 │                                                          │
 │  Groups:                                                 │
 │    Workspace workspace-init · workspace-planning         │
@@ -58,6 +60,7 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │                                                          │
 │  ──▶ dependency  ╌╌▶ conditional/optional                │
 │  ◇ requires external template/repo                      │
+│  ◆ requires external API/service                        │
 ╰──────────────────────────────────────────────────────────╯
 ```
 
@@ -81,7 +84,7 @@ Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 | [skill-reviewer](skills/workflow/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | — | |
 | [yunxiao](skills/workflow/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | git, yunxiao MCP / aliyun CLI | |
 | [ha-integration-reviewer](skills/workflow/ha-integration-reviewer/SKILL.md) | Home Assistant integration code review for PR prep | git, gh, Context7 MCP | 🔒 |
-| [pinboard-manager](skills/workflow/pinboard-manager/SKILL.md) | Pinboard bookmark tag audit, dead link detection, and timeliness check | curl, Pinboard API | 🔒 |
+| [pinboard-manager](skills/workflow/pinboard-manager/SKILL.md) | Pinboard bookmark tag audit, dead link detection, and timeliness check | curl, Pinboard API | 🌐 |
 | [schedule-manager](skills/workflow/schedule-manager/SKILL.md) | Apple Calendar & Reminders via osascript, GTD methodology | reminders-cli | 🍎 |
 
 ### Writing
