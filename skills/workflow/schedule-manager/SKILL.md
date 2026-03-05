@@ -14,6 +14,7 @@ description: (macOS only) 通过 osascript 和 reminders-cli 管理 Apple Calend
 | macOS | system | Yes | This skill requires macOS |
 | osascript | cli | Yes | Built-in on macOS |
 | reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
+| Schedule YAML | data | No | `~/code/*/planning/schedules/*.yaml` — for cross-project weekly planning |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
@@ -200,6 +201,21 @@ reminders add "提醒" "<任务名>"
 3. 整理 Reminders 列表（`reminders show-all`）
 
 详见 [gtd-methodology.md](references/gtd-methodology.md)。
+
+### 场景 5: 跨项目周规划（需要 Schedule YAML）
+
+当 `~/code/*/planning/schedules/*.yaml` 存在时，「规划下周」工作流增加项目排期上下文：
+
+1. 扫描 `~/code/*/planning/schedules/*.yaml`，解析每个文件的 `project`、`timeline`、`capacity`
+2. 查看下周 Calendar 已有事件（osascript）
+3. 查看 Reminders 待办（`reminders show-all`）
+4. 从 schedule YAML 中提取下周相关 module（按 `weeks` 字段匹配）
+5. 按 `capacity.days_per_week` 估算各项目时间分配
+6. 合并展示：Calendar 事件 + Reminders 待办 + 各项目模块任务
+7. 标注产能冲突（总分配 > 可用工作日）
+8. 建议 Calendar time block（展示建议，用户确认后创建）
+
+**无 Schedule YAML 时**：跳过步骤 4-7，退化为标准的场景 4 周回顾流程。
 
 ## 常见错误
 
