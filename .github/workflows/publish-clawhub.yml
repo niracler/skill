@@ -1,0 +1,65 @@
+name: Publish to ClawHub
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install ClawHub CLI
+        run: bun install -g clawhub
+
+      - name: Authenticate
+        run: clawhub login --token "${{ secrets.CLAWHUB_TOKEN }}" --no-browser
+
+      - name: Publish skills
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          # Strip leading 'v' from tag (v0.1.0 -> 0.1.0)
+          SEMVER="${VERSION#v}"
+
+          # Public skills to publish (slug -> path)
+          declare -A SKILLS=(
+            ["nini-git-workflow"]="skills/workflow/git-workflow"
+            ["nini-code-sync"]="skills/workflow/code-sync"
+            ["nini-markdown-lint"]="skills/workflow/markdown-lint"
+            ["nini-skill-reviewer"]="skills/workflow/skill-reviewer"
+            ["nini-anki-card-generator"]="skills/learning/anki-card-generator"
+            ["nini-writing-proofreading"]="skills/writing/writing-proofreading"
+            ["nini-writing-inspiration"]="skills/writing/writing-inspiration"
+            ["nini-pinboard-manager"]="skills/workflow/pinboard-manager"
+            ["nini-workspace-init"]="skills/workspace/workspace-init"
+            ["nini-workspace-planning"]="skills/workspace/workspace-planning"
+          )
+
+          FAILED=0
+          for SLUG in "${!SKILLS[@]}"; do
+            PATH_DIR="${SKILLS[$SLUG]}"
+            if [ ! -f "$PATH_DIR/SKILL.md" ]; then
+              echo "⚠ Skipping $SLUG — $PATH_DIR/SKILL.md not found"
+              continue
+            fi
+            echo "Publishing $SLUG@$SEMVER..."
+            if clawhub publish "$PATH_DIR" \
+              --slug "$SLUG" \
+              --version "$SEMVER" \
+              --changelog "Release $VERSION — see https://github.com/niracler/skill/releases/tag/$VERSION"; then
+              echo "✓ $SLUG@$SEMVER published"
+            else
+              echo "✗ $SLUG failed"
+              FAILED=$((FAILED + 1))
+            fi
+            # ClawHub rate limit: wait between publishes
+            sleep 5
+          done
+
+          if [ $FAILED -gt 0 ]; then
+            echo "::warning::$FAILED skill(s) failed to publish"
+          fi

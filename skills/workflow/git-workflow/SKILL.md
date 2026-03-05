@@ -1,6 +1,7 @@
 ---
 name: git-workflow
 description: Use when creating commits, pull requests, releases, or tags. Triggers on「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」「写 commit message」「推代码」
+metadata: {"openclaw":{"emoji":"📝","requires":{"bins":["git"],"anyBins":["gh"]}}}
 ---
 
 # Git Workflow

@@ -1,6 +1,7 @@
 ---
 name: code-sync
 description: Use when syncing all git repos under ~/code across machines, typically at end-of-day (push) or start-of-day (pull). Triggers on「同步代码」「code-sync」「下班同步」「上班更新」.
+metadata: {"openclaw":{"emoji":"🔄","requires":{"bins":["git"]}}}
 ---
 
 # Code Sync

@@ -1,6 +1,7 @@
 ---
 name: markdown-lint
 description: Use when setting up or running markdown formatting and linting in a repository, or when encountering markdownlint errors (MD013, MD040, MD060) or horizontal rule violations. Triggers on「格式化 markdown」「设置 markdown lint」「markdown 检查」「设置 pre-commit」「检查 md 格式」「markdownlint 报错」
+metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["markdownlint-cli2"],"anyBins":["pre-commit"],"install":[{"type":"node","pkg":"markdownlint-cli2"}]}}}
 ---
 
 # Markdown Lint

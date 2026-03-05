@@ -1,5 +1,6 @@
 ---
 name: workspace-init
+metadata: {"openclaw":{"emoji":"🚀","requires":{"bins":["git","jq"],"install":[{"type":"node","pkg":"openspec"}]}}}
 description: >-
   Initialize and update dev-config-template workspaces. Two modes:
   (1) Init -- guides users through repos.json, CLAUDE.md customization,

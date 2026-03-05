@@ -1,6 +1,7 @@
 ---
 name: pinboard-manager
 description: Pinboard bookmark management — tag audit, dead link detection, and timeliness check. Triggers on "pinboard", "bookmark", "tag audit", "dead link", "timeliness". 触发场景：用户说「pinboard 整理 tag」「pinboard 检查死链」「pinboard 检查时效」「pinboard audit」「pinboard cleanup」「pinboard timeliness check」「pinboard 过时检测」「整理书签」时触发。
+metadata: {"openclaw":{"emoji":"📌","requires":{"bins":["curl"],"env":["PINBOARD_AUTH_TOKEN"]}}}
 ---
 
 # Pinboard Manager
