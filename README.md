@@ -42,8 +42,11 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    └╌╌▶ yunxiao                 codeup.aliyun.com        │
 │    skill-reviewer                                        │
 │    └╌╌▶ writing-skills          quality audit (ext)       │
+│    workspace-init ◇ dev-config-template                  │
+│    workspace-planning ◇ dev-config-template              │
 │                                                          │
 │  Groups:                                                 │
+│    Workspace workspace-init · workspace-planning         │
 │    Workflow  git-workflow · yunxiao · schedule-mgr        │
 │             ha-integration-reviewer · markdown-lint      │
 │             skill-reviewer · code-sync · worklog         │
@@ -54,10 +57,18 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    Fun      zaregoto-miko                                │
 │                                                          │
 │  ──▶ dependency  ╌╌▶ conditional/optional                │
+│  ◇ requires external template/repo                      │
 ╰──────────────────────────────────────────────────────────╯
 ```
 
 Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
+
+### Workspace
+
+| Skill | Description | Dependencies | Scope |
+|-------|-------------|--------------|-------|
+| [workspace-init](skills/workspace/workspace-init/SKILL.md) | Interactive initialization for [dev-config-template](https://github.com/niracler/dev-config-template) workspaces — repos.json, CLAUDE.md, OpenSpec, environments, validation | git, jq, openspec | 🌐 |
+| [workspace-planning](skills/workspace/workspace-planning/SKILL.md) | Project schedule management with YAML-based modules, milestones, and delivery tracking | [dev-config-template](https://github.com/niracler/dev-config-template) | 🌐 |
 
 ### Workflow
 
