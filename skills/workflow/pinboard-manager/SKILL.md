@@ -17,6 +17,26 @@ Interactive Pinboard bookmark management with tag auditing, dead link detection,
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool or token, directly guide the user through setup step by step.
 
+## First-Time Setup
+
+If `references/tag-convention.md` does not exist in the skill directory, run the
+**Tag Convention Generator** before any other mode:
+
+1. Fetch all bookmarks via the Pinboard API
+2. Analyze existing tags: frequency, patterns, languages, potential typos
+3. Present findings to the user:
+   - Top 30 tags by frequency
+   - Tags that look like typos or duplicates
+   - Chinese/non-English tags that may need English equivalents
+   - Tags with inconsistent casing or separators
+4. Ask the user about their preferred categories (tech, life, culture, etc.)
+5. Generate `references/tag-convention.md` based on the analysis and user input,
+   following the structure in `references/tag-convention.example.md`
+6. Confirm with the user before saving
+
+> An example convention is provided at `references/tag-convention.example.md` for
+> reference. Users should customize it to match their own bookmarking habits.
+
 ## Mode Selection
 
 | User Intent | Mode | Section |
@@ -78,7 +98,7 @@ Pinboard recommends at most 1 API call per 3 seconds. When making multiple calls
 
 Audit all bookmarks against the tag convention, present issues in batches, and apply fixes with user confirmation.
 
-Reference: [tag-convention.md](references/tag-convention.md)
+Reference: [tag-convention.md](references/tag-convention.md) (generated during first-time setup)
 
 ### Step 1: Fetch all bookmarks
 
