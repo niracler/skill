@@ -6,9 +6,19 @@
   },
   "metadata": {
     "description": "Personal collection of Claude Code skills for daily workflow",
-    "version": "1.0.0"
+    "version": "0.1.2"
   },
   "plugins": [
+    {
+      "name": "workspace-skills",
+      "description": "Workspace management: initialization and project planning",
+      "source": "./skills/workspace",
+      "strict": false,
+      "skills": [
+        "./workspace-init",
+        "./workspace-planning"
+      ]
+    },
     {
       "name": "workflow-skills",
       "description": "Workflow automation: Git, sync, devops, linting",
