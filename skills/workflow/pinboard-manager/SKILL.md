@@ -274,7 +274,7 @@ Apply three filters in order to identify candidates for AI analysis:
 
 Include bookmarks with ANY of these tech-related tags:
 
-`llm`, `claude`, `programming`, `python`, `javascript`, `typescript`, `web`, `devops`, `cloudflare`, `shell`, `github`, `database`, `security`, `home_assistant`, `iot`, `zigbee`
+`llm`, `programming`, `python`, `javascript`, `typescript`, `web`, `devops`, `cloudflare`, `shell`, `github`, `database`, `security`, `home_assistant`, `iot`, `zigbee`
 
 Exclude bookmarks with ANY of these meta tags (even if they have tech tags):
 
