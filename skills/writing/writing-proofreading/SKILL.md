@@ -100,6 +100,11 @@ metadata: {"openclaw":{"emoji":"✏️","requires":{"anyBins":["markdownlint-cli
 - 加引号的「幽默」比喻
 - emoji 或序号开头
 - 频繁使用破折号
+- `---` 水平分割线（用标题或编号自然过渡）
+
+**结构偏好**：
+
+- 优先使用层级编号（1 → 1.1 → 1.1.1）组织内容，尤其在提纲/报告/分析类文章中
 
 详见 [personal-style.md](references/personal-style.md)
 
