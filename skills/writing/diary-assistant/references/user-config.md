@@ -21,7 +21,6 @@ diary_template: "{date}.md"
 # 日记流程中调用的 skill
 related_skills:
   - schedule-manager  # 任务回顾 + 创建后续计划
-  - worklog  # Work Log 自动化（身份配置见 worklog skill 的 user-config.md）
   - anki-card-generator  # 生成记忆卡片
   # 注意：日记存储在 Obsidian，不需要 git 提交
 ```

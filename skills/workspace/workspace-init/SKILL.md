@@ -17,7 +17,7 @@ description: >-
   Also trigger when user mentions dev-config-template in the context of
   getting started, first-time setup, or template updates.
   Do NOT trigger for: project scheduling (use workspace-planning),
-  daily/weekly work reports (use worklog), or general git/repo operations.
+  weekly work reports (use weekly-report), or general git/repo operations.
 ---
 
 # Workspace Init

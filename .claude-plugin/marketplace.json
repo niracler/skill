@@ -32,7 +32,7 @@
         "./schedule-manager",
         "./skill-reviewer",
         "./code-sync",
-        "./worklog",
+        "./weekly-report",
         "./pinboard-manager"
       ]
     },

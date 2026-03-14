@@ -12,7 +12,7 @@ description: >-
   Also trigger when user mentions specific module names (e.g. "auth", "zone-control")
   in the context of status updates or progress tracking.
   Do NOT trigger for: calendar/reminder management (use schedule-manager),
-  daily/weekly work reports (use worklog), or general Yunxiao task operations
+  weekly work reports (use weekly-report), or general Yunxiao task operations
   without schedule context (use yunxiao skill).
 ---
 

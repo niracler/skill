@@ -30,9 +30,9 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  Skill Dependencies:                                     │
 │    diary-assistant                                       │
 │    ├──▶ schedule-manager        task review               │
-│    ├──▶ worklog                 work log                  │
-│    │    └╌╌▶ yunxiao            云效 data                 │
 │    └──▶ anki-card-generator     TIL → flashcards         │
+│    weekly-report                                         │
+│    └╌╌▶ yunxiao                 云效 data                 │
 │    note-to-blog                                          │
 │    └╌╌▶ writing-proofreading    draft proofreading       │
 │    writing-proofreading                                  │
@@ -51,7 +51,7 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    Workspace workspace-init · workspace-planning         │
 │    Workflow  git-workflow · yunxiao · schedule-mgr        │
 │             ha-integration-reviewer · markdown-lint      │
-│             skill-reviewer · code-sync · worklog         │
+│             skill-reviewer · code-sync · weekly-report    │
 │             pinboard-manager                             │
 │    Writing  diary-assistant · note-to-blog               │
 │             writing-proofreading · writing-inspiration   │
@@ -79,7 +79,7 @@ Scope: 🌐 = EN-friendly · 🍎 = macOS only · 🔒 = personal/niche
 |-------|-------------|--------------|-------|
 | [git-workflow](skills/workflow/git-workflow/SKILL.md) | Conventional Commits, PR templates, release workflow | git, gh | 🌐 |
 | [code-sync](skills/workflow/code-sync/SKILL.md) | Batch sync git repos — push (end-of-day) or pull (start-of-day) | git | 🌐 |
-| [worklog](skills/workflow/worklog/SKILL.md) | Personal work review with git stats, GitHub & Yunxiao integration | git, gh, jq, yunxiao MCP | 🔒 |
+| [weekly-report](skills/workflow/weekly-report/SKILL.md) | 软件研发周报: scan schedules, git logs, daily notes → structured weekly report | git, reminders-cli, gh, yunxiao | 🔒 |
 | [markdown-lint](skills/workflow/markdown-lint/SKILL.md) | markdownlint + pre-commit hook setup and batch fix | Node.js, markdownlint-cli2 | |
 | [skill-reviewer](skills/workflow/skill-reviewer/SKILL.md) | Audit skills for quality and cross-platform compatibility | — | |
 | [yunxiao](skills/workflow/yunxiao/SKILL.md) | Alibaba Cloud DevOps CLI (git-repo, Push Review, OpenAPI) | git, yunxiao MCP / aliyun CLI | |
