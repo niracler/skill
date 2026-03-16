@@ -1,11 +1,20 @@
 ---
 name: diary-assistant
-description: (macOS, requires schedule-manager) Use when user wants to write diary entries or daily logs. Triggers include「帮我写日记」「记录今天」「写日记」「今天的日记」. Integrates with Reminders for task review and planning.
+metadata: {"openclaw":{"emoji":"📔","requires":{"bins":["osascript","reminders-cli"],"skills":["schedule-manager"]}}}
+description: >-
+  (macOS, requires schedule-manager) Use this skill whenever the user wants to write
+  a personal diary entry or daily journal — this includes any request to record today's
+  events, write a diary, log what happened today, or capture personal reflections.
+  Invoke immediately for phrases like 帮我写日记, 写日记, 记录今天, 今天的日记,
+  "write my diary", or "daily log". This skill guides a complete journaling session:
+  reviewing today's tasks from Reminders, reflective guided questions, composing the
+  entry, and scheduling follow-up plans. Distinct from diary-note (quick append) and
+  weekly-report (work summary).
 ---
 
 # Diary Assistant
 
-日记写作助手，提供完整的日记工作流，包含任务回顾、Work Log 自动化、启发提问和任务捕获。
+日记写作助手，提供完整的日记工作流，包含任务回顾、启发提问和任务捕获。
 
 ## Prerequisites
 
@@ -25,14 +34,13 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
 | **45 分钟约束** | 完整流程控制在一个番茄钟内完成 |
 | **GTD 集成** | 开始时回顾今日任务，结束时捕获新计划 |
 | **启发而非代写** | 用提问引导思考，不替用户决定内容 |
-| **工作日必须 Work Log** | 周一至周五自动获取，不询问 |
 
 ## 完整流程
 
 ```text
-┌─────────────────────────────────────────────────────────────────────┐
-│          diary-assistant 完整流程（目标 ≤45min）                     │
-└─────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│       diary-assistant 完整流程（目标 ≤35min）              │
+└──────────────────────────────────────────────────────────┘
 
   ┌──────────────┐
   │ 用户触发日记  │
@@ -57,44 +65,16 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
   └──────┬──────┘  │
          └────┬────┘
               ▼
-  ┌─────────────────────────────────────────────────────────────┐
-  │ 2. 并行获取数据（subagent）                    (~2-3min)    │
-  │                                                            │
-  │    └─ Reminders (今日任务)                                 │
-  │                                                            │
-  └──────┬────────────────────────────────────────────────────┘
-         │
-         ▼
   ┌────────────────────────────────────┐
-  │ 3. 今日任务回顾（简化）    (~2min)   │
-  │                                    │
-  │    「今日计划 5 件事：              │
-  │     1.写文档 2.修bug 3.开会...」    │
-  │    「哪些完成了？输入序号」          │
-  │    「未完成的延期到什么时候？」       │
+  │ 2. 今日任务回顾（简化）    (~2min)   │
+  │    获取 Reminders → 批量确认       │
   └──────┬─────────────────────────────┘
          │
          ▼
-    ┌────┴────┐
-    │ 是工作日？│
-    └────┬────┘
-     是  │      │ 否
-         ▼      │
-  ┌──────────┐  │
-  │ Work Log │  │  整理 subagent 获取的数据
-  │ 云效+GH  │  │
-  └────┬─────┘  │
-       └───┬────┘
-           ▼
   ┌────────────────────────────────────┐
-  │ 3. 启发提问（适应性）    (~20-25min) │
+  │ 3. 启发提问              (~20min)   │
   │                                    │
-  │    工作日：                         │
-  │    Q1「工作之外还有什么想记录的？」  │
-  │    Q2「之后有什么计划？」           │
-  │                                    │
-  │    周末：                           │
-  │    Q1「今天做了什么？」             │
+  │    Q1「今天有什么想记录的？」       │
   │    Q2「有什么收获或感受？」         │
   │    Q3「之后有什么计划？」           │
   │                                    │
@@ -114,7 +94,7 @@ description: (macOS, requires schedule-manager) Use when user wants to write dia
          │
          ▼
       ┌──────┐
-      │ 完成  │  总计 ~35-45min
+      │ 完成  │  总计 ~33-38min
       └──────┘
 ```
 
@@ -137,7 +117,7 @@ Claude: 「今天的日记是 2026-01-29.md 吗？」
 | **追加** | 在文件末尾添加新内容 |
 | **重新开始** | 清空重写（会确认） |
 
-## 2. 今日任务回顾（简化版）
+## 2. 今日任务回顾
 
 调用 `schedule-manager` 获取今日 Reminders，然后批量确认：
 
@@ -181,44 +161,23 @@ reminders delete "<列表名>" <index>
 reminders add "<列表名>" "<任务名>" --due-date "<用户指定的日期>"
 ```
 
-## 3. Work Log 记录
-
-**工作日（周一至周五），当用户提到想记录工作内容时执行。周末跳过，直接进入启发提问。**
-
-通过对话引导用户回顾今天的工作经验，将内容写入日记的 `## 2 Work Log` 部分。
-这里的 Work Log 是**个人经验记录**（原始素材），不是给上司看的正式报告。
-
-> 正式的软件研发周报由 weekly-report skill 在每周最后一个工作日生成，
-> 它会读取这些每日 Work Log 作为数据源。
-
-## 4. 启发提问（适应性）
-
-根据工作日/周末问不同的问题：
-
-### 工作日（Work Log 已记录工作内容）
+## 3. 启发提问
 
 | 顺序 | 问题 |
 |------|------|
-| Q1 | 「工作之外，今天还有什么想记录的？」 |
-| Q2 | 「之后有什么计划？」 |
-
-### 周末（无 Work Log）
-
-| 顺序 | 问题 |
-|------|------|
-| Q1 | 「今天做了什么？」 |
+| Q1 | 「今天有什么想记录的？」 |
 | Q2 | 「有什么收获或感受？」 |
 | Q3 | 「之后有什么计划？」 |
 
 ### 提问节奏
 
 ```text
-Claude: 「工作之外，今天还有什么想记录的？」
+Claude: 「今天有什么想记录的？」
 用户: [回答]
-Claude: [确认/追问] → 「好的，下一个问题：之后有什么计划？」
+Claude: [确认/追问] → 「好的，下一个问题：有什么收获或感受？」
 ```
 
-## 5. 任务捕获
+## 4. 任务捕获
 
 最后一个问题「之后有什么计划？」的回答会自动解析为任务：
 
@@ -249,7 +208,7 @@ reminders add "提醒" "交报告" --due-date "tomorrow"
 reminders add "提醒" "开会" --due-date "friday"
 ```
 
-## 6. 智能收尾
+## 5. 智能收尾
 
 根据日记内容推荐后续操作：
 
@@ -264,12 +223,11 @@ reminders add "提醒" "开会" --due-date "friday"
 | 步骤 | 时间 |
 |------|------|
 | 确认日期 + 文件处理 | ~1 min |
-| 任务回顾（简化） | ~2 min |
-| Work Log（自动） | ~2-3 min |
-| 启发提问（含计划） | ~20-25 min |
+| 任务回顾 | ~2 min |
+| 启发提问（含计划） | ~20 min |
 | 整理成文 | ~10 min |
 | 智能收尾（可选） | ~0-5 min |
-| **总计** | **~35-45 min** |
+| **总计** | **~33-38 min** |
 
 ## 用户配置
 

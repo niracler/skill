@@ -1,6 +1,14 @@
 ---
 name: markdown-lint
-description: Use when setting up or running markdown formatting and linting in a repository, or when encountering markdownlint errors (MD013, MD040, MD060) or horizontal rule violations. Triggers on「格式化 markdown」「设置 markdown lint」「markdown 检查」「设置 pre-commit」「检查 md 格式」「markdownlint 报错」
+description: >-
+  Use this skill immediately when the user needs to: set up markdownlint-cli2 and
+  pre-commit hooks in a repository, fix or batch-repair markdownlint errors like
+  MD013/MD040/MD060, configure .markdownlint.json rules, remove horizontal rules
+  from markdown files while preserving YAML frontmatter, or run markdown format
+  checking in a monorepo. Trigger on: markdownlint 报错, 设置 markdown lint,
+  格式化 markdown, 检查 md 格式, 设置 pre-commit, markdownlint error,
+  MD013/MD040/MD060 violations. Do NOT use for general article proofreading,
+  writing new markdown content, or YAML/JSON linting.
 metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["markdownlint-cli2"],"anyBins":["pre-commit"],"install":[{"type":"node","pkg":"markdownlint-cli2"}]}}}
 ---
 
@@ -80,7 +88,7 @@ ls .markdownlint.json .pre-commit-config.yaml 2>/dev/null
 ```yaml
 repos:
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.20.0  # 运行 pre-commit autoupdate 获取最新
+    rev: v0.21.0  # 运行 pre-commit autoupdate 获取最新
     hooks:
       - id: markdownlint-cli2
   - repo: local

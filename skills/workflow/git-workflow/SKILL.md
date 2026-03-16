@@ -1,6 +1,14 @@
 ---
 name: git-workflow
-description: Use when creating commits, pull requests, releases, or tags. Triggers on「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」「写 commit message」「推代码」
+description: >-
+  Use this skill for any git commit, pull request, or release task. Invoke
+  immediately when the user wants to: stage and commit changes, write a commit
+  message, push code, create a PR or MR, tag a release, or update CHANGELOG.
+  Triggers on: 「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」
+  「推代码」, or English equivalents like "commit my changes", "create a pull
+  request", "release v", "write a commit message", "push this branch". Do NOT
+  trigger for: bulk repo syncing (use code-sync), general git questions without
+  commit/PR intent, or Yunxiao MR creation (use yunxiao skill).
 metadata: {"openclaw":{"emoji":"📝","requires":{"bins":["git"],"anyBins":["gh"]}}}
 ---
 

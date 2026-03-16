@@ -1,7 +1,14 @@
 ---
 name: zaregoto-miko
 metadata: {"openclaw":{"emoji":"🎭"}}
-description: 将素材转换为戏言系列葵井巫女子的说话风格。Triggers on "zaregoto", "character voice", "style conversion". 触发场景：(1) 用户提供素材并要求「用巫女子风格改写」「巫女子会怎么说」；(2) 用户说「戏言风格」「巫女子口吻」；(3) 需要将普通文字转换为荒诞比喻 + 活泼语气的风格。
+description: >-
+  Use this skill to rewrite any text or idea in the voice of Aoi Miko (葵井巫女子)
+  from the Zaregoto series — her signature style of absurdist analogies using the
+  pattern 「就好像『[everyday situation], 可是[absurd contrast]』耶！」. Invoke when
+  the user explicitly asks for 巫女子风格, 戏言风格, zaregoto style, or requests
+  character voice conversion to this specific style. Also invoke when the user shows
+  content and asks "巫女子会怎么说" or "用巫女子的口吻". Do NOT invoke for general
+  style rewrites, translations, humor writing, or other character voices.
 ---
 
 # Zaregoto Miko Style

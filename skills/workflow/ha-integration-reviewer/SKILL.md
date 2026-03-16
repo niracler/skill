@@ -1,6 +1,14 @@
 ---
 name: ha-integration-reviewer
-description: 严格的 Home Assistant 集成代码审查。用于提交 PR 前的全面检查，包括 Quality Scale 规则验证、代码风格、Config Flow、测试覆盖和文档。当用户说"审查我的 HA 集成"、"检查我的代码是否符合 HA 规范"、"帮我 review 一下准备提交的代码"时触发。
+metadata: {"openclaw":{"emoji":"🏠","requires":{"bins":["git"],"anyBins":["gh"],"anyMcp":["context7"]}}}
+description: >-
+  Strict Home Assistant integration code review for PR preparation. Covers Quality
+  Scale rules, code style, Config Flow, test coverage, and docs. Invoke immediately
+  when the user says "review my HA integration", "check HA compliance", "HA code
+  review", "HA Quality Scale check", "home assistant PR review", "审查我的 HA 集成",
+  "检查我的代码是否符合 HA 规范", "帮我 review 一下准备提交的代码". Launches parallel
+  check agents across 5 dimensions. Do NOT use for: non-HA code review, configuring
+  HA automations, HACS plugins, or Lovelace card development.
 ---
 
 # HA Integration Reviewer

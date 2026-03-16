@@ -1,13 +1,32 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# scan.sh - Scan ~/code for git repositories and output JSON status report
-# Usage: scan.sh [--fetch]
+# scan.sh - Scan a base directory for git repositories and output JSON status report
+# Usage: scan.sh [--fetch] [--base-dir <path>]
+#   --fetch      Fetch remote before reporting (10s timeout per repo)
+#   --base-dir   Base directory to scan (default: ~/code)
+#
+# Scans <base-dir>/*/ and <base-dir>/*/repos/*/ for git repos.
 
 DO_FETCH=false
-[[ "${1:-}" == "--fetch" ]] && DO_FETCH=true
-
+BASE_DIR="$HOME/code"
 FETCH_TIMEOUT=10
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --fetch) DO_FETCH=true; shift ;;
+        --base-dir) BASE_DIR="$2"; shift 2 ;;
+        *) echo "Unknown option: $1" >&2; exit 1 ;;
+    esac
+done
+
+# Expand ~ if needed
+BASE_DIR="${BASE_DIR/#\~/$HOME}"
+
+if [[ ! -d "$BASE_DIR" ]]; then
+    echo "Error: base directory '$BASE_DIR' not found" >&2
+    exit 1
+fi
 
 # JSON-escape a string value (handles backslash and double quote)
 json_escape() {
@@ -36,12 +55,12 @@ run_with_timeout() {
     fi
 }
 
-# Collect candidate directories: ~/code/*/ and ~/code/*/repos/*/
+# Collect candidate directories: <base-dir>/*/ and <base-dir>/*/repos/*/
 candidates=()
-for dir in "$HOME"/code/*/; do
+for dir in "$BASE_DIR"/*/; do
     [[ -d "$dir" ]] && candidates+=("$dir")
 done
-for dir in "$HOME"/code/*/repos/*/; do
+for dir in "$BASE_DIR"/*/repos/*/; do
     [[ -d "$dir" ]] && candidates+=("$dir")
 done
 

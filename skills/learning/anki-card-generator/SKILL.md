@@ -1,7 +1,15 @@
 ---
 name: anki-card-generator
-description: 生成 Anki 闪卡，输出 simple-anki-sync 兼容格式。Triggers on "anki", "flashcard", "memorize", "study cards". 当用户说「生成 Anki 卡片」「做卡片」「帮我记忆」「做闪卡」「学习卡片」「背诵卡」「记忆这个」时触发。
 metadata: {"openclaw":{"emoji":"🃏"}}
+description: >-
+  Use this skill to generate Anki flashcards in simple-anki-sync format for active
+  memorization of any knowledge. Invoke whenever the user wants to memorize, make
+  flashcards, create study cards, or turn knowledge into reviewable cards — including
+  phrases like 生成 Anki 卡片, 做闪卡, 帮我记忆, "anki cards", "flashcards",
+  "study cards", "memorize this". The skill applies LessWrong spaced-repetition best
+  practices: atomic questions, standardized templates, appropriate detail levels.
+  Not for general learning plans, summaries, or explanations — only for producing
+  actual Anki-formatted cards ready for import.
 ---
 
 # Anki Card Generator
