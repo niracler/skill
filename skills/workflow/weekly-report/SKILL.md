@@ -1,14 +1,14 @@
 ---
 name: weekly-report
 description: >-
-  Generate structured weekly work reports (软件研发周报) by scanning project schedules,
-  git logs, and previous reports. Use when user wants to write a weekly report, review
-  weekly progress, or prepare end-of-week summaries.
-  Triggers on「写周报」「软件研发周报」「weekly report」「本周总结」「周报」「周工作总结」.
-  Also trigger on Friday afternoons when user mentions work summary or report writing.
-  Do NOT trigger for personal daily diary (use diary-assistant instead).
-  This skill specifically produces the 3-section corporate report
-  format: 本周工作总结 / 下周工作计划 / 其他事项.
+  Use this skill whenever the user wants to write or generate a structured weekly
+  work report (软件研发周报) — the formal 3-section corporate format with 本周工作总结,
+  下周工作计划, and 其他事项. This skill automatically collects data from git logs,
+  Obsidian diary Work Log entries, schedule YAML files, GitHub PRs, and 云效 MRs/tasks
+  to draft the report. Invoke when the user says 周报, 软件研发周报, 本周工作总结,
+  写周报, weekly report, end-of-week summary, or asks to prepare a work summary for
+  their manager/team. Do NOT use for personal diary entries, monthly reviews,
+  OKR summaries, meeting notes, or quarterly retrospectives.
 ---
 
 # Weekly Report

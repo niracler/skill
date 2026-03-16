@@ -1,7 +1,14 @@
 ---
 name: yunxiao
 metadata: {"openclaw":{"emoji":"☁️","requires":{"bins":["git"],"anyBins":["jq"],"anyMcp":["yunxiao"],"anyInstall":[{"type":"cli","pkg":"aliyun-cli"}]}}}
-description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效) or codeup.aliyun.com remotes. Triggers on「创建 MR」「提交评审」「推送代码」「更新任务」「查看任务」「发布版本」「打 tag」「云效」「yunxiao」
+description: >-
+  Use this skill for all Alibaba Cloud 云效 (Yunxiao) DevOps operations on
+  codeup.aliyun.com. Invoke IMMEDIATELY when the user wants to: create or manage
+  Merge Requests (MR) on codeup, update work items/tasks in 云效, query MR lists
+  or task status, create version tags via 云效 API, or push code to a codeup remote.
+  Key triggers: 创建 MR, 提交评审, 云效, yunxiao, codeup, 更新任务, 查看任务,
+  发布版本, 打 tag. Handles both MCP tool mode and aliyun CLI fallback. Do NOT use
+  for GitHub PRs (use git-workflow), Jira, GitLab, or non-Alibaba platforms.
 ---
 
 # 云效 CLI

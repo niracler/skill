@@ -1,6 +1,14 @@
 ---
 name: skill-reviewer
-description: Use when reviewing, auditing, or validating Claude Code skills for quality and cross-platform/cross-agent compatibility. Triggers on「审查 skill」「review skill」「检查 skill 质量」「skill 兼容性检查」「review 兼容性」
+description: >-
+  Use this skill to audit, review, or validate Claude Code skills (.md files in
+  .claude/commands/). Invoke when user wants to check skill quality, cross-platform
+  compatibility, cross-agent compatibility, prerequisite declarations, or description
+  triggering accuracy. Triggers on: 审查 skill, review skill, 检查 skill 质量,
+  skill 兼容性检查, validate skill, audit skill. This skill delegates structure
+  validation to validate.sh, content quality to skill-creator, and handles
+  compatibility auditing itself. Do NOT use for general code review, reviewing PRs,
+  or reviewing CLAUDE.md.
 metadata: {"openclaw":{"emoji":"🔍"}}
 ---
 

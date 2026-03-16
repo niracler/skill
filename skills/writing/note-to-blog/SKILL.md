@@ -1,6 +1,13 @@
 ---
 name: note-to-blog
-description: Use when user wants to find a note to publish as a blog post. Triggers on「选一篇笔记发博客」「note to blog」「写博客」「博客选题」. Scans Obsidian vault for blog-ready candidates.
+description: >-
+  Use this skill whenever the user wants to find notes from their Obsidian vault to
+  publish as blog posts, or wants to convert existing notes into blog-ready drafts.
+  Invoke immediately when the user wants to: scan their note archive for publishable
+  content, select a note for blogging, do blog topic selection from their notes, or
+  convert a specific note to a blog post format. Trigger phrases: 选一篇笔记发博客,
+  note to blog, 写博客, 博客选题, 从笔记里找文章. NOT for: writing a new blog post
+  from scratch, proofreading a blog draft, or general note organization.
 ---
 
 # Note to Blog

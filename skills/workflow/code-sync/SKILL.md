@@ -1,6 +1,14 @@
 ---
 name: code-sync
-description: Use when syncing all git repos under ~/code across machines, typically at end-of-day (push) or start-of-day (pull). Triggers on「同步代码」「code-sync」「下班同步」「上班更新」.
+description: >-
+  Use this skill to batch-sync all git repos across machines — pushing uncommitted
+  changes at end of day or pulling latest at start of day. Invoke when the user
+  wants to sync all repos (not just one), mentions 「下班同步」「上班更新」
+  「code-sync」, or describes end-of-day push / morning pull across ~/code.
+  Triggers on: "sync all my repos", "end of day sync", "morning update",
+  "push all dirty repos", "pull all projects", 「同步代码」「下班同步」「上班更新」.
+  Do NOT trigger for: single-repo git operations, committing specific files
+  (use git-workflow), general git push/pull questions, or workspace template updates.
 metadata: {"openclaw":{"emoji":"🔄","requires":{"bins":["git"]}}}
 ---
 

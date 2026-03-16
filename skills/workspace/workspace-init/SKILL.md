@@ -2,22 +2,14 @@
 name: workspace-init
 metadata: {"openclaw":{"emoji":"🚀","requires":{"bins":["git","jq"],"install":[{"type":"node","pkg":"openspec"}]}}}
 description: >-
-  Initialize and update dev-config-template workspaces. Two modes:
-  (1) Init -- guides users through repos.json, CLAUDE.md customization,
-  sub-repo cloning, OpenSpec setup, and dev environment configuration;
-  (2) Update -- detects template version drift and merges upstream changes
-  while preserving user customizations.
-  Use whenever the user wants to initialize, set up, configure, or update a
-  multi-repo workspace created from dev-config-template. Triggers on
-  "init workspace", "setup workspace", "initialize", "configure my workspace",
-  "help me set up", "I just created a workspace from the template",
-  "update workspace", "update template", "sync template",
-  or Chinese equivalents like "初始化工作区", "配置工作区", "帮我设置",
-  "更新工作区模板", "模板有更新吗".
-  Also trigger when user mentions dev-config-template in the context of
-  getting started, first-time setup, or template updates.
-  Do NOT trigger for: project scheduling (use workspace-planning),
-  weekly work reports (use weekly-report), or general git/repo operations.
+  Use this skill to initialize or update a multi-repo workspace created from
+  dev-config-template. Invoke whenever the user wants to: set up a fresh workspace
+  clone, fill in CLAUDE.md placeholders, clone sub-repos, configure dev environments,
+  or sync workspace files with the latest template. Triggers on: "init workspace",
+  "initialize", "set up my project", "configure workspace", "update template",
+  "sync template", "update workspace", dev-config-template setup questions, or
+  Chinese: 初始化工作区, 配置工作区, 更新工作区模板, 模板有更新吗. Do NOT trigger
+  for: project scheduling, weekly reports, or individual git operations.
 ---
 
 # Workspace Init

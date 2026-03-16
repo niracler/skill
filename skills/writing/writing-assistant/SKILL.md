@@ -2,10 +2,14 @@
 name: writing-assistant
 metadata: {"openclaw":{"emoji":"✏️","requires":{"anyBins":["markdownlint-cli2"]}}}
 description: >-
-  Use when user needs help with writing — either starting a new piece (inspiration)
-  or reviewing/polishing an existing article (proofreading). Triggers include
-  「帮我改文章」「检查一下」「润色」「校对一下」「不知道写什么」「帮我构思」
-  「写游记」「记录 TIL」「写点什么」. For diary writing, use diary-assistant instead.
+  Use this skill when the user needs help with personal writing — either starting a
+  new piece from scratch (inspiration/brainstorming) or reviewing and polishing an
+  existing article (proofreading/editing). Invoke immediately when: the user shares
+  an article and asks for feedback, wants to improve their writing style, feels stuck
+  on what to write, wants help structuring a travel piece/TIL note/personal essay, or
+  asks to review Chinese writing quality. Trigger phrases: 帮我改文章, 检查一下, 润色,
+  校对, 不知道写什么, 帮我构思, 写游记, 记录 TIL, 写点什么. NOT for diary writing
+  (use diary-assistant) or formal business communications.
 ---
 
 # Writing Assistant

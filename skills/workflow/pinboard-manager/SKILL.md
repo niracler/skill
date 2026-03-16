@@ -1,6 +1,14 @@
 ---
 name: pinboard-manager
-description: Pinboard bookmark management — tag audit, dead link detection, and timeliness check. Triggers on "pinboard", "bookmark", "tag audit", "dead link", "timeliness". 触发场景：用户说「pinboard 整理 tag」「pinboard 检查死链」「pinboard 检查时效」「pinboard audit」「pinboard cleanup」「pinboard timeliness check」「pinboard 过时检测」「整理书签」时触发。
+description: >-
+  Use this skill for ALL Pinboard bookmark management tasks — this is the go-to
+  skill whenever Pinboard (pinboard.in) is involved. Invoke immediately when the
+  user wants to: audit or reorganize messy tags, check for broken/dead links,
+  identify stale or outdated bookmarks, clean up their bookmark collection, or
+  manage their Pinboard account in any way. Also use when the user says 整理书签,
+  检查死链, 整理 tag, 书签管理, pinboard cleanup, bookmark audit, tag consistency,
+  timeliness check, pinboard 过时检测. Do NOT trigger for: browser bookmark management,
+  Raindrop.io, or general URL checking without Pinboard context.
 metadata: {"openclaw":{"emoji":"📌","requires":{"bins":["curl"],"env":["PINBOARD_AUTH_TOKEN"]}}}
 ---
 

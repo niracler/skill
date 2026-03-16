@@ -1,7 +1,15 @@
 ---
 name: diary-assistant
 metadata: {"openclaw":{"emoji":"📔","requires":{"bins":["osascript","reminders-cli"],"skills":["schedule-manager"]}}}
-description: (macOS, requires schedule-manager) Use when user wants to write diary entries or daily logs. Triggers include「帮我写日记」「记录今天」「写日记」「今天的日记」. Integrates with Reminders for task review and planning.
+description: >-
+  (macOS, requires schedule-manager) Use this skill whenever the user wants to write
+  a personal diary entry or daily journal — this includes any request to record today's
+  events, write a diary, log what happened today, or capture personal reflections.
+  Invoke immediately for phrases like 帮我写日记, 写日记, 记录今天, 今天的日记,
+  "write my diary", or "daily log". This skill guides a complete journaling session:
+  reviewing today's tasks from Reminders, reflective guided questions, composing the
+  entry, and scheduling follow-up plans. Distinct from diary-note (quick append) and
+  weekly-report (work summary).
 ---
 
 # Diary Assistant

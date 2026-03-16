@@ -2,10 +2,13 @@
 name: diary-note
 metadata: {"openclaw":{"emoji":"📝"}}
 description: >-
-  Quickly append a note to today's diary. Use when user wants to record
-  an experience, insight, or TIL without going through the full diary flow.
-  Triggers include「记到日记里」「记录一下」「追记」「记录经验」「jot this down」.
-  For full diary writing sessions, use diary-assistant instead.
+  Use this skill to instantly capture a quick note, insight, TIL, or lesson learned
+  directly into today's diary — without going through a full journaling session.
+  Invoke when the user says things like 记到日记里, 记录一下, 追记, jot this down,
+  or "add this to my diary". Perfect for end-of-coding-session learnings, spontaneous
+  insights, or brief experience logs. Appends to the existing diary file in the right
+  section automatically. Not for full diary writing sessions (use diary-assistant) or
+  work summaries (use weekly-report).
 ---
 
 # Diary Note

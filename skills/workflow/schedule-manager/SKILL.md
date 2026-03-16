@@ -1,7 +1,14 @@
 ---
 name: schedule-manager
 metadata: {"openclaw":{"emoji":"📅","requires":{"bins":["osascript","reminders-cli"]}}}
-description: (macOS only) 通过 osascript 和 reminders-cli 管理 Apple Calendar 和 Reminders，遵循 GTD 方法论。Triggers on "schedule", "calendar", "reminders", "GTD", "todo". 触发场景：用户说「安排会议」「创建提醒」「查看日程」「规划下周」「添加待办」「今天要做什么」「周回顾」「记一下」「别忘了」时触发。
+description: >-
+  (macOS only) Use this skill for ALL Apple Calendar and Reminders management tasks
+  using osascript and reminders-cli, following GTD methodology. Invoke immediately
+  when the user wants to: schedule a meeting or event, add a todo or reminder, check
+  today's agenda, plan the week ahead, do a weekly review, or capture any task they
+  don't want to forget. Also use when the user says 安排会议, 创建提醒, 查看日程,
+  规划下周, 添加待办, 记一下, 别忘了, 今天要做什么, 周回顾. This is the right skill
+  any time the user wants to interact with macOS Calendar or Reminders apps.
 ---
 
 # Schedule Manager

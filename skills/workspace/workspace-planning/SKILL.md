@@ -2,18 +2,15 @@
 name: workspace-planning
 metadata: {"openclaw":{"emoji":"📅"}}
 description: >-
-  Manage project schedules stored as YAML in the workspace planning/ directory.
-  Use whenever the user asks about project delivery progress, module status,
-  weekly task breakdown (frontend/backend), milestone countdowns, risk analysis,
-  or wants to update module status, link OpenSpec changes, create new schedules,
-  or sync to Yunxiao. Triggers on "planning", "schedule", "progress", "milestone",
-  "what's this week", "what's left", or Chinese equivalents like "排期", "进度",
-  "本周任务", "里程碑", "模块状态", "还剩多少", "风险", "deferred".
-  Also trigger when user mentions specific module names (e.g. "auth", "zone-control")
-  in the context of status updates or progress tracking.
-  Do NOT trigger for: calendar/reminder management (use schedule-manager),
-  weekly work reports (use weekly-report), or general Yunxiao task operations
-  without schedule context (use yunxiao skill).
+  Use this skill for project schedule management — tracking modules, milestones,
+  and delivery phases stored in YAML. Invoke whenever the user asks about: project
+  progress or delivery status, module status (planned/in_progress/done/deferred),
+  weekly task breakdown, milestone countdowns, risk analysis, linking OpenSpec
+  changes to modules, or syncing schedule data to Yunxiao. Triggers on: "planning",
+  "schedule", "progress", "milestone", "what's this week", "what's left",
+  "mark as done", "排期", "进度", "本周任务", "里程碑", "模块状态", "还剩多少".
+  Do NOT trigger for: calendar reminders, weekly work reports, or Yunxiao tasks
+  without schedule context.
 ---
 
 # Workspace Planning
