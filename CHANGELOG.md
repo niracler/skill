@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-03-16
+
+### Fixed
+
+- **plugin manifest** — Updated `marketplace.json` for v0.2.0 skill changes: replaced removed `writing-inspiration`/`writing-proofreading` with `writing-assistant` and `diary-note`
+
 ## [0.2.0] - 2026-03-16
 
 ### Added
@@ -93,6 +99,7 @@ First tagged release. All skills that existed before this point are included.
 - Standardized Prerequisites section across all skills
 - Architecture diagram in README showing skill dependencies and external tool requirements
 
+[0.2.1]: https://github.com/niracler/skill/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/niracler/skill/compare/v0.1.3...v0.2.0
 [0.1.1]: https://github.com/niracler/skill/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/niracler/skill/releases/tag/v0.1.0
