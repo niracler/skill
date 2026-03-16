@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-03-16
+
+### Added
+
+- **weekly-report** — New skill replacing `worklog`, with structured 3-section corporate format, auto-collecting data from git logs, Obsidian diary, schedule YAML, GitHub PRs, and Yunxiao MRs
+- **diary-note** — Lightweight quick-append skill for diary entries (split from diary-assistant)
+- **writing-assistant** — Merged `writing-inspiration` + `writing-proofreading` into a dual-mode skill (inspiration + proofreading)
+- **planning.py** — Script for workspace-planning YAML operations
+- **Claude Code GitHub Workflow** — CI workflows for Claude Code review (#9)
+
+### Changed
+
+- **Comprehensive skill restructuring** (#8):
+  - Restructured pinboard-manager: split mode details into `references/`, unified user config at `~/.config/nini-skill/`
+  - Simplified diary-assistant: removed Work Log, streamlined flow
+  - Deduplicated schedule-manager: removed inline commands, reference docs
+  - Generalized code-sync: added `--base-dir` parameter and first-time setup flow
+  - Updated skill-reviewer dependency: writing-skills → skill-creator
+  - Updated markdown-lint pre-commit rev to v0.21.0
+- **Optimized all 17 skill descriptions** for better triggering — action-forward pattern with explicit negative triggers
+- **writing-proofreading** — Added formatting preferences for numbered headings and no horizontal rules (#7)
+- **OpenClaw metadata** — Added to all remaining skills
+
+### Removed
+
+- **worklog** — Replaced by weekly-report
+- **writing-inspiration** — Merged into writing-assistant
+- **writing-proofreading** — Merged into writing-assistant
+
+### Fixed
+
+- **pinboard-manager** — Removed "claude" from timeliness tech tag filter
+
 ## [0.1.1] - 2026-03-05
 
 ### Changed
@@ -60,5 +93,6 @@ First tagged release. All skills that existed before this point are included.
 - Standardized Prerequisites section across all skills
 - Architecture diagram in README showing skill dependencies and external tool requirements
 
+[0.2.0]: https://github.com/niracler/skill/compare/v0.1.3...v0.2.0
 [0.1.1]: https://github.com/niracler/skill/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/niracler/skill/releases/tag/v0.1.0
