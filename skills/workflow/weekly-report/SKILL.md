@@ -312,14 +312,34 @@ tell application "Calendar"
 end tell'
 ```
 
+### Defaults
+
+- **Calendar name**: "Work " (note trailing space) (with trailing space — verify with `osascript -e 'tell application "Calendar" to get name of calendars'`)
+- **Time block**: 9:30-11:45 (morning focus block, not full day)
+- **No all-day events**: Always create timed events, never all-day
+- **Reminders list**: `提醒`
+
+### Date calculation
+
+Use `current date` with day offsets to calculate next week's dates. Do not use
+hardcoded date strings — they cause locale-dependent parse errors on macOS.
+
+```applescript
+set baseDate to current date
+set time of baseDate to 0
+set nextMon to baseDate + ({offset} * days)
+set startTime to nextMon + (9 * hours) + (30 * minutes)
+set endTime to nextMon + (11 * hours) + (45 * minutes)
+```
+
 Present the proposed schedule to the user first — only create after confirmation:
 
 ```text
-下周日程建议：
-  周一 3/16: sylsmart - auth system/member/invitation 接口（1 天）
-  周二-周三 3/17-3/18: sunlite - switch API 设计与实现（2 天）
-  周四 3/19: HA 集成 - issue #73 + ZHA 设备支持（1 天）
-  周五 3/20: buffer / 周报
+下周日程建议（Work 日历，9:30-11:45）：
+  周一 3/23: sylsmart - xxx（1 天）
+  周二-周三 3/24-3/25: sunlite - xxx（2 天）
+  周四 3/26: HA 集成 - xxx（1 天）
+  周五 3/27: buffer / 周报
 
 确认创建到 Calendar 和 Reminders 吗？
 ```
