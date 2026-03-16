@@ -54,126 +54,25 @@ description: (macOS only) 通过 osascript 和 reminders-cli 管理 Apple Calend
 
 ## Calendar 操作
 
-### 查看日历列表
+通过 osascript 管理 Calendar 事件（查看、创建、删除）。
 
-```bash
-osascript -e 'tell application "Calendar" to get name of calendars'
-```
-
-### 查看今日/本周事件
-
-```bash
-osascript <<'EOF'
-set today to current date
-set time of today to 0
-set tomorrow to today + (1 * days)
-
-tell application "Calendar"
-    repeat with cal in calendars
-        set evts to (every event of cal whose start date ≥ today and start date < tomorrow)
-        if (count of evts) > 0 then
-            repeat with e in evts
-                log (summary of e) & " | " & (start date of e)
-            end repeat
-        end if
-    end repeat
-end tell
-EOF
-```
-
-详见 [osascript-calendar.md](references/osascript-calendar.md)。
-
-### 创建事件
-
-```bash
-osascript -e '
-tell application "Calendar"
-    tell calendar "个人"
-        set startDate to (current date) + (1 * days)
-        set hours of startDate to 14
-        set minutes of startDate to 0
-        set endDate to startDate + (1 * hours)
-        make new event with properties {summary:"会议标题", start date:startDate, end date:endDate}
-    end tell
-end tell'
-```
-
-**可用属性：** `summary`, `start date`, `end date`, `description`, `location`, `allday event`
-
-详见 [osascript-calendar.md](references/osascript-calendar.md)。
-
-### 删除事件
-
-```bash
-osascript -e '
-tell application "Calendar"
-    tell calendar "个人"
-        delete (every event whose summary is "要删除的事件名")
-    end tell
-end tell'
-```
+详见 [osascript-calendar.md](references/osascript-calendar.md) 获取完整命令模板。
 
 ## Reminders 操作
 
-> **注意**：osascript 访问 Reminders 非常慢（已知问题），推荐使用 `reminders-cli`。
->
-> 详见 [reminders-cli-guide.md](references/reminders-cli-guide.md)。
+推荐使用 `reminders-cli`（osascript 访问 Reminders 非常慢）。
 
-### 查看提醒列表
+常用命令速查：
 
 ```bash
-reminders show-lists
+reminders show-lists              # 查看列表
+reminders show-all --due-date today  # 今日待办
+reminders add "列表" "任务"         # 创建
+reminders complete "列表" 0        # 完成
 ```
 
-### 查看待办事项
-
-```bash
-# 查看所有未完成提醒
-reminders show-all
-
-# 查看指定列表
-reminders show "工作"
-
-# 按截止日期筛选
-reminders show-all --due-date today
-```
-
-### 创建提醒
-
-```bash
-# 基础创建
-reminders add "收件箱" "任务名称"
-
-# 带截止日期
-reminders add "工作" "完成报告" --due-date "tomorrow 5pm"
-
-# 带优先级 (low/medium/high)
-reminders add "工作" "紧急任务" --priority high
-```
-
-### 完成提醒
-
-```bash
-# 按索引完成（索引通过 show 命令查看）
-reminders complete "收件箱" 0
-```
-
-### 其他操作
-
-```bash
-# 取消完成
-reminders uncomplete "收件箱" 0
-
-# 编辑提醒
-reminders edit "收件箱" 0 "新的任务名称"
-
-# 删除提醒
-reminders delete "收件箱" 0
-```
-
-### osascript 备选（仅用于复杂操作）
-
-osascript 适合需要批量操作或复杂查询的场景，但速度很慢。详见 [osascript-reminders.md](references/osascript-reminders.md)。
+详见 [reminders-cli-guide.md](references/reminders-cli-guide.md) 获取完整命令参考。
+osascript 备选见 [osascript-reminders.md](references/osascript-reminders.md)。
 
 ## 常见工作流
 

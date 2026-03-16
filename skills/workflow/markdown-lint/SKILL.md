@@ -80,7 +80,7 @@ ls .markdownlint.json .pre-commit-config.yaml 2>/dev/null
 ```yaml
 repos:
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.20.0  # 运行 pre-commit autoupdate 获取最新
+    rev: v0.21.0  # 运行 pre-commit autoupdate 获取最新
     hooks:
       - id: markdownlint-cli2
   - repo: local

@@ -2,6 +2,9 @@
 
 note-to-blog skill paths and settings.
 
+> **Migration note**: This config will move to `~/.config/nini-skill/note-to-blog/user-config.md`
+> in a future update. The skill will check both locations (new first, then this fallback).
+
 ## Note Repository
 
 ```yaml

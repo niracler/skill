@@ -12,7 +12,7 @@ metadata: {"openclaw":{"emoji":"🔍"}}
 
 | Tool | Type | Required | Install |
 |------|------|----------|---------|
-| writing-skills | skill | Yes | `npx skills add https://github.com/obra/superpowers --skill writing-skills` |
+| skill-creator | skill | Yes | Built-in on most AI coding agents (Claude Code, Cursor, etc.) |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
@@ -30,15 +30,14 @@ bash <skill-reviewer-dir>/scripts/validate.sh
 
 ### Step 2: 内容质量（委托）
 
-**MUST 执行**：调用 `writing-skills` skill 进行深度质量审查（token 效率、渐进式披露、反模式、CSO 等）。
+**MUST 执行**：调用 `skill-creator` skill 进行深度质量审查（token 效率、渐进式披露、反模式、description 基准测试等）。
 
-若 `writing-skills` 不可用，**MUST 停下并引导用户安装**，不得跳过：
+若 `skill-creator` 不可用，**MUST 停下并引导用户确认**，不得跳过。大多数 AI 编码 agent 内置了 skill-creator：
 
-```bash
-npx skills add https://github.com/obra/superpowers --skill writing-skills
-```
+- Claude Code: `document-skills:skill-creator` 或 `skill-creator:skill-creator`
+- 其他 agent: 检查对应的 skill 管理功能
 
-> 此步骤不可跳过。没有 writing-skills 的审计是不完整的。
+> 此步骤不可跳过。没有 skill-creator 的审计是不完整的。
 
 ### Step 3: 兼容性审计（自身核心）
 
@@ -75,7 +74,7 @@ npx skills add https://github.com/obra/superpowers --skill writing-skills
 | 维度 | 状态 | 方式 |
 |------|------|------|
 | 结构与元数据 | PASS / FAIL | validate.sh |
-| 内容质量 | PASS / FAIL (N issues) | writing-skills |
+| 内容质量 | PASS / FAIL (N issues) | skill-creator |
 | 平台兼容性 | PASS / FAIL (N issues) | 自查 |
 | Agent 兼容性 | PASS / FAIL (N issues) | 自查 |
 | npx skills 生态 | PASS / FAIL (N issues) | 自查 |

@@ -66,11 +66,27 @@ Forbidden: any transition out of `done`.
 
 For the complete YAML schema and field reference, read `references/yaml-schema.md`.
 
+## Script
+
+Deterministic operations are handled by `scripts/planning.py`:
+
+```bash
+python3 <skill-dir>/scripts/planning.py review                      # Show progress
+python3 <skill-dir>/scripts/planning.py update <id> --status done   # Update status
+python3 <skill-dir>/scripts/planning.py link <id> --change <name>   # Link change
+python3 <skill-dir>/scripts/planning.py week W3                     # Show week modules
+```
+
+All commands output JSON for the LLM to format. Use `--file` to specify a schedule YAML
+if multiple exist.
+
+Requires: `pip install pyyaml`
+
 ## Commands
 
 ### `planning init <project-name>`
 
-Bootstrap a new schedule YAML for a project.
+Bootstrap a new schedule YAML for a project. This is interactive (handled by the LLM, not the script).
 
 **Steps:**
 
@@ -89,8 +105,8 @@ Show overall schedule progress grouped by phase.
 
 **Steps:**
 
-1. Read `planning/schedules/*.yaml` (if multiple files, list them and let user choose)
-2. Calculate current week from `today - timeline.start`
+1. Run `python3 <skill-dir>/scripts/planning.py review` (use `--file` if needed)
+2. Format the JSON output for the user
 3. Display by phase:
 
 ```text
@@ -122,24 +138,22 @@ Legend: V done, * in_progress, o planned, - deferred
 
 Update a module's status.
 
-**Steps:**
+```bash
+python3 <skill-dir>/scripts/planning.py update <module-id> --status <status>
+```
 
-1. Read YAML, find module by id
-2. Validate transition against the state machine
-3. If invalid, show error with the allowed target states from current state
-4. Update the `status` field in YAML
-5. Confirm the change
+The script validates the state machine transition and returns JSON with the result.
+If invalid, it shows the error with allowed target states.
 
 ### `planning link <module-id> --change <change-name>`
 
 Associate an OpenSpec change with a module.
 
-**Steps:**
+```bash
+python3 <skill-dir>/scripts/planning.py link <module-id> --change <change-name>
+```
 
-1. Verify `openspec/changes/<change-name>/` exists
-2. Append change name to the module's `changes` list (create list if absent)
-3. If module status is `planned`, auto-transition to `in_progress`
-4. Confirm the change
+The script verifies the change exists, appends it, and auto-transitions `planned` to `in_progress`.
 
 ### `planning sync-yunxiao`
 

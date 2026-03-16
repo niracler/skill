@@ -1,5 +1,6 @@
 ---
 name: yunxiao
+metadata: {"openclaw":{"emoji":"☁️","requires":{"bins":["git"],"anyBins":["jq"],"anyMcp":["yunxiao"],"anyInstall":[{"type":"cli","pkg":"aliyun-cli"}]}}}
 description: Use when working with Alibaba Cloud DevOps (Yunxiao/云效) or codeup.aliyun.com remotes. Triggers on「创建 MR」「提交评审」「推送代码」「更新任务」「查看任务」「发布版本」「打 tag」「云效」「yunxiao」
 ---
 
