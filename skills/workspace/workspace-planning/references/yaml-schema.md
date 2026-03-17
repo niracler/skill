@@ -31,6 +31,7 @@ phases:                         # optional
     end: 2026-04-03
     weeks: [W1, W2, W3, W4]
 
+# Option A: inline modules
 modules:
   # Infrastructure module (backend-only, no UI frames)
   - id: core-extraction
@@ -62,6 +63,15 @@ modules:
       notes: "optional notes"
     yunxiao_id: "WI-12345"
     changes: ["add-auth-api"]
+
+# Option B: split modules into separate files
+# Use module_files instead of modules. Paths are relative to
+# the main YAML file. Each referenced file has a top-level
+# "modules:" list. The CLI merges them at load time and writes
+# back to the correct file on update/link.
+module_files:
+  - my-project-month-1.yaml
+  - my-project-month-2.yaml
 ```
 
 ## Field Reference
@@ -75,7 +85,7 @@ modules:
 | `timeline.start` | date | Project start date (ISO) |
 | `timeline.end` | date | Project end date (ISO) |
 | `milestones` | list | Milestone definitions |
-| `modules` | list | Module definitions |
+| `modules` | list | Module definitions (use this OR `module_files`, not both) |
 
 ### Optional Top-Level Fields
 
@@ -83,6 +93,7 @@ modules:
 |-------|------|-------------|
 | `capacity` | object | Team capacity config |
 | `phases` | list | Phase definitions |
+| `module_files` | list | Paths to YAML files containing modules (relative to main file; alternative to inline `modules`) |
 
 ### Module Required Fields
 

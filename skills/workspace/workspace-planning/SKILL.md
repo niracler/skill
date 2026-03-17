@@ -75,9 +75,20 @@ python3 <skill-dir>/scripts/planning.py week W3                     # Show week 
 ```
 
 All commands output JSON for the LLM to format. Use `--file` to specify a schedule YAML
-if multiple exist.
+if multiple exist. Always point `--file` at the **main** schedule file (e.g. `sylsmart.yaml`),
+not the month files — the script resolves `module_files` references automatically.
 
 Requires: `pip install pyyaml`
+
+### Split vs Inline Modules
+
+Schedules support two layouts:
+
+- **Inline**: `modules:` list directly in the main YAML (simple projects)
+- **Split**: `module_files:` list of relative paths, each containing a `modules:` list (large projects)
+
+When using split layout, all read commands (`review`, `week`) merge modules from all
+referenced files. Write commands (`update`, `link`) save back to the correct source file.
 
 ## Commands
 
@@ -135,22 +146,33 @@ Legend: V done, * in_progress, o planned, - deferred
 
 Update a module's status.
 
+**Step 1 — Validate** with the script (does NOT write to files):
+
 ```bash
 python3 <skill-dir>/scripts/planning.py update <module-id> --status <status>
 ```
 
-The script validates the state machine transition and returns JSON with the result.
-If invalid, it shows the error with allowed target states.
+The script validates the state machine transition and returns JSON including `source_file`
+(the YAML file containing the module). If invalid, it exits with an error.
+
+**Step 2 — Apply** with the Edit tool: use the `source_file` from the JSON output to
+locate the module and change its `status:` field. This preserves YAML comments and formatting.
 
 ### `planning link <module-id> --change <change-name>`
 
 Associate an OpenSpec change with a module.
 
+**Step 1 — Validate** with the script (does NOT write to files):
+
 ```bash
 python3 <skill-dir>/scripts/planning.py link <module-id> --change <change-name>
 ```
 
-The script verifies the change exists, appends it, and auto-transitions `planned` to `in_progress`.
+The script verifies the change exists and returns JSON with the updated `changes` list,
+`source_file`, and whether an auto-transition from `planned` to `in_progress` should apply.
+
+**Step 2 — Apply** with the Edit tool: add the change name to the module's `changes:` list
+(or create the field). If `auto_transition` is true, also update `status: in_progress`.
 
 ### `planning sync-yunxiao`
 
