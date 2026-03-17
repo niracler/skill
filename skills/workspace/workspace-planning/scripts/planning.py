@@ -48,15 +48,34 @@ def find_schedule(path: str | None) -> Path:
 
 
 def load_schedule(path: Path) -> dict:
-    """Load and return the schedule YAML."""
+    """Load schedule YAML, resolving module_files if present.
+
+    When the main YAML contains a ``module_files`` list, modules are loaded
+    from each referenced file (paths relative to the main file's directory).
+    Each module gets a ``_source_file`` tag so callers know which file it
+    came from.
+    """
     with open(path) as f:
-        return yaml.safe_load(f)
+        data = yaml.safe_load(f)
 
+    if "module_files" in data:
+        all_modules: list[dict] = []
+        for ref in data["module_files"]:
+            ref_path = path.parent / ref
+            if not ref_path.exists():
+                print(
+                    f"Error: referenced module file '{ref}' not found at {ref_path}",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
+            with open(ref_path) as f:
+                ref_data = yaml.safe_load(f)
+            for m in ref_data.get("modules", []):
+                m["_source_file"] = str(ref_path)
+                all_modules.append(m)
+        data["modules"] = all_modules
 
-def save_schedule(path: Path, data: dict) -> None:
-    """Write schedule data back to YAML, preserving readability."""
-    with open(path, "w") as f:
-        yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+    return data
 
 
 def find_module(data: dict, module_id: str) -> dict | None:
@@ -147,7 +166,7 @@ def cmd_review(args: argparse.Namespace) -> None:
 
 
 def cmd_update(args: argparse.Namespace) -> None:
-    """Update a module's status."""
+    """Validate a status transition and output what to change (does not write)."""
     path = find_schedule(args.file)
     data = load_schedule(path)
 
@@ -172,16 +191,18 @@ def cmd_update(args: argparse.Namespace) -> None:
         )
         sys.exit(1)
 
-    module["status"] = target
-    save_schedule(path, data)
-
-    result = {"module": args.module_id, "from": current, "to": target}
+    result = {
+        "module": args.module_id,
+        "from": current,
+        "to": target,
+        "source_file": module.get("_source_file", str(path)),
+    }
     json.dump(result, sys.stdout, ensure_ascii=False, indent=2)
     print()
 
 
 def cmd_link(args: argparse.Namespace) -> None:
-    """Link an OpenSpec change to a module."""
+    """Validate a change link and output what to change (does not write)."""
     path = find_schedule(args.file)
     data = load_schedule(path)
 
@@ -201,25 +222,19 @@ def cmd_link(args: argparse.Namespace) -> None:
     changes = module.get("changes", [])
     if changes is None:
         changes = []
-    if change_name in changes:
-        print(f"Warning: '{change_name}' already linked to '{args.module_id}'", file=sys.stderr)
-    else:
-        changes.append(change_name)
-        module["changes"] = changes
+    already_linked = change_name in changes
+    if not already_linked:
+        changes = [*changes, change_name]
 
-    # Auto-transition planned → in_progress
-    auto_transitioned = False
-    if module["status"] == "planned":
-        module["status"] = "in_progress"
-        auto_transitioned = True
-
-    save_schedule(path, data)
+    auto_transition = module["status"] == "planned"
 
     result = {
         "module": args.module_id,
         "change": change_name,
         "changes": changes,
-        "auto_transitioned": auto_transitioned,
+        "already_linked": already_linked,
+        "auto_transition": auto_transition,
+        "source_file": module.get("_source_file", str(path)),
     }
     json.dump(result, sys.stdout, ensure_ascii=False, indent=2)
     print()
