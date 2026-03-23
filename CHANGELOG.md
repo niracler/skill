@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **biweekly-collector** — New writing skill that collects raw materials from 8 data sources (daily notes, Pinboard, Douban RSS, Telegram RSS, Apple Calendar, Apple Reminders, rss-agent digests, plrom git diff) for personal biweekly diary writing. Includes strict date filtering for Telegram RSS and graceful degradation when sources are unavailable.
+
 ## [0.2.1] - 2026-03-16
 
 ### Fixed

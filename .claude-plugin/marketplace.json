@@ -45,7 +45,8 @@
         "./diary-assistant",
         "./diary-note",
         "./note-to-blog",
-        "./writing-assistant"
+        "./writing-assistant",
+        "./biweekly-collector"
       ]
     },
     {
