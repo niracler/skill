@@ -11,7 +11,7 @@ description: >-
   Photos, RSS digests, plrom diff) and organizes them into the 周记 template structure —
   it does NOT write the final diary for you. Distinct from diary-assistant (daily journaling),
   weekly-report (work report for boss), and diary-note (quick append).
-metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","osascript","reminders-cli","git"],"env":["PINBOARD_AUTH_TOKEN"]}}}
+metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","reminders-cli","git","icalBuddy"],"env":["PINBOARD_AUTH_TOKEN"]}}}
 ---
 
 # Biweekly Collector
@@ -28,6 +28,7 @@ metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","osascript","re
 |------|------|----------|---------|
 | macOS | system | Yes | This skill requires macOS |
 | reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
+| icalBuddy | cli | Yes | `brew install ical-buddy` |
 | curl | cli | Yes | Built-in on macOS |
 | git | cli | Yes | Built-in or `brew install git` |
 | `PINBOARD_AUTH_TOKEN` | env var | Yes | See pinboard-manager skill for setup |
@@ -40,7 +41,8 @@ metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","osascript","re
 | Path | Purpose |
 |------|---------|
 | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Archives/日记(Daily)/` | Daily diary entries |
-| `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Areas/生活(Life)/周记(Weekly)/` | Output location for 周记 |
+| `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Areas/生活(Life)/周记(Weekly)/` | Output location for 周记 (legacy) |
+| `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Areas/生活(Life)/月记(Monthly)/` | Output location for 月记 (current) |
 | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/templates/monthly.md` | 周记 template |
 | `~/code/ai-dev/repos/rss-agent/output/daily/` | AI-curated RSS daily digests |
 | `~/code/nini-dev/repos/plrom/README.md` | plrom source file (人 X 社区 X 物), has its own git repo |
@@ -102,8 +104,8 @@ Claude: 「这次周记要覆盖什么时间段？」
         或者你可以指定其他范围（最短两周，最长一个月）
 ```
 
-Suggest a default based on the last 周记's date. Scan `Areas/生活(Life)/周记(Weekly)/` for the
-most recent entry to calculate the gap.
+Suggest a default based on the last entry's date. Scan both `Areas/生活(Life)/周记(Weekly)/` and
+`Areas/生活(Life)/月记(Monthly)/` for the most recent entry to calculate the gap.
 
 ### Determine Title
 
@@ -116,7 +118,8 @@ Ask the user for a title, or offer to decide later after seeing the materials.
 
 ### Create Skeleton File
 
-Create the file in the 周记 directory using the template from `templates/monthly.md`:
+Create the file using the template from `templates/monthly.md`. The output directory can be
+either `周记(Weekly)/` or `月记(Monthly)/` — ask the user or accept if they specify a path directly:
 
 ```markdown
 ---
@@ -144,7 +147,7 @@ modified: {today}
 
 {collected_calendar_events}
 
-### 素材：完成的提醒事项
+### 素材：当前提醒事项（个人相关）
 
 {collected_reminders}
 
@@ -302,39 +305,39 @@ Group by hashtag category when possible:
 
 ### 2e. Apple Calendar Events
 
-Query Calendar events within the date range:
-
-```applescript
-osascript -e '
-tell application "Calendar"
-    set startDate to current date
-    set time of startDate to 0
-    -- calculate actual start/end dates
-    set endDate to startDate
-    set eventList to ""
-    repeat with cal in calendars
-        set calEvents to (every event of cal whose start date >= startDate and start date <= endDate)
-        repeat with ev in calEvents
-            set eventList to eventList & (start date of ev) & " | " & (summary of ev) & linefeed
-        end repeat
-    end repeat
-    return eventList
-end tell'
-```
-
-Calculate the actual date offsets from the confirmed period. Include personal calendar events
-(meetups, appointments, trips) but skip recurring work meetings.
-
-### 2f. Apple Reminders (Completed)
-
-Query completed reminders within the date range:
+Use `icalBuddy` to query calendar events within the date range:
 
 ```bash
-reminders show-all --completed
+icalBuddy -sd -ic "Personal,Learn&Create" \
+  eventsFrom:{start_date} to:{end_date}
 ```
 
-Filter by date range. Completed personal tasks show what the user actually accomplished
-beyond work — exercise goals, reading targets, errands.
+Key flags:
+- `-sd`: separate by date (groups events under date headers)
+- `-ic "Personal,Learn&Create"`: include only personal calendars, skip "Work" and
+  "Scheduled Reminders" calendars (reminders are captured separately via reminders-cli)
+- Output includes: event summary, calendar name, time range, and notes
+
+The output is already well-structured with date grouping. Include personal events
+(meetups, appointments, trips, hobbies) but skip recurring work meetings.
+
+To list available calendar names: `icalBuddy calendars`
+
+### 2f. Apple Reminders
+
+Query current reminders to capture what the user is tracking and planning:
+
+```bash
+reminders show-all
+```
+
+This returns all active (uncompleted) reminders across all lists, with due dates and notes.
+For the 月记, current reminders are more valuable than completed ones — they show what the
+user is actively focused on: life goals, relationship maintenance schedules, recurring habits,
+upcoming plans, and learning checkpoints.
+
+Filter the output to personal-relevant lists (生活, 健康, 人际关系, 阅读, 提醒) and skip
+pure work items (提醒 list items about specific work tasks like "sunlite: switch API").
 
 ### 2g. RSS Daily Digests
 
@@ -423,7 +426,7 @@ Show the user a summary of what was collected:
 📰 RSS 精选: 22 篇（去重后 17 篇）
 🔄 plrom 变更: +3 新增, -1 移除
 
-已写入文件：Areas/生活(Life)/周记(Weekly)/202603-2-title.md
+已写入文件：Areas/生活(Life)/月记(Monthly)/202603-title.md
 你可以在 Obsidian 中打开这个文件，在素材基础上写你的周记。
 ```
 
@@ -442,7 +445,7 @@ Write the final organized materials to the file.
 | Pinboard token not set | Skip, note "Pinboard 数据未获取" |
 | Douban feed empty or blocked | Try RSSHub fallback: `https://rsshub.app/douban/people/niracler/interests`; if still empty, leave table for manual fill |
 | Telegram RSS unreachable | Skip, note it |
-| Calendar access denied | Skip, suggest `! tccutil reset Calendar` |
+| Calendar access denied | Run `icalBuddy calendars` to test access; if denied, suggest `! tccutil reset Calendar` |
 | rss-agent output missing | Skip, note "RSS 精选未找到" |
 | plrom repo not found | Skip plrom diff |
 
@@ -451,8 +454,9 @@ Write the final organized materials to the file.
 | Issue | Fix |
 |-------|-----|
 | Douban RSS returns empty | Douban may block direct RSS; try via RSSHub: `https://rsshub.app/douban/people/niracler/interests` |
-| Calendar date math wrong | Use `current date` with day offsets in AppleScript, not string dates |
+| icalBuddy calendar name mismatch | Run `icalBuddy calendars` to list exact names; adjust `-ic` filter accordingly |
 | Too many Pinboard results | Add tag filter or increase `fromdt` precision |
 | plrom has no commits in range | Normal — plrom updates are infrequent |
 | Telegram RSS has no date filter | Fetch all entries, filter by pubDate in the date range |
 | File already exists | Ask user: overwrite / append / use different name |
+| Output path: 周记 vs 月记 | User may use `月记(Monthly)/` instead of `周记(Weekly)/`. Ask or accept if user specifies a path directly |
