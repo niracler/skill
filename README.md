@@ -21,10 +21,10 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │  $ skill architecture                                    │
 │                                                          │
 │  External Dependencies:                                  │
-│    CLI: git(6) · gh(3) · curl(1) · reminders-cli(2)     │
-│         jq(2) · markdownlint-cli2(2) · osascript(2)     │
-│         aliyun-cli(1) · pre-commit(1)                    │
-│    API: Pinboard(1)                                      │
+│    CLI: git(7) · gh(3) · curl(2) · reminders-cli(3)     │
+│         jq(2) · markdownlint-cli2(2) · osascript(3)     │
+│         aliyun-cli(1) · pre-commit(1) · python3(1)      │
+│    API: Pinboard(2)                                      │
 │    MCP: yunxiao(3) · context7(1)                         │
 │                                                          │
 │  Skill Dependencies:                                     │
@@ -47,16 +47,18 @@ claude plugin marketplace add https://github.com/niracler/skill.git
 │    └╌╌▶ skill-creator           quality audit (built-in)  │
 │    workspace-init ◇ dev-config-template                  │
 │    workspace-planning ◇ dev-config-template              │
+│    biweekly-collector ◆ Pinboard API                     │
 │    pinboard-manager ◆ Pinboard API                       │
 │                                                          │
 │  Groups:                                                 │
 │    Workspace workspace-init · workspace-planning         │
 │    Workflow  git-workflow · yunxiao · schedule-mgr        │
 │             ha-integration-reviewer · markdown-lint      │
-│             skill-reviewer · code-sync · weekly-report    │
+│             skill-reviewer · code-sync · weekly-report   │
 │             pinboard-manager                             │
 │    Writing  writing-assistant · diary-assistant           │
 │             diary-note · note-to-blog                    │
+│             biweekly-collector                            │
 │    Learning anki-card-generator                          │
 │    Fun      zaregoto-miko                                │
 │                                                          │
@@ -97,6 +99,7 @@ Scope: EN-friendly · macOS only · personal/niche
 | [diary-assistant](skills/writing/diary-assistant/SKILL.md) | Daily journal with GTD task review and planning | reminders-cli, schedule-manager | macOS, personal |
 | [diary-note](skills/writing/diary-note/SKILL.md) | Quick-append notes to today's diary (experiences, TIL, insights) | — | |
 | [note-to-blog](skills/writing/note-to-blog/SKILL.md) | Scan Obsidian notes, evaluate blog-readiness, convert and create draft | writing-assistant | personal |
+| [biweekly-collector](skills/writing/biweekly-collector/SKILL.md) | Collect raw materials from 8 sources (diary, Pinboard, Douban, Telegram, Calendar, Reminders, RSS digests, plrom) for personal biweekly diary | curl, reminders-cli, osascript, git, python3, Pinboard API | macOS, personal |
 
 ### Learning
 
