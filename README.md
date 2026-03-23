@@ -99,7 +99,7 @@ Scope: EN-friendly · macOS only · personal/niche
 | [diary-assistant](skills/writing/diary-assistant/SKILL.md) | Daily journal with GTD task review and planning | reminders-cli, schedule-manager | macOS, personal |
 | [diary-note](skills/writing/diary-note/SKILL.md) | Quick-append notes to today's diary (experiences, TIL, insights) | — | |
 | [note-to-blog](skills/writing/note-to-blog/SKILL.md) | Scan Obsidian notes, evaluate blog-readiness, convert and create draft | writing-assistant | personal |
-| [biweekly-collector](skills/writing/biweekly-collector/SKILL.md) | Collect raw materials from 8 sources (diary, Pinboard, Douban, Telegram, Calendar, Reminders, RSS digests, plrom) for personal biweekly diary | curl, reminders-cli, osascript, git, python3, Pinboard API | macOS, personal |
+| [biweekly-collector](skills/writing/biweekly-collector/SKILL.md) | Collect raw materials from 8 sources (diary, Pinboard, Douban, Telegram, Calendar, Reminders, RSS digests, plrom) for personal biweekly diary | curl, reminders-cli, icalBuddy, git, python3, Pinboard API | macOS, personal |
 
 ### Learning
 
