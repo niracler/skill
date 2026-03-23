@@ -248,20 +248,24 @@ Generate three sections following [report-template.md](references/report-templat
 **本周工作总结:**
 
 - Group by project, each header includes phase progress (e.g., `进度 4/6`) when available
-- Each bullet: `**bold key phrase**：` + concrete description with numbers
-- Boss-readable: explain "what was done" + "why it matters", not implementation details
+- Each project 1-2 bullets max, compress into core deliverables
+- Each bullet: `**bold key phrase**：` + business-language description
+- Use domain numbers (接口数、页面数、参数个数), NOT internal numbers (commit 数、PR#)
+- Skip entirely: CI/CD changes, version bumps, SDK sub-releases, upstream open-source contributions, internal process improvements (CLAUDE.md, openspec schema)
+- sunlite and sylsmart are separate projects — never merge them
 
 **下周工作计划:**
 
 - Source from schedule YAML next-week modules + carry-forward items
-- Include time estimates when known (e.g., `（1 天）`)
-- Each bullet: `**bold key phrase**：` + expected outcome
+- Include time estimates when known (e.g., `（2.5 天）`)
+- Each bullet: `**bold key phrase**：` + expected outcome in business terms
+- sunlite and sylsmart must have separate headers with separate time allocations
 
 **其他事项:**
 
+- Carry-forward items from last week's plan that didn't get done, with brief reason
 - Handoffs, blockers, cross-team coordination
-- Carry-forward items from last week's plan that didn't get done
-- Status changes (task transferred to someone else, scope changes, etc.)
+- Keep it concise — no technical explanations in parentheses
 
 ## Step 5: User Review and Write
 
@@ -350,9 +354,15 @@ Present the proposed schedule to the user first — only create after confirmati
 things that need changing. Silence means approval. This is a lesson learned from real usage:
 removing "good" items to make room for user corrections breaks the report.
 
-**Concrete over vague.** Every bullet should have at least one specific number or reference:
-commit count, test coverage, API count, PR/MR number, issue number. "Completed auth module"
-is bad. "Completed auth module (9 endpoints, 91% coverage, MR merged)" is good.
+**Business language, not technical jargon.** The boss does NOT read code. Write what was
+done and what it enables, using domain terms (接口、页面、配置参数、用户可以...). Never use:
+implementation details (Router Factory, Playwright E2E, migration downgrade), internal process
+names (CLAUDE.md, openspec review schema), version bumps (v0.2.0→v0.2.1), commit/PR counts,
+or CI/CD details. These are valuable data for collection but must be translated to
+business outcomes in the final report.
+
+**Concrete with business numbers.** Use domain-relevant numbers: 14 个接口, 17 个页面,
+4 个配置参数, 18 个待确认问题. NOT: 13 commits, PR#78, 91% coverage.
 
 **Match previous report style.** If a previous report exists, mirror its voice, detail level,
 and formatting choices. The goal is consistency across weeks so the boss sees a coherent
