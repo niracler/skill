@@ -4,15 +4,37 @@
 import argparse
 import json
 import math
+import os
+import subprocess
 import sys
+import venv
 from datetime import date, datetime
 from pathlib import Path
+
+VENV_DIR = Path.home() / ".cache" / "claude-skills" / "workspace-planning" / "venv"
+
+
+def _bootstrap_venv() -> None:
+    """Create a venv with PyYAML (if needed) and re-exec using the venv's python."""
+    python = str(VENV_DIR / "bin" / "python")
+    if not (VENV_DIR / "bin" / "python").exists():
+        print(f"PyYAML not found. Bootstrapping venv at {VENV_DIR}...", file=sys.stderr)
+        VENV_DIR.parent.mkdir(parents=True, exist_ok=True)
+        venv.create(str(VENV_DIR), with_pip=True)
+        pip = str(VENV_DIR / "bin" / "pip")
+        subprocess.check_call(
+            [pip, "install", "--quiet", "pyyaml"],
+            stdout=sys.stderr,
+            stderr=sys.stderr,
+        )
+        print("Done.", file=sys.stderr)
+    os.execv(python, [python, *sys.argv])
+
 
 try:
     import yaml
 except ImportError:
-    print("Error: PyYAML is required. Install with: pip install pyyaml", file=sys.stderr)
-    sys.exit(1)
+    _bootstrap_venv()
 
 
 VALID_STATUSES = {"planned", "in_progress", "done", "deferred"}
