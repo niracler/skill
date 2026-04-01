@@ -296,21 +296,24 @@ def cmd_week(args: argparse.Namespace) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Workspace planning CLI")
-    parser.add_argument("--file", "-f", help="Path to schedule YAML file")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    sub.add_parser("review", help="Show schedule progress")
+    p_review = sub.add_parser("review", help="Show schedule progress")
+    p_review.add_argument("--file", "-f", help="Path to schedule YAML file")
 
     p_update = sub.add_parser("update", help="Update module status")
     p_update.add_argument("module_id", help="Module ID")
     p_update.add_argument("--status", "-s", required=True, help="Target status")
+    p_update.add_argument("--file", "-f", help="Path to schedule YAML file")
 
     p_link = sub.add_parser("link", help="Link OpenSpec change to module")
     p_link.add_argument("module_id", help="Module ID")
     p_link.add_argument("--change", "-c", required=True, help="OpenSpec change name")
+    p_link.add_argument("--file", "-f", help="Path to schedule YAML file")
 
     p_week = sub.add_parser("week", help="Show modules for a specific week")
     p_week.add_argument("week", help="Week identifier (e.g. W3)")
+    p_week.add_argument("--file", "-f", help="Path to schedule YAML file")
 
     args = parser.parse_args()
 
