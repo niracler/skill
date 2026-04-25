@@ -48,38 +48,74 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 *Contains forbidden AI markers*
 
-## PR Template
+## PR Description
 
 **Merge strategy**: Squash and merge.
 
-### Body
+**Schema (prose-only — no markdown headings):**
 
-```markdown
-## Summary
-- Key change 1
-- Key change 2
-- Key change 3
+```text
+<type>(<scope>): <imperative subject>      ← title, ≤72 char
 
-## Test plan
-- [ ] Test case 1
-- [ ] Test case 2
-- [ ] Test case 3
+<2-3 declarative sentences explaining *why* this change exists.
+Do not restate what the diff already shows.>
+
+<Optional one-liner pointing the reviewer at the load-bearing file.>
+
+Verify: <one line on how you self-tested, or "N/A: docs only">
 ```
 
-### Example
+The `Verify:` line is also valid as `验证：` when the body is in Chinese — both languages are first-class.
 
-**Title**: `feat(auth): add OAuth2 authentication`
+**Forbidden patterns** (these turn the description into noise):
 
-```markdown
-## Summary
-- Implement OAuth2 flow with Google provider
-- Add token refresh mechanism
-- Update login UI with OAuth button
+1. Markdown section headings inside the description body
+2. Emoji-as-bullet or emoji-headings: 🔧 ✅ 💡 ⚡ 🚀 📝
+3. Commit list / file list / line-count statistics — the diff already shows that
+4. AI filler phrases: "本次变更主要包含", "值得注意的是", "综上所述", "希望对你有帮助" (Chinese); "This PR mainly includes", "It is worth noting that", "In summary" (English)
+5. Collapsible blocks (`<details>`) or tables substituting for bullets
+6. Reflective narration ("I considered A then B but settled on C…") — technical prose is declarative impersonal; design tradeoffs belong in `docs/specs/` or `openspec/changes/`
 
-## Test plan
-- [ ] Test Google OAuth login flow
-- [ ] Verify token refresh works after expiration
-- [ ] Check error handling for failed authentication
+### Examples
+
+#### English — small fix
+
+```text
+fix(sensor): clamp energy reading at 65535
+
+The old firmware wraps the `wh` field back to 0 when power
+exceeds 65W, which breaks HA's historical chart. Clamp at the
+device layer so per-entity defenses are unnecessary. SDK API
+is untouched.
+
+Verify: feed wh=70000 manually; HA shows 65535, not 0.
+```
+
+#### English — refactor
+
+```text
+refactor: move register_listener to entity objects
+
+The global gateway listener forced every integration entity to
+import the gateway singleton, which broke unit tests that spin
+up devices in isolation. Move register_listener() onto
+Device/Group/Scene so entities own their own subscription.
+
+Reviewer hint: src/sdk/device.py is the new home; old gateway.py
+becomes a thin wrapper.
+
+Verify: pytest tests/unit/test_device_listener.py
+```
+
+#### Chinese — illustrating bilingual support
+
+```text
+fix(sensor): align HA history with cumulative meter reading
+
+旧逻辑只汇报实时功率，HA 历史图无法回放整月用电。改为汇报
+累计 wh，由 HA 自己做 derivative。
+
+验证：让 HA 录 24 小时数据，对比物理表读数误差 < 1%。
 ```
 
 ## CHANGELOG Format

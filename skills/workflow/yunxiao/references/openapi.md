@@ -155,7 +155,7 @@ mcp__yunxiao__create_change_request(
     targetBranch="main",
     sourceProjectId=repo_id,
     targetProjectId=repo_id,
-    description="## Summary\n\n- Change 1\n- Change 2",
+    description="Move register_listener onto Device/Group/Scene so entities own their own subscription, removing the gateway singleton import.\n\nVerify: pytest tests/unit/test_device_listener.py",
 )
 ```
 
@@ -246,7 +246,7 @@ aliyun devops UpdateMergeRequest \
   --localId <mr-local-id> \
   --body '{
     "title": "feat: updated title",
-    "description": "## Summary\n\n- Updated description"
+    "description": "Updated prose description: explain why and how to verify."
   }'
 ```
 

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - **biweekly-collector** — New writing skill that collects raw materials from 8 data sources (daily notes, Pinboard, Douban RSS, Telegram RSS, Apple Calendar, Apple Reminders, rss-agent digests, plrom git diff) for personal biweekly diary writing. Includes strict date filtering for Telegram RSS and graceful degradation when sources are unavailable.
 
+### Changed
+
+- **git-workflow / yunxiao** — Switch PR/MR description guidance from a two-section markdown template (Summary + Test plan) to a prose-only schema: subject + 2-3 declarative sentences on *why* + one `Verify:` / `验证：` line. Forbidden patterns now explicit (section headings, emoji-bullets, commit-list copy, AI filler phrases). See `docs/specs/2026-04-25-pr-description-prose-only.md`.
+
 ## [0.2.1] - 2026-03-16
 
 ### Fixed

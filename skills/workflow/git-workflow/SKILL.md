@@ -80,6 +80,7 @@ type(scope): concise summary
   - Has upstream tracking → `git push`
   - No upstream tracking → `git push -u origin <branch>`
 - **Single-purpose commits**: Each commit does one thing. If a change spans multiple types or scopes, split into separate commits before pushing.
+- **PR/MR description is prose, not template**: subject + 2-3 declarative sentences explaining *why* + one `验证：` / `Verify:` line. No markdown section headings inside the description, no emoji-bullets, no commit-list copy-paste. Full schema and forbidden patterns in [examples-and-templates.md](references/examples-and-templates.md#pr-description).
 
 ## Detailed Guides
 
