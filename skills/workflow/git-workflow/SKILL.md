@@ -54,7 +54,7 @@ type(scope): concise summary
 - Keep short and focused
 ```
 
-**Types**: feat, fix, refactor, docs, test, chore
+**Types**: feat, fix, refactor, docs, test, chore, style, ci, perf, build, revert
 
 ### Branch Naming
 
@@ -79,6 +79,7 @@ type(scope): concise summary
 - **Commit always pushes**: After commit, always push immediately. Do not ask.
   - Has upstream tracking → `git push`
   - No upstream tracking → `git push -u origin <branch>`
+- **Single-purpose commits**: Each commit does one thing. If a change spans multiple types or scopes, split into separate commits before pushing.
 
 ## Detailed Guides
 
