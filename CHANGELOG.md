@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **diary-note / diary-assistant** — Add universal "diary is for the writer's future self" rules to `diary-note` SKILL.md (avoid narrator framing, prefer prose over sub-headings, leave hooks not articles). Extend the shared user-config schema with an optional `## 写作风格` section so individual style preferences (bold-as-TLDR, divider char, quote style, em-dash policy, register) layer on top of the universal rules.
+
 ## [0.3.0] - 2026-04-27
 
 ### Added

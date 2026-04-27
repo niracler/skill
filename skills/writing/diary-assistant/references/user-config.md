@@ -25,6 +25,28 @@ related_skills:
   # 注意：日记存储在 Obsidian，不需要 git 提交
 ```
 
+## 写作风格（可选）
+
+可选段。diary-note / diary-assistant 在追加日记内容时，会把这里的偏好叠加在 skill
+的普遍规则（言简意赅、避免 narrator 腔、prose 不带 sub-heading）之上。
+
+如果不写这段，走 skill 的普遍规则即可。
+
+示例（按个人偏好修改或删除）：
+
+```yaml
+# 视觉与排版
+bold_as_tldr: true              # 加粗关键短语作 visual TLDR（每 1-2 段一次）
+section_divider: "--"           # 段内分隔符，避免再嵌一层 markdown sub-heading
+quote_style: "「」"             # 中文角引号 vs 直引号
+em_dash: false                  # 不用 ——、— 作分句符；改用逗号/分号/句号/括号
+
+# 语气
+parenthetical_asides: true      # 允许（筋疲力尽）这类括号补充
+self_deprecating_close: true    # 自嘲式收尾
+register: "工程师口语，不翻译腔"
+```
+
 ## 如何使用
 
 1. 将上述配置根据个人情况修改

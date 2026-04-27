@@ -42,13 +42,18 @@ description: >-
 4. Optional: Anki      (~0min, ask only)
 ```
 
-## Step 1: Locate Diary File
+## Step 1: Locate Diary File and Style Preferences
 
-Diary path configuration is shared with diary-assistant.
+Diary configuration is shared with diary-assistant.
 
 Check for config at `~/.config/nini-skill/diary/user-config.md`.
 If not found, check diary-assistant's `references/user-config.md` as fallback.
 If neither exists, ask the user for their diary path.
+
+After locating the config, **also read the `## 写作风格` section if present**.
+Layer those personal style preferences on top of the universal rules in Step 3
+(formatting, punctuation, voice cues). If the section is absent, the universal
+rules alone are enough.
 
 **File name**: `{YYYY-MM-DD}.md` (today's date).
 
@@ -73,14 +78,35 @@ If the diary file has no section structure, append at the end.
 ## Step 3: Append Content
 
 Write the content provided by the user (or summarized from the conversation)
-to the target section. Format rules:
+to the target section.
 
-- Use bullet points or short paragraphs
-- Preserve the user's voice — don't over-polish
+### Universal rules
+
+- **Diary is for the writer's future self, not for explaining things they already
+  know.** Leave hooks (keywords, dates, context references) instead of unfolding
+  the full story. Aim for "reminder" not "article".
+- **Avoid narrator / reflective framing**. Phrases like 「今天最大的洞察」
+  「之前一直以为……但其实」「借这个机会」「值得记录的是」 are AI-style article
+  openings; strip them. Same in English: "The key insight today is", "What I
+  realized is".
+- **Prefer prose paragraphs over sub-headings inside an entry.** Sub-headings
+  invite filler (an AI will pad bullets to balance them even when there's nothing
+  to say). One H3 per entry is enough; the body should flow as prose. If multiple
+  logical units exist in one entry, separate them with an inline divider (the
+  user's preferred divider lives in `## 写作风格`) rather than another heading.
+- Use bullet points or short paragraphs.
+- Preserve the user's voice — don't over-polish.
 - Add a timestamp prefix if multiple entries exist in the same section:
   `**14:30** — content here`
-- If the user provides raw conversation context (e.g., "record what we just did"),
-  summarize the key takeaways concisely
+- If the user provides raw conversation context ("record what we just did"),
+  summarize the key takeaways concisely.
+
+### Personal style overlay
+
+If `## 写作风格` was found in user-config (Step 1), apply those preferences after
+the universal rules. Common preferences include: bold-as-TLDR, divider character,
+quote style, em-dash policy, register choice. The schema is open; treat each
+listed preference as a directive.
 
 ## Step 4: Optional Anki
 
