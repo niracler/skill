@@ -75,6 +75,7 @@ The `Verify:` line is also valid as `验证：` when the body is in Chinese — 
 4. AI filler phrases: "本次变更主要包含", "值得注意的是", "综上所述", "希望对你有帮助" (Chinese); "This PR mainly includes", "It is worth noting that", "In summary" (English)
 5. Collapsible blocks (`<details>`) or tables substituting for bullets
 6. Reflective narration ("I considered A then B but settled on C…") — technical prose is declarative impersonal; design tradeoffs belong in `docs/specs/` or `openspec/changes/`
+7. Mention of abandoned alternatives or earlier drafts — describe only what is being shipped, not what was tried and rejected. History of the design lives in spec / OpenSpec change docs, not in the PR description.
 
 ### Examples
 
