@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.3.0] - 2026-04-27
 
 ### Added
 
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- **git-workflow / yunxiao** — Switch PR/MR description guidance from a two-section markdown template (Summary + Test plan) to a prose-only schema: subject + 2-3 declarative sentences on *why* + one `Verify:` / `验证：` line. Forbidden patterns now explicit (section headings, emoji-bullets, commit-list copy, AI filler phrases). See `docs/specs/2026-04-25-pr-description-prose-only.md`.
+- **git-workflow / yunxiao** — Switch PR/MR description guidance from a two-section markdown template (Summary + Test plan) to a prose-only schema: subject + 2-3 declarative sentences on *why* + one `Verify:` / `验证：` line. Forbidden patterns now explicit (section headings, emoji-bullets, commit-list copy, AI filler phrases, mention of abandoned alternatives). See `docs/specs/2026-04-25-pr-description-prose-only.md`.
 
 ## [0.2.1] - 2026-03-16
 
@@ -109,6 +109,7 @@ First tagged release. All skills that existed before this point are included.
 - Standardized Prerequisites section across all skills
 - Architecture diagram in README showing skill dependencies and external tool requirements
 
+[0.3.0]: https://github.com/niracler/skill/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/niracler/skill/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/niracler/skill/compare/v0.1.3...v0.2.0
 [0.1.1]: https://github.com/niracler/skill/compare/v0.1.0...v0.1.1
