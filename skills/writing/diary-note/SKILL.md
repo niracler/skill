@@ -85,6 +85,15 @@ to the target section.
 - **Diary is for the writer's future self, not for explaining things they already
   know.** Leave hooks (keywords, dates, context references) instead of unfolding
   the full story. Aim for "reminder" not "article".
+- **Filter for human-side content, not agent-side debugging.** Diary entries
+  should capture the human writer's strategic decisions, principles they
+  articulated, surprises in their own thinking, or experience-level reflections.
+  Agent-side tooling pitfalls (broken pre-commit hooks, MCP API gaps, sandbox
+  SSL hiccups, missed `git add`, plugin install commands) are operational
+  debugging notes — they belong in agent memory (`feedback_*.md`) or workflow
+  READMEs, NOT in the user's diary. When summarizing a session, ask:
+  "would the human want to recall this in 3 months, or is this just what
+  the agent had to fight through to get the job done?"
 - **Avoid narrator / reflective framing**. Phrases like 「今天最大的洞察」
   「之前一直以为……但其实」「借这个机会」「值得记录的是」 are AI-style article
   openings; strip them. Same in English: "The key insight today is", "What I
@@ -101,12 +110,36 @@ to the target section.
 - If the user provides raw conversation context ("record what we just did"),
   summarize the key takeaways concisely.
 
-### Personal style overlay
+### Style precedence
 
-If `## 写作风格` was found in user-config (Step 1), apply those preferences after
-the universal rules. Common preferences include: bold-as-TLDR, divider character,
-quote style, em-dash policy, register choice. The schema is open; treat each
-listed preference as a directive.
+When the diary content includes Chinese prose, apply this layered precedence
+(higher layers override lower layers on conflict):
+
+1. **`tech-doc-style-chinese` skill rules** (highest) — punctuation (`「」`
+   not `“”`, no exclamation marks), 中英留白, term capitalization (`GitHub` /
+   `Codeup` / `OpenSpec` etc. per its extended list), blacklist words
+   (`兜底` / `赋能` / `抓手` …), error-translation table, register guidance
+   (「克制、直接、可执行」). If the `tech-doc-style-chinese` skill is not
+   loaded in the current session, still apply its core conventions where
+   reasonable.
+2. **Universal rules above** (this skill's own rules: reminder hooks,
+   no narrator framing, agent-side filter, prose over sub-headings).
+3. **Personal style overlay** from `## 写作风格` in user-config — bold-as-TLDR,
+   divider character, quote style, em-dash policy, register choice. Apply only
+   for items that don't conflict with layer 1 or 2.
+
+**Common conflict resolutions** (`tech-doc-style-chinese` wins):
+
+- `register: 工程师口语` (user-config) vs 「克制、直接、可执行」 (tech-doc):
+  prefer the more restrained tech-doc register; technical terms can still
+  stay in English (e.g., `provider`, `callback`, `submodule`).
+- `self_deprecating_close: true` (user-config): minimize. Tech-doc avoids
+  decorative closes; if a closing remark is genuinely useful, keep it short
+  and factual rather than self-deprecating (`（笑）`, `（埋雷）` etc.).
+- `parenthetical_asides: true` (user-config): allow brief technical
+  clarifications in parens, but avoid narrator-voice asides.
+- `quote_style`, `em_dash`, `bold_as_tldr`, `section_divider`: typically
+  aligned across both layers, no conflict.
 
 ## Step 4: Optional Anki
 
