@@ -20,6 +20,8 @@ python3 "<skill-dir>/scripts/note-to-blog.py" convert "<full-path-to-note>"
 - Frontmatter set to: title, pubDate (today), tags (merged from frontmatter + inline #tags), hidden: true
 - Wikilinks → plain text, image embeds → standard markdown, callouts → bold, highlights → bold, comments → removed
 - Verify no conversion artifacts or TODO comments from unrecognized syntax
+- **Strip manual heading numbers**: bokushi auto-numbers H2/H3/H4 via CSS counter (`1` / `1.1` / `1.1.1`). Source notes that prefix headings with manual numbers (e.g. `## 1 出题篇`, `### 1.1 NPC`) will render as `1. 1. 出题篇` / `1.1. 1.1 NPC`. Strip the leading number+space before writing. Cross-references like "see 1.2" inside body text stay valid because heading order is preserved.
+- Known regex limitations to manually fix: callout `> [!type]` only converts when type is ASCII (`\w+` breaks on full-width punctuation like `？`); fix Chinese-titled callouts to `> **title**` by hand.
 
 **Step 3 — Generate a description**: Write a one-sentence description for the blog post frontmatter (in the same language as the article content).
 
