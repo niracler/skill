@@ -1,0 +1,20 @@
+{
+  "name": "niracler-skills-marketplace",
+  "interface": {
+    "displayName": "Niracler Skills"
+  },
+  "plugins": [
+    {
+      "name": "niracler-skills",
+      "source": {
+        "source": "local",
+        "path": "."
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
