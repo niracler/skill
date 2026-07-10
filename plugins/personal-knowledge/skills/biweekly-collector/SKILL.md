@@ -110,6 +110,7 @@ Suggest a default based on the last entry's date. Scan both `Areas/生活(Life)/
 ### Determine Title
 
 The 周记 naming convention is `YYYYMM-N-title.md`:
+
 - `YYYYMM`: year-month of the period's end date
 - `N`: the nth entry of that month (1, 2, 3...)
 - `title`: a short descriptive title chosen by the user
@@ -190,11 +191,13 @@ skip it and continue.
 Read each daily note within the date range from `Archives/日记(Daily)/`.
 
 Extract content from three sections:
+
 - `## 1 title Journal` → personal events, reflections, photos
 - `## 2 Work Log` → skim for personal-interest items (skip formal 周报 content)
 - `## 3 Today I Learn` → TIL entries, media impressions
 
 **Output format:**
+
 ```markdown
 #### 3/10 (周一)
 - 在图书馆看了《断舍离》
@@ -217,6 +220,7 @@ curl -s "https://api.pinboard.in/v1/posts/all?auth_token=$PINBOARD_AUTH_TOKEN&fo
 ```
 
 Format each bookmark as:
+
 ```markdown
 - [Title](url) - {description if any} `{tags}`
 ```
@@ -235,6 +239,7 @@ curl -s "https://rsshub.app/douban/people/niracler/interests"
 ```
 
 Parse the RSS/Atom entries. Extract:
+
 - Title (作品名)
 - Category/type (书/电影/音乐/游戏)
 - Rating (if marked)
@@ -242,6 +247,7 @@ Parse the RSS/Atom entries. Extract:
 - Date
 
 Format into the 作品 table rows:
+
 ```markdown
 | 《作品名》 | 电影 | 100% | 8 | 用户的短评 |
 ```
@@ -269,6 +275,7 @@ The feed is standard RSS 2.0 with `<content:encoded>` HTML bodies. Important par
   music shares, ACG content, tech observations, life updates
 
 Use a script to filter strictly:
+
 ```bash
 # Fetch and filter Telegram RSS by date range
 curl -s "https://tg.niracler.com/rss.xml" | python3 -c "
@@ -292,6 +299,7 @@ for item in tree.findall('.//item'):
 ```
 
 Group by hashtag category when possible:
+
 ```markdown
 #### 文章分享 (#pinboard)
 - [Article title](url) - user's comment
@@ -313,6 +321,7 @@ icalBuddy -sd -ic "Personal,Learn&Create" \
 ```
 
 Key flags:
+
 - `-sd`: separate by date (groups events under date headers)
 - `-ic "Personal,Learn&Create"`: include only personal calendars, skip "Work" and
   "Scheduled Reminders" calendars (reminders are captured separately via reminders-cli)
@@ -344,6 +353,7 @@ pure work items (提醒 list items about specific work tasks like "sunlite: swit
 Read the AI-curated daily digest files from `~/code/ai-dev/repos/rss-agent/output/daily/`.
 
 For each day in the range, read `YYYY-MM-DD.md` if it exists. Each daily digest contains:
+
 - AI-scored articles (0-100) with Chinese summaries
 - Two sections: "核心推荐" (4 core focus) and "开拓视野" (3 exploration)
 - Each article has: title, source, score, reasoning, category, personal relevance
@@ -371,6 +381,7 @@ fi
 ```
 
 If there are changes, summarize what was added/removed:
+
 - New people followed (技术博主, 漫画家, UP 主, etc.)
 - New communities joined
 - New tools/products/games discovered
@@ -394,6 +405,7 @@ After all data is collected, organize the materials into the skeleton file creat
 3. **文章 section** — merge Pinboard bookmarks + RSS digest highlights + Telegram shares.
    Deduplicate by URL. Prefer Pinboard entries (they have the user's own description).
    Format like historical 周记 entries:
+
    ```markdown
    - [Title](url) - one-line comment from user or AI summary
    ```
@@ -431,6 +443,7 @@ Show the user a summary of what was collected:
 ```
 
 Ask if the user wants to:
+
 - Adjust the time range and re-collect
 - Remove certain sections
 - Add any manual notes they remembered

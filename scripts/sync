@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 将本仓库的 skills 同步到 ~/.claude/skills/ (via ~/.agents/skills/ + symlink)。
+# 将 plugins 中的 skills 同步到 ~/.claude/skills/（经由 ~/.agents/skills/ 和符号链接）。
 #
 # Usage:
 #   ./scripts/sync                  # 同步全部 skills
@@ -10,7 +10,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-SOURCE_DIR="$REPO_ROOT/skills"
+PLUGINS_DIR="$REPO_ROOT/plugins"
 AGENTS_DIR="$HOME/.agents/skills"
 CLAUDE_DIR="$HOME/.claude/skills"
 
@@ -28,15 +28,24 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# ── 发现 skills（嵌套：skills/category/skill-name/SKILL.md）─────────
+# ── 发现 skills（plugins/plugin-name/skills/skill-name/SKILL.md）───
 # 用两个平行数组代替关联数组（兼容 bash 3.x / macOS）
 SKILL_NAMES=()
 SKILL_DIRS=()
 
-for md in "$SOURCE_DIR"/*/*/SKILL.md; do
+for md in "$PLUGINS_DIR"/*/skills/*/SKILL.md; do
     [[ -f "$md" ]] || continue
     dir="$(dirname "$md")"
-    SKILL_NAMES+=("$(basename "$dir")")
+    name="$(basename "$dir")"
+    if [[ ${#SKILL_NAMES[@]} -gt 0 ]]; then
+        for existing_name in "${SKILL_NAMES[@]}"; do
+            if [[ "$existing_name" == "$name" ]]; then
+                echo "错误: 重复的 skill 名称: $name" >&2
+                exit 1
+            fi
+        done
+    fi
+    SKILL_NAMES+=("$name")
     SKILL_DIRS+=("$dir")
 done
 

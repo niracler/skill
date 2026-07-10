@@ -1,0 +1,34 @@
+{
+  "name": "creative-fun",
+  "version": "0.1.0",
+  "description": "Creative text transformation workflows for playful character-style rewriting",
+  "author": {
+    "name": "Niracler",
+    "email": "i@niracler.com",
+    "url": "https://github.com/niracler"
+  },
+  "homepage": "https://github.com/niracler/skill",
+  "repository": "https://github.com/niracler/skill",
+  "license": "MIT",
+  "keywords": [
+    "creative-writing",
+    "style",
+    "rewrite"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Creative Fun",
+    "shortDescription": "Playful character-style text transformation",
+    "longDescription": "Rewrite supplied text with the distinctive analogy pattern and speaking style defined by the bundled Zaregoto Miko skill.",
+    "developerName": "Niracler",
+    "category": "Creativity",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://github.com/niracler/skill",
+    "defaultPrompt": [
+      "把这段话改成巫女子的说话风格"
+    ],
+    "brandColor": "#E05DAD"
+  }
+}

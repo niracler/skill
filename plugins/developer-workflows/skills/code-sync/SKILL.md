@@ -22,7 +22,7 @@ Default base directory: `~/code`. Configurable via `~/.config/nini-skill/code-sy
 | Tool | Type | Required | Install |
 |------|------|----------|---------|
 | git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
-| git-workflow | skill | Yes | Included in `npx skills add niracler/skill` — **must** be invoked via `Skill` tool for all commits |
+| git-workflow | skill | Yes | Bundled with the `developer-workflows` plugin — **must** be invoked via `Skill` tool for all commits |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 

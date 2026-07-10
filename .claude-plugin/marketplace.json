@@ -10,61 +10,45 @@
   },
   "plugins": [
     {
-      "name": "workspace-skills",
-      "description": "Workspace management: initialization and project planning",
-      "source": "./skills/workspace",
+      "name": "developer-workflows",
+      "description": "Workspace, Git, DevOps, review, linting, and reporting workflows",
+      "source": "./plugins/developer-workflows",
       "strict": false,
       "skills": [
-        "./workspace-init",
-        "./workspace-planning"
+        "./skills/workspace-init",
+        "./skills/workspace-planning",
+        "./skills/git-workflow",
+        "./skills/code-sync",
+        "./skills/ha-integration-reviewer",
+        "./skills/markdown-lint",
+        "./skills/skill-reviewer",
+        "./skills/weekly-report",
+        "./skills/yunxiao"
       ]
     },
     {
-      "name": "workflow-skills",
-      "description": "Workflow automation: Git, sync, devops, linting",
-      "source": "./skills/workflow",
+      "name": "personal-knowledge",
+      "description": "Schedules, bookmarks, diaries, writing, blogging, and learning workflows",
+      "source": "./plugins/personal-knowledge",
       "strict": false,
       "skills": [
-        "./git-workflow",
-        "./ha-integration-reviewer",
-        "./markdown-lint",
-        "./yunxiao",
-        "./schedule-manager",
-        "./skill-reviewer",
-        "./code-sync",
-        "./weekly-report",
-        "./pinboard-manager"
+        "./skills/schedule-manager",
+        "./skills/pinboard-manager",
+        "./skills/writing-assistant",
+        "./skills/diary-assistant",
+        "./skills/diary-note",
+        "./skills/note-to-blog",
+        "./skills/biweekly-collector",
+        "./skills/anki-card-generator"
       ]
     },
     {
-      "name": "writing-skills",
-      "description": "Chinese writing: diary, blog, writing assistant",
-      "source": "./skills/writing",
+      "name": "creative-fun",
+      "description": "Playful character-style text transformation",
+      "source": "./plugins/creative-fun",
       "strict": false,
       "skills": [
-        "./diary-assistant",
-        "./diary-note",
-        "./note-to-blog",
-        "./writing-assistant",
-        "./biweekly-collector"
-      ]
-    },
-    {
-      "name": "learning-skills",
-      "description": "Learning tools: Anki card generation",
-      "source": "./skills/learning",
-      "strict": false,
-      "skills": [
-        "./anki-card-generator"
-      ]
-    },
-    {
-      "name": "fun-skills",
-      "description": "Fun and creative: character voice style conversion",
-      "source": "./skills/fun",
-      "strict": false,
-      "skills": [
-        "./zaregoto-miko"
+        "./skills/zaregoto-miko"
       ]
     }
   ]

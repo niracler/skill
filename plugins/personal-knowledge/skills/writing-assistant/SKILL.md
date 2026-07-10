@@ -23,7 +23,7 @@ description: >-
 | Tool | Type | Required | Install |
 |------|------|----------|---------|
 | markdownlint-cli2 | cli | No | `npx markdownlint-cli2` (no install needed, used in proofreading step 6) |
-| markdown-lint | skill | No | Included in `npx skills add niracler/skill` (for repo setup) |
+| markdown-lint | skill | No | Optional; bundled with the separate `developer-workflows` plugin |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 

@@ -35,7 +35,7 @@ metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["markdownlint-cli2"],"
 **不适用：**
 
 - **单文件检查**：直接运行 `npx markdownlint-cli2 file.md`，不需要走 setup 流程
-- **文章内容审校**：使用 writing-proofreading skill（步骤 6 会引用本 skill）
+- **文章内容审校**：使用 `writing-assistant` skill（该 skill 的步骤 6 会引用本 skill；需安装 `personal-knowledge` plugin）
 
 ## Setup 流程
 

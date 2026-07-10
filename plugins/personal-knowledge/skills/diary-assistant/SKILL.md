@@ -22,8 +22,8 @@ description: >-
 |------|------|----------|---------|
 | macOS | system | Yes | This skill requires macOS |
 | reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
-| schedule-manager | skill | Yes | Included in `npx skills add niracler/skill` |
-| anki-card-generator | skill | No | Included in `npx skills add niracler/skill` |
+| schedule-manager | skill | Yes | Bundled with the `personal-knowledge` plugin |
+| anki-card-generator | skill | No | Bundled with the `personal-knowledge` plugin |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 

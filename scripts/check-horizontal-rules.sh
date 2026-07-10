@@ -13,6 +13,8 @@ for file in "$@"; do
   result=$(awk '
     NR == 1 && /^---[[:space:]]*$/ { fm = 1; next }
     fm && /^---[[:space:]]*$/ { fm = 0; next }
+    !fm && /^[[:space:]]*(```|~~~)/ { fence = !fence; next }
+    fence { next }
     !fm && /^[[:space:]]*[-*_][[:space:]]*[-*_][[:space:]]*[-*_][-*_ ]*$/ {
       printf "%s:%d: horizontal rule found\n", FILENAME, NR
       found = 1

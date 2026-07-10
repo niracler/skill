@@ -20,7 +20,7 @@ description: >-
 |------|------|----------|---------|
 | Python 3 | cli | Yes | Pre-installed on macOS |
 | PyYAML | cli | Yes | `pip install pyyaml` |
-| writing-proofreading | skill | No | Included in `npx skills add niracler/skill` |
+| writing-assistant | skill | No | Bundled with the `personal-knowledge` plugin |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
@@ -28,7 +28,7 @@ description: >-
 
 - 笔记库少于 5 篇时，手动选题更快
 - 只想转换单篇已确定的笔记 — 直接运行 `<skill-dir>/scripts/note-to-blog.py convert "<path>"`
-- 博客草稿已存在，只需校对 — 使用 writing-proofreading
+- 博客草稿已存在，只需校对 — 使用 `writing-assistant`
 
 ## Script Location
 
@@ -258,7 +258,7 @@ Deep Track 完成：
   drafted: N 篇
 
 草稿均为 hidden: true，需要手动 review 后改为 false 发布。
-建议使用 /writing-proofreading 进行审校。
+建议使用 `writing-assistant` 进行审校。
 
 发布后运行:
   python3 <skill-dir>/scripts/note-to-blog.py state publish "<note_path>" --note-repo "<NOTE_REPO>"

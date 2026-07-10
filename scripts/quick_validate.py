@@ -37,6 +37,11 @@ def parse_simple_yaml(text):
     if current_key:
         result[current_key] = '\n'.join(current_value_lines).strip()
 
+    for key, value in result.items():
+        lines = value.splitlines()
+        if lines and lines[0] in {">", ">-", ">+", "|", "|-", "|+"}:
+            result[key] = "\n".join(line.strip() for line in lines[1:]).strip()
+
     return result
 
 
