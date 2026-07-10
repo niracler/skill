@@ -1,0 +1,39 @@
+{
+  "name": "developer-workflows",
+  "version": "0.1.0",
+  "description": "Developer workflows for workspaces, Git, DevOps, reviews, linting, and reporting",
+  "author": {
+    "name": "Niracler",
+    "email": "i@niracler.com",
+    "url": "https://github.com/niracler"
+  },
+  "homepage": "https://github.com/niracler/skill",
+  "repository": "https://github.com/niracler/skill",
+  "license": "MIT",
+  "keywords": [
+    "developer-tools",
+    "git",
+    "workflow",
+    "devops"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Developer Workflows",
+    "shortDescription": "Workspace, Git, DevOps, review, linting, and reporting workflows",
+    "longDescription": "Manage multi-repository workspaces, Git and Yunxiao delivery, Home Assistant reviews, Markdown checks, skill audits, code synchronization, and weekly engineering reports.",
+    "developerName": "Niracler",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/niracler/skill",
+    "defaultPrompt": [
+      "帮我 review 当前改动并生成 commit message",
+      "帮我初始化这个工作区",
+      "帮我写一份软件研发周报"
+    ],
+    "brandColor": "#0F9D58"
+  }
+}
