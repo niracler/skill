@@ -4,41 +4,16 @@ Personal Codex and Claude Code workflows packaged as three installable plugins. 
 
 ## Codex installation
 
-Register the GitHub repository as a Marketplace:
+Register the marketplace and install any needed plugins:
 
 ```bash
 codex plugin marketplace add niracler/skill --ref main
-```
-
-Install only the groups needed for the current environment:
-
-```bash
 codex plugin add developer-workflows@niracler-skills
 codex plugin add personal-knowledge@niracler-skills
 codex plugin add creative-fun@niracler-skills
 ```
 
-Open a new task after installation or upgrade so Codex loads the bundled skills.
-
-### Migrating the old Marketplace name
-
-Repositories registered before this layout used `niracler-skills-marketplace`. Replace that registration once:
-
-```bash
-codex plugin marketplace remove niracler-skills-marketplace
-codex plugin marketplace add niracler/skill --ref main
-```
-
-Then install the required plugins from `niracler-skills`.
-
-### Updating Codex plugins
-
-```bash
-codex plugin marketplace upgrade niracler-skills
-codex plugin add developer-workflows@niracler-skills
-codex plugin add personal-knowledge@niracler-skills
-codex plugin add creative-fun@niracler-skills
-```
+Start a new task after installation so Codex loads the bundled skills.
 
 ## Other installation methods
 
