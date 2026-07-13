@@ -1,7 +1,7 @@
 {
   "name": "developer-workflows",
   "version": "0.1.0",
-  "description": "Developer workflows for Git, repository synchronization, reviews, linting, and reporting",
+  "description": "Developer workflows for Git, repository synchronization, reviews, and linting",
   "author": {
     "name": "Niracler",
     "email": "i@niracler.com",
@@ -19,8 +19,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Developer Workflows",
-    "shortDescription": "Git, repository synchronization, review, linting, and reporting workflows",
-    "longDescription": "Manage Git delivery, Home Assistant reviews, Markdown checks, skill audits, repository synchronization, and weekly engineering reports.",
+    "shortDescription": "Git, repository synchronization, review, and linting workflows",
+    "longDescription": "Manage Git delivery, Home Assistant reviews, Markdown checks, skill audits, and repository synchronization.",
     "developerName": "Niracler",
     "category": "Developer Tools",
     "capabilities": [
@@ -32,7 +32,7 @@
     "defaultPrompt": [
       "帮我 review 当前改动并生成 commit message",
       "帮我检查 Markdown 文档",
-      "帮我写一份软件研发周报"
+      "帮我同步所有 Git 仓库"
     ],
     "brandColor": "#0F9D58"
   }

@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- **Codex Marketplace** — Publish `developer-workflows`, `personal-knowledge`, and `creative-fun` as independent plugins with repository-local manifests and contract validation.
+- **Codex Marketplace** — Publish `developer-workflows`, `personal-knowledge`, `creative-fun`, and the author-only `personal` plugin with repository-local manifests and contract validation.
+- **Personal plugin** — Separate six workflows tied to the author's Obsidian structure, writing preferences, and reporting setup from the general-purpose installation path.
 
 ### Changed
 
 - **Plugin layout** — Move all 15 remaining skills into `plugins/<plugin>/skills/<skill>/` as the single source used by Codex, Claude Code, and the skills CLI. Rename the marketplace from `niracler-skills-marketplace` to `niracler-skills`.
+- **Personal skill language** — Rewrite the six `personal` plugin SKILL.md files so their triggering descriptions, headings, and natural-language instructions use Chinese.
 - **Validation and sync** — Discover bundled skills from plugin directories, reject duplicate skill names, validate marketplace and plugin contracts, and run repository tests through `scripts/validate.sh`.
-- **Skill dependencies** — Replace stale `writing-proofreading` references with `writing-assistant` and document the optional cross-plugin dependency from `writing-assistant` to `markdown-lint`.
+- **Skill dependencies** — Replace stale `writing-proofreading` references with `writing-assistant`, document the required dependency from `diary-assistant` to `schedule-manager`, and retain the optional dependency from `writing-assistant` to `markdown-lint`.
 - **diary-note / diary-assistant** — Add universal "diary is for the writer's future self" rules to `diary-note` SKILL.md (avoid narrator framing, prefer prose over sub-headings, leave hooks not articles). Extend the shared user-config schema with an optional `## 写作风格` section so individual style preferences (bold-as-TLDR, divider char, quote style, em-dash policy, register) layer on top of the universal rules.
 
 ### Removed

@@ -1,6 +1,6 @@
 # Niracler Skills
 
-Personal Codex and Claude Code workflows packaged as three installable plugins. The same bundled skills remain discoverable through the skills CLI.
+Personal Codex and Claude Code workflows packaged as three general-purpose plugins and one author-only plugin. The same bundled skills remain discoverable through the skills CLI.
 
 ## Codex installation
 
@@ -15,6 +15,14 @@ codex plugin add creative-fun@niracler-skills
 
 Start a new task after installation so Codex loads the bundled skills.
 
+## Author-only plugin
+
+The `personal` plugin contains workflows tied to Niracler's local Obsidian structure, writing preferences, and reporting setup. Other users do not need it. It depends on `personal-knowledge` for `schedule-manager`.
+
+```bash
+codex plugin add personal@niracler-skills
+```
+
 ## Other installation methods
 
 Skills CLI:
@@ -27,7 +35,7 @@ npx skills add niracler/skill
 
 ### Developer Workflows
 
-Git, repository synchronization, review, linting, and engineering-report workflows.
+Git, repository synchronization, review, and linting workflows.
 
 | Skill | Purpose | Main dependencies |
 | --- | --- | --- |
@@ -36,22 +44,29 @@ Git, repository synchronization, review, linting, and engineering-report workflo
 | [ha-integration-reviewer](plugins/developer-workflows/skills/ha-integration-reviewer/SKILL.md) | Review Home Assistant integrations | Git, GitHub CLI, Context7 |
 | [markdown-lint](plugins/developer-workflows/skills/markdown-lint/SKILL.md) | Configure and repair Markdown linting | Node.js, markdownlint-cli2 |
 | [skill-reviewer](plugins/developer-workflows/skills/skill-reviewer/SKILL.md) | Audit Agent Skill quality and compatibility | Built-in `skill-creator` |
-| [weekly-report](plugins/developer-workflows/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Reminders, optional GitHub |
 
 ### Personal Knowledge
 
-Schedules, bookmarks, diaries, writing, blogging, and learning workflows.
+Reusable scheduling, bookmark, and learning workflows.
 
 | Skill | Purpose | Main dependencies |
 | --- | --- | --- |
 | [schedule-manager](plugins/personal-knowledge/skills/schedule-manager/SKILL.md) | Manage Apple Calendar and Reminders | macOS, reminders-cli |
 | [pinboard-manager](plugins/personal-knowledge/skills/pinboard-manager/SKILL.md) | Audit and maintain Pinboard bookmarks | curl, Pinboard API |
-| [writing-assistant](plugins/personal-knowledge/skills/writing-assistant/SKILL.md) | Plan, review, and polish personal writing | Optional `markdown-lint` from Developer Workflows |
-| [diary-assistant](plugins/personal-knowledge/skills/diary-assistant/SKILL.md) | Run a guided daily-journal workflow | macOS, `schedule-manager` |
-| [diary-note](plugins/personal-knowledge/skills/diary-note/SKILL.md) | Append short notes to the current diary | None |
-| [note-to-blog](plugins/personal-knowledge/skills/note-to-blog/SKILL.md) | Convert Obsidian notes into blog drafts | Python, PyYAML, optional `writing-assistant` |
-| [biweekly-collector](plugins/personal-knowledge/skills/biweekly-collector/SKILL.md) | Collect material for a personal biweekly diary | macOS, curl, Git, Pinboard API |
 | [anki-card-generator](plugins/personal-knowledge/skills/anki-card-generator/SKILL.md) | Generate atomic Anki cards | None |
+
+### Personal
+
+Author-specific Chinese workflows for diaries, writing, blogging, and reporting.
+
+| Skill | Purpose | Main dependencies |
+| --- | --- | --- |
+| [writing-assistant](plugins/personal/skills/writing-assistant/SKILL.md) | Plan, review, and polish personal writing | Optional `markdown-lint` from Developer Workflows |
+| [diary-assistant](plugins/personal/skills/diary-assistant/SKILL.md) | Run a guided daily-journal workflow | macOS, `schedule-manager` from Personal Knowledge |
+| [diary-note](plugins/personal/skills/diary-note/SKILL.md) | Append short notes to the current diary | None |
+| [note-to-blog](plugins/personal/skills/note-to-blog/SKILL.md) | Convert Obsidian notes into blog drafts | Python, PyYAML, optional `writing-assistant` |
+| [biweekly-collector](plugins/personal/skills/biweekly-collector/SKILL.md) | Collect material for a personal biweekly diary | macOS, curl, Git, Pinboard API |
+| [weekly-report](plugins/personal/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Reminders, optional GitHub |
 
 ### Creative Fun
 
@@ -61,7 +76,7 @@ Schedules, bookmarks, diaries, writing, blogging, and learning workflows.
 
 ## Dependency notes
 
-Required skill dependencies stay inside each plugin. The only cross-plugin relationship is optional: `writing-assistant` can use `markdown-lint` when Developer Workflows is also installed.
+The author-only Personal plugin requires `schedule-manager` from Personal Knowledge for its full diary workflow. It can optionally use `markdown-lint` from Developer Workflows when reviewing writing.
 
 Several skills depend on local applications, CLI tools, APIs, MCP servers, or personal paths. Each `SKILL.md` documents its own prerequisites and fallback behavior.
 

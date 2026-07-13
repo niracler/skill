@@ -1,0 +1,39 @@
+{
+  "name": "personal",
+  "version": "0.1.0",
+  "description": "Author-specific workflows for diaries, writing, blogging, and weekly reports",
+  "author": {
+    "name": "Niracler",
+    "email": "i@niracler.com",
+    "url": "https://github.com/niracler"
+  },
+  "homepage": "https://github.com/niracler/skill",
+  "repository": "https://github.com/niracler/skill",
+  "license": "MIT",
+  "keywords": [
+    "diary",
+    "writing",
+    "obsidian",
+    "personal"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Personal",
+    "shortDescription": "Author-specific diary, writing, blogging, and reporting workflows",
+    "longDescription": "Work with Niracler's Obsidian diary, personal writing style, blog pipeline, biweekly journal, and software-engineering weekly report.",
+    "developerName": "Niracler",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/niracler/skill",
+    "defaultPrompt": [
+      "帮我写今天的日记",
+      "把这条灵感记到今天的日记",
+      "从 Obsidian 笔记中挑选适合发布的博客"
+    ],
+    "brandColor": "#7B61FF"
+  }
+}

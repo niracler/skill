@@ -15,7 +15,6 @@ EXPECTED_PLUGINS = {
             "ha-integration-reviewer",
             "markdown-lint",
             "skill-reviewer",
-            "weekly-report",
         },
     },
     "personal-knowledge": {
@@ -23,17 +22,23 @@ EXPECTED_PLUGINS = {
         "skills": {
             "schedule-manager",
             "pinboard-manager",
-            "writing-assistant",
-            "diary-assistant",
-            "diary-note",
-            "note-to-blog",
-            "biweekly-collector",
             "anki-card-generator",
         },
     },
     "creative-fun": {
         "category": "Creativity",
         "skills": {"zaregoto-miko"},
+    },
+    "personal": {
+        "category": "Productivity",
+        "skills": {
+            "writing-assistant",
+            "diary-assistant",
+            "diary-note",
+            "note-to-blog",
+            "biweekly-collector",
+            "weekly-report",
+        },
     },
 }
 
@@ -102,6 +107,32 @@ class PluginRepositoryContractTest(unittest.TestCase):
     def test_legacy_aggregate_layout_is_removed(self) -> None:
         self.assertFalse((REPO_ROOT / ".codex-plugin").exists())
         self.assertFalse((REPO_ROOT / "skills").exists())
+
+    def test_personal_skills_use_chinese_instructions(self) -> None:
+        skills_root = REPO_ROOT / "plugins" / "personal" / "skills"
+
+        for skill_name in EXPECTED_PLUGINS["personal"]["skills"]:
+            content = (skills_root / skill_name / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
+            frontmatter = content.split("---", 2)[1]
+            self.assertRegex(frontmatter, r"description:[\s\S]*[\u4e00-\u9fff]")
+
+            in_fence = False
+            headings: list[str] = []
+            for line in content.splitlines():
+                if line.startswith("```"):
+                    in_fence = not in_fence
+                elif not in_fence and line.startswith("#"):
+                    headings.append(line)
+
+            self.assertTrue(headings, f"{skill_name} must contain headings")
+            for heading in headings:
+                self.assertRegex(
+                    heading,
+                    r"[\u4e00-\u9fff]",
+                    f"{skill_name} heading must use Chinese: {heading}",
+                )
 
 
 if __name__ == "__main__":

@@ -2,30 +2,27 @@
 name: diary-assistant
 metadata: {"openclaw":{"emoji":"📔","requires":{"bins":["osascript","reminders-cli"],"skills":["schedule-manager"]}}}
 description: >-
-  (macOS, requires schedule-manager) Use this skill whenever the user wants to write
-  a personal diary entry or daily journal — this includes any request to record today's
-  events, write a diary, log what happened today, or capture personal reflections.
-  Invoke immediately for phrases like 帮我写日记, 写日记, 记录今天, 今天的日记,
-  "write my diary", or "daily log". This skill guides a complete journaling session:
-  reviewing today's tasks from Reminders, reflective guided questions, composing the
-  entry, and scheduling follow-up plans. Distinct from diary-note (quick append) and
-  weekly-report (work summary).
+  （仅限 macOS，依赖 schedule-manager）用于完成一次完整的个人日记写作：回顾
+  Reminders 中的今日任务，通过启发式问题整理当天经历与感受，形成日记，并把后续计划
+  写入提醒事项。用户提到「帮我写日记」「写日记」「记录今天」「今天的日记」以及
+  "write my diary" 或 "daily log" 时立即使用。快速追加内容使用 diary-note；整理工作
+  周报使用 weekly-report。
 ---
 
-# Diary Assistant
+# 日记助手
 
 日记写作助手，提供完整的日记工作流，包含任务回顾、启发提问和任务捕获。
 
-## Prerequisites
+## 前置条件
 
-| Tool | Type | Required | Install |
+| 工具 | 类型 | 必需 | 安装方式 |
 |------|------|----------|---------|
-| macOS | system | Yes | This skill requires macOS |
-| reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
-| schedule-manager | skill | Yes | Bundled with the `personal-knowledge` plugin |
-| anki-card-generator | skill | No | Bundled with the `personal-knowledge` plugin |
+| macOS | 系统 | 是 | 此 skill 仅支持 macOS |
+| reminders-cli | CLI | 是 | `brew install keith/formulae/reminders-cli` |
+| schedule-manager | skill | 是 | 由 `personal-knowledge` plugin 提供 |
+| anki-card-generator | skill | 否 | 由 `personal-knowledge` plugin 提供 |
 
-> Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
+> 加载 skill 时不要主动检查这些工具。命令因缺少工具而失败时，再逐步引导完成安装和配置。
 
 ## 核心原则
 
@@ -48,7 +45,7 @@ description: >-
          │
          ▼
   ┌────────────────────────────────────┐
-  │ 1. Pre-Diary Clarification  (~1min) │
+  │ 1. 写日记前确认            (~1min) │
   │    确认日期：2026-01-29.md         │
   └──────┬─────────────────────────────┘
          │
@@ -98,7 +95,7 @@ description: >-
       └──────┘
 ```
 
-## 1. Pre-Diary Clarification
+## 1. 写日记前确认
 
 开始前确认日期和文件：
 
@@ -216,7 +213,7 @@ reminders add "提醒" "开会" --due-date "friday"
 |----------|----------|
 | TIL（今天学到的东西） | 「检测到你今天学了新东西，要生成 Anki 卡片吗？」→ 调用 `anki-card-generator` |
 
-**注意：** 日记存储在 Obsidian（iCloud 同步），不需要 git 提交。
+**注意：** 日记存储在 Obsidian（iCloud 同步），不需要 Git 提交。
 
 ## 时间预算
 

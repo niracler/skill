@@ -19,8 +19,7 @@
         "./skills/code-sync",
         "./skills/ha-integration-reviewer",
         "./skills/markdown-lint",
-        "./skills/skill-reviewer",
-        "./skills/weekly-report"
+        "./skills/skill-reviewer"
       ]
     },
     {
@@ -31,11 +30,6 @@
       "skills": [
         "./skills/schedule-manager",
         "./skills/pinboard-manager",
-        "./skills/writing-assistant",
-        "./skills/diary-assistant",
-        "./skills/diary-note",
-        "./skills/note-to-blog",
-        "./skills/biweekly-collector",
         "./skills/anki-card-generator"
       ]
     },
@@ -46,6 +40,20 @@
       "strict": false,
       "skills": [
         "./skills/zaregoto-miko"
+      ]
+    },
+    {
+      "name": "personal",
+      "description": "Author-specific diary, writing, blogging, and reporting workflows",
+      "source": "./plugins/personal",
+      "strict": false,
+      "skills": [
+        "./skills/diary-assistant",
+        "./skills/diary-note",
+        "./skills/biweekly-collector",
+        "./skills/note-to-blog",
+        "./skills/writing-assistant",
+        "./skills/weekly-report"
       ]
     }
   ]
