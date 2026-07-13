@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-13
+
 ### Added
 
 - **Codex Marketplace** — Publish `developer-workflows`, `personal-knowledge`, `creative-fun`, and the author-only `personal` plugin with repository-local manifests and contract validation.
 - **Personal plugin** — Separate six workflows tied to the author's Obsidian structure, writing preferences, and reporting setup from the general-purpose installation path.
+- **Repository guidance** — Add root `AGENTS.md` with repository-specific plugin layout, Personal content boundaries, documentation synchronization, and validation commands.
 
 ### Changed
 
@@ -19,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **Validation and sync** — Discover bundled skills from plugin directories, reject duplicate skill names, validate marketplace and plugin contracts, and run repository tests through `scripts/validate.sh`.
 - **Skill dependencies** — Replace stale `writing-proofreading` references with `writing-assistant`, document the required dependency from `diary-assistant` to `schedule-manager`, and retain the optional dependency from `writing-assistant` to `markdown-lint`.
 - **diary-note / diary-assistant** — Add universal "diary is for the writer's future self" rules to `diary-note` SKILL.md (avoid narrator framing, prefer prose over sub-headings, leave hooks not articles). Extend the shared user-config schema with an optional `## 写作风格` section so individual style preferences (bold-as-TLDR, divider char, quote style, em-dash policy, register) layer on top of the universal rules.
+- **weekly-report** — Rewrite the workflow and template in Chinese, collect from Obsidian, Meegle, GitLab, GitHub, and local Git, support alternating five- and six-day workweeks, and schedule confirmed plans in Apple Calendar.
+- **git-workflow** — Preserve unrelated worktree changes, create or update PRs/MRs after feature-branch commits, require explicit intent for direct default-branch pushes, and choose PR/MR language from the reviewer audience.
 
 ### Removed
 
@@ -128,6 +133,8 @@ First tagged release. All skills that existed before this point are included.
 - Standardized Prerequisites section across all skills
 - Architecture diagram in README showing skill dependencies and external tool requirements
 
+[Unreleased]: https://github.com/niracler/skill/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/niracler/skill/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/niracler/skill/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/niracler/skill/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/niracler/skill/compare/v0.1.3...v0.2.0
