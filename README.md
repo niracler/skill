@@ -15,14 +15,6 @@ codex plugin add creative-fun@niracler-skills
 
 Start a new task after installation so Codex loads the bundled skills.
 
-## Author-only plugin
-
-The `personal` plugin contains workflows tied to Niracler's local Obsidian structure, writing preferences, and reporting setup. Other users do not need it. It depends on `personal-knowledge` for `schedule-manager`.
-
-```bash
-codex plugin add personal@niracler-skills
-```
-
 ## Other installation methods
 
 Skills CLI:
