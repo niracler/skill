@@ -20,8 +20,8 @@ Standardized Git workflow for commits, pull requests, and releases using convent
 
 | Tool | Type | Required | Install |
 |------|------|----------|---------|
-| git | cli | Yes | `brew install git` or [git-scm.com](https://git-scm.com/) |
-| gh | cli | No | `brew install gh` then `gh auth login` (required for PR and Release) |
+| git | cli | Yes | Install from [git-scm.com](https://git-scm.com/downloads) |
+| gh | cli | No | Install from [cli.github.com](https://cli.github.com/), then run `gh auth login` (required for GitHub PRs and releases) |
 
 > Do NOT proactively verify these tools on skill load. If a command fails due to a missing tool, directly guide the user through installation and configuration step by step.
 
@@ -75,11 +75,15 @@ type(scope): concise summary
 
 - **Keep messages concise**: Commit messages and PR titles must be short and to the point. Omit filler words. The diff shows "what" — the message explains "why".
 - **No AI signatures**: Never include `Co-Authored-By: Claude`, `Generated with Claude Code`, or any AI markers in commits or PRs.
-- **Commit always pushes**: After commit, always push immediately. Do not ask.
+- **Preserve unrelated changes**: Inspect the worktree before staging. Stage only the requested scope; use patch staging when one file also contains unrelated edits.
+- **Commit always pushes**: After commit, push immediately unless the user explicitly requests a local-only commit.
   - Has upstream tracking → `git push`
   - No upstream tracking → `git push -u origin <branch>`
+- **Feature-branch commits include PR/MR handling**: After pushing a non-default branch, check for an existing open PR/MR from that branch. Update it when its title, description, or verification is stale; otherwise leave it unchanged. If none exists, create one. Stop before PR/MR handling only when the user explicitly requests commit-only, push-only, or no PR/MR.
+- **Default-branch writes require explicit intent**: Push directly to the default branch only when the user explicitly requests it. Otherwise create or use a feature branch.
 - **Single-purpose commits**: Each commit does one thing. If a change spans multiple types or scopes, split into separate commits before pushing.
 - **PR/MR description is prose, not template**: subject + 2-3 declarative sentences explaining *why* + one `验证：` / `Verify:` line. No markdown section headings inside the description, no emoji-bullets, no commit-list copy-paste. Full schema and forbidden patterns in [examples-and-templates.md](references/examples-and-templates.md#pr-description).
+- **PR/MR language follows the audience**: Honor an explicit language request first. Otherwise infer the primary reviewer language from repository documentation, recent PRs/MRs, and named reviewers. Use English for international, mixed-language, or uncertain audiences; use Chinese only when the audience is clearly Chinese-speaking. Do not infer the PR/MR language from the conversation language alone.
 
 ## Detailed Guides
 
@@ -104,19 +108,24 @@ The validator checks:
 
 ## Common Workflows
 
-### Commit (default: commit + push)
+### Commit (default: commit + push + feature-branch PR/MR)
 
 ```bash
+git status --short
 git add <files>
-git commit -m "feat(component): add new feature" && git push
+git commit -m "feat(component): add new feature"
+git push
+# On a non-default branch: update the existing PR/MR or create one.
 ```
 
 ### Pull Request
 
 ```bash
 git checkout -b feature/new-feature
-# ... make changes, commit (auto-pushes per default behavior) ...
-gh pr create --title "feat(component): add new feature" --body "..."
+# ... make changes, commit, and push ...
+gh pr list --head feature/new-feature --state open
+# Existing PR: gh pr edit <number> --title "..." --body "..."
+# No PR: gh pr create --title "..." --body "..."
 ```
 
 ### Release
@@ -136,4 +145,6 @@ gh release create v1.2.0 -R owner/repo --title "v1.2.0" --notes "..."
 | Subject line > 72 chars | Description too long | Shorten summary, put details in body |
 | Multiple types in one commit | Scope too large | Split into single-purpose commits |
 | Merge commits appear | Used merge | Use `git pull --rebase` |
+| Duplicate PR/MR | Existing branch request was not checked | Search by head/source branch before creating |
+| Wrong PR/MR language | Conversation language was used as the default | Infer the reviewer audience from repository evidence |
 | Validator script errors | Format mismatch | Check type(scope): format |

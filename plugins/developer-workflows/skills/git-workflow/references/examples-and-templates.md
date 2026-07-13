@@ -1,5 +1,11 @@
 # Examples and Templates
 
+## Contents
+
+- [Commit Examples](#commit-examples)
+- [PR Description](#pr-description)
+- [CHANGELOG Format](#changelog-format)
+
 ## Commit Examples
 
 ### Good
@@ -52,6 +58,15 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 **Merge strategy**: Squash and merge.
 
+**Language selection:**
+
+1. Follow an explicit language request.
+2. Otherwise inspect repository documentation, recent PRs/MRs, and named reviewers.
+3. Use English for international, mixed-language, or uncertain audiences.
+4. Use Chinese only when the audience is clearly Chinese-speaking.
+
+The conversation language alone does not determine the PR/MR language. Keep the title and body in the same language unless the repository has an explicit mixed-language convention.
+
 **Schema (prose-only — no markdown headings):**
 
 ```text
@@ -65,7 +80,7 @@ Do not restate what the diff already shows.>
 Verify: <one line on how you self-tested, or "N/A: docs only">
 ```
 
-The `Verify:` line is also valid as `验证：` when the body is in Chinese — both languages are first-class.
+Use `Verify:` with an English body and `验证：` with a Chinese body.
 
 **Forbidden patterns** (these turn the description into noise):
 
