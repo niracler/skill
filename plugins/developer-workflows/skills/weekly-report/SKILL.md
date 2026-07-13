@@ -4,8 +4,8 @@ description: >-
   Use this skill whenever the user wants to write or generate a structured weekly
   work report (软件研发周报) — the formal 3-section corporate format with 本周工作总结,
   下周工作计划, and 其他事项. This skill automatically collects data from git logs,
-  Obsidian diary Work Log entries, schedule YAML files, GitHub PRs, and 云效 MRs/tasks
-  to draft the report. Invoke when the user says 周报, 软件研发周报, 本周工作总结,
+  Obsidian diary Work Log entries, and GitHub PRs to draft the report. Invoke when
+  the user says 周报, 软件研发周报, 本周工作总结,
   写周报, weekly report, end-of-week summary, or asks to prepare a work summary for
   their manager/team. Do NOT use for personal diary entries, monthly reviews,
   OKR summaries, meeting notes, or quarterly retrospectives.
@@ -13,8 +13,8 @@ description: >-
 
 # Weekly Report
 
-软件研发周报生成助手。自动扫描 `~/code/` 下所有项目的 schedule YAML 和 git log，
-结合前几周周报做对比，生成结构化的三段式周报，写入 Obsidian 日记。
+软件研发周报生成助手。自动扫描 `~/code/` 下所有项目的 Git 日志，结合前几周周报
+做对比，生成结构化的三段式周报，写入 Obsidian 日记。
 
 ## Prerequisites
 
@@ -24,15 +24,13 @@ description: >-
 | reminders-cli | cli | Yes | `brew install keith/formulae/reminders-cli` |
 | macOS Calendar | system | Yes | Built-in, access via `osascript` |
 | gh | cli | No | `brew install gh` then `gh auth login` — for GitHub PR/Issue data |
-| yunxiao | skill | No | For 云效 MR/Task/Bug data (invoke via Skill tool) |
 
 ### Path Dependencies
 
 | Path | Purpose | Required |
 |------|---------|----------|
-| `~/code/*/` | Monorepo workspaces (git repos + schedule YAMLs) | Yes |
-| `~/code/*/planning/schedules/*.yaml` | Project schedule definitions | No (skip projects without schedule) |
-| `~/code/*/repos/*/` | Sub-repos within each monorepo workspace | No (scanned automatically if present) |
+| `~/code/*/` | Project repositories | Yes |
+| `~/code/*/repos/*/` | Nested repositories | No (scanned automatically if present) |
 | Obsidian daily notes directory | Daily diary files with Work Log entries + report output | Yes |
 
 The Obsidian vault path is auto-detected by scanning `~/Library/Mobile Documents/iCloud~md~obsidian/`.
@@ -69,10 +67,8 @@ If not found, ask the user.
   ┌─────────────────────────────────────────────────┐
   │ 3. 并行数据收集（subagent）          (~3-5min)   │
   │    ┌─ 本周日记 Work Log（各工作日）              │
-  │    ├─ Schedule YAML（本周 + 下周模块）           │
   │    ├─ Git log（~/code/*/ 全扫描）                │
-  │    ├─ GitHub PR/Issue（gh CLI）                  │
-  │    └─ 云效 MR/Task/Bug（yunxiao skill）          │
+  │    └─ GitHub PR/Issue（gh CLI）                  │
   └──────┬──────────────────────────────────────────┘
          │
          ▼
@@ -124,7 +120,7 @@ If no previous report found, skip comparison and proceed — this is normal for 
 
 ## Step 3: Parallel Data Collection
 
-Launch subagents concurrently. The five data sources are independent — run as many in
+Launch subagents concurrently. The three data sources are independent — run as many in
 parallel as possible. If any source fails or is unavailable, skip it and continue.
 
 ### 3a. Daily Notes (Work Log)
@@ -136,23 +132,9 @@ This is the richest data source — daily work logs often contain context, decis
 details that git commits and PR titles don't capture. Prioritize this content when
 writing the report.
 
-### 3b. Schedule YAML Scan
+### 3b. Git Log Collection
 
-Scan `~/code/*/planning/schedules/*.yaml` — same directory structure as code-sync
-(`~/code/*/` monorepo workspaces).
-
-For each YAML found:
-
-1. Read `project`, `title`, `timeline.start`, `phases`, `modules`
-2. Calculate the current week number: `ceil((today - timeline.start) / 7)`
-3. Extract modules where `weeks` includes current week → this week's work
-4. Extract modules where `weeks` includes next week → next week's plan
-5. Count `status: done` modules in current phase → progress fraction (e.g., 4/6)
-
-### 3c. Git Log Collection
-
-Scan `~/code/*/` and `~/code/*/repos/*/` for git repos (same candidates as code-sync's
-scan.sh pattern), then for each:
+Scan `~/code/*/` and `~/code/*/repos/*/` for Git repositories, then for each:
 
 ```bash
 git log --oneline --since="{monday}" --until="{saturday}" --author="{user}" --all
@@ -160,10 +142,10 @@ git log --oneline --since="{monday}" --until="{saturday}" --author="{user}" --al
 
 Where `{user}` is from `git config user.name`.
 
-Group commits by workspace → repo. This supplements the daily notes — useful for catching
+Group commits by project → repository. This supplements the daily notes — useful for catching
 work the user forgot to log in their diary.
 
-### 3d. GitHub Activity (if `gh` available)
+### 3c. GitHub Activity (if `gh` available)
 
 ```bash
 # PRs authored this week
@@ -176,22 +158,6 @@ gh search issues --author=@me --created="{monday}..{saturday}" --json repository
 Include merged PRs, open PRs, and closed issues in the report. PR numbers and titles
 provide concrete references for the boss.
 
-### 3e. 云效 Activity (if yunxiao skill available)
-
-Spawn a subagent to invoke yunxiao skill via Skill tool:
-
-```text
-Agent tool:
-- subagent_type: general-purpose
-- prompt: |
-    Invoke the yunxiao skill to query work activity from {monday} to {friday}.
-    Get: MRs authored (merged + open), Tasks assigned (modified this week),
-    Bugs assigned (modified this week).
-    Return: list of items with identifier, title, status, and dates.
-```
-
-MR numbers (e.g., MR#67) and task identifiers (e.g., YWQO-4) add traceability to the report.
-
 ### Data Source Priority
 
 When the same work appears in multiple sources, merge intelligently:
@@ -199,21 +165,17 @@ When the same work appears in multiple sources, merge intelligently:
 | Priority | Source | Strength |
 |---|---|---|
 | 1 | Daily notes | Most context, user's own words, decisions and reasoning |
-| 2 | Schedule YAML | Structured progress, phase tracking, module status |
-| 3 | GitHub / 云效 | Concrete references (PR#, MR#, issue#, task ID) |
-| 4 | Git log | Catch unreported work, verify claims |
+| 2 | GitHub | Concrete references (PR#, issue#) |
+| 3 | Git log | Catch unreported work, verify claims |
 
-The daily notes provide the narrative; schedule YAML provides structure; GitHub/云效
-provide traceability; git log fills gaps.
+The daily notes provide the narrative; GitHub provides traceability; Git logs fill gaps.
 
 ### Data Source Degradation
 
 | Source unavailable | Behavior |
 |---|---|
 | Daily notes missing for some days | Use available days, note gaps |
-| No schedule YAML for a project | Include project based on git/daily notes alone, omit progress fraction |
 | `gh` not installed or auth failed | Skip GitHub data, note "GitHub 数据未获取" |
-| yunxiao skill unavailable | Skip 云效 data, note "云效数据未获取" |
 | Git log returns nothing | Project may have had non-code work (meetings, design) — check daily notes |
 | All remote sources fail | Proceed with daily notes + git log only |
 
@@ -235,9 +197,8 @@ Compare last week's 「下周工作计划」 against this week's actual output:
 Do not hardcode groups. Instead, derive grouping from:
 
 1. **Previous report** (if exists): reuse the same project display names and grouping
-2. **Schedule YAML `title` field**: use as display name
-3. **Common sense merging**: repos under the same `~/code/<workspace>/` that share a
-   schedule can be grouped together
+2. **Daily notes**: use the project names already used by the author
+3. **Repository layout**: group nested repositories under the same project when appropriate
 
 Omit projects with zero activity this week.
 
@@ -247,7 +208,7 @@ Generate three sections following [report-template.md](references/report-templat
 
 **本周工作总结:**
 
-- Group by project, each header includes phase progress (e.g., `进度 4/6`) when available
+- Group by project and reuse established display names when available
 - Each project 1-2 bullets max, compress into core deliverables
 - Each bullet: `**bold key phrase**：` + business-language description
 - Use domain numbers (接口数、页面数、参数个数), NOT internal numbers (commit 数、PR#)
@@ -256,7 +217,7 @@ Generate three sections following [report-template.md](references/report-templat
 
 **下周工作计划:**
 
-- Source from schedule YAML next-week modules + carry-forward items
+- Source from carry-forward items, daily notes, Reminders, and explicit user input
 - Include time estimates when known (e.g., `（2.5 天）`)
 - Each bullet: `**bold key phrase**：` + expected outcome in business terms
 - sunlite and sylsmart must have separate headers with separate time allocations
@@ -373,7 +334,6 @@ narrative, not a different writing style each time.
 | Issue | Fix |
 |-------|-----|
 | No daily notes found | Verify Obsidian vault path, check iCloud sync status |
-| Schedule YAML parse error | Validate YAML syntax, check `timeline.start` date format |
 | Previous report not found | Normal for first week — skip accountability check |
 | `gh search` returns 0 results | Check date range format, verify `gh auth status` |
 | Calendar "工作" not found | Run `osascript -e 'tell application "Calendar" to get name of calendars'` to list available calendars, use an existing one |

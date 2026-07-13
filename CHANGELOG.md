@@ -13,10 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- **Plugin layout** — Move all 18 skills into `plugins/<plugin>/skills/<skill>/` as the single source used by Codex, Claude Code, and the skills CLI. Rename the marketplace from `niracler-skills-marketplace` to `niracler-skills`.
+- **Plugin layout** — Move all 15 remaining skills into `plugins/<plugin>/skills/<skill>/` as the single source used by Codex, Claude Code, and the skills CLI. Rename the marketplace from `niracler-skills-marketplace` to `niracler-skills`.
 - **Validation and sync** — Discover bundled skills from plugin directories, reject duplicate skill names, validate marketplace and plugin contracts, and run repository tests through `scripts/validate.sh`.
 - **Skill dependencies** — Replace stale `writing-proofreading` references with `writing-assistant` and document the optional cross-plugin dependency from `writing-assistant` to `markdown-lint`.
 - **diary-note / diary-assistant** — Add universal "diary is for the writer's future self" rules to `diary-note` SKILL.md (avoid narrator framing, prefer prose over sub-headings, leave hooks not articles). Extend the shared user-config schema with an optional `## 写作风格` section so individual style preferences (bold-as-TLDR, divider char, quote style, em-dash policy, register) layer on top of the universal rules.
+
+### Removed
+
+- **workspace-init / workspace-planning / yunxiao** — Remove the unused skills and their marketplace entries, plugin metadata, contract expectations, and integrations from weekly-report, schedule-manager, and git-workflow.
 
 ## [0.3.0] - 2026-04-27
 

@@ -7,8 +7,8 @@ description: >-
   Triggers on: 「帮我提交」「commit」「提交代码」「创建 PR」「发布版本」「打 tag」
   「推代码」, or English equivalents like "commit my changes", "create a pull
   request", "release v", "write a commit message", "push this branch". Do NOT
-  trigger for: bulk repo syncing (use code-sync), general git questions without
-  commit/PR intent, or Yunxiao MR creation (use yunxiao skill).
+  trigger for: bulk repo syncing (use code-sync) or general git questions without
+  commit/PR intent.
 metadata: {"openclaw":{"emoji":"📝","requires":{"bins":["git"],"anyBins":["gh"]}}}
 ---
 
@@ -40,7 +40,6 @@ Check `git remote get-url origin` to select workflow:
 | Remote URL contains | Commits/Tags/Releases | PR/MR                            |
 | ------------------- | --------------------- | -------------------------------- |
 | `github.com`        | This skill            | This skill (`gh pr create`)      |
-| `codeup.aliyun.com` | This skill            | **Switch to `yunxiao` skill**    |
 | `gitlab.com`        | This skill            | This skill (adapt for GitLab CLI) |
 
 ## Quick Reference

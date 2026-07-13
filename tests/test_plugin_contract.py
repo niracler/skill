@@ -10,15 +10,12 @@ EXPECTED_PLUGINS = {
     "developer-workflows": {
         "category": "Developer Tools",
         "skills": {
-            "workspace-init",
-            "workspace-planning",
             "git-workflow",
             "code-sync",
             "ha-integration-reviewer",
             "markdown-lint",
             "skill-reviewer",
             "weekly-report",
-            "yunxiao",
         },
     },
     "personal-knowledge": {
@@ -96,7 +93,10 @@ class PluginRepositoryContractTest(unittest.TestCase):
             self.assertEqual(skill_names, expected["skills"])
             published_skills.extend(skill_names)
 
-        self.assertEqual(len(published_skills), 18)
+        expected_skill_count = sum(
+            len(plugin["skills"]) for plugin in EXPECTED_PLUGINS.values()
+        )
+        self.assertEqual(len(published_skills), expected_skill_count)
         self.assertEqual(len(published_skills), len(set(published_skills)))
 
     def test_legacy_aggregate_layout_is_removed(self) -> None:

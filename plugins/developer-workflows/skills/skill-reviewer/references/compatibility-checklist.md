@@ -57,9 +57,9 @@
 
 扫描 `mcp__` 前缀。MCP 协议是 Claude Code 特性，Codex CLI 不支持。
 
-若 skill 依赖 MCP 工具（如 `mcp__yunxiao__*`），标记 Critical 并建议：
+若 skill 依赖 MCP 工具，标记 Critical 并建议：
 
-- 提供 CLI fallback 方案（如 `aliyun` CLI 替代 MCP 工具）
+- 提供 CLI 或直接访问上游文档的替代方案
 - 或在文档中声明 "Requires Claude Code with MCP"
 
 ### High
@@ -105,7 +105,7 @@ skill 指令优先使用 Claude Code 工具术语（便于 Claude Code 直接理
 | `WebFetch: <URL>` | `> 其他环境：curl -sL <URL>` |
 | `使用 Task 工具并行启动` | `> 其他 Agent 环境：以下检查相互独立，可按顺序执行` |
 | `使用 Context7 获取文档` | `> 若未安装 Context7 MCP，从 GitHub 仓库直接获取` |
-| `subagent: 云效数据` | `> 其他环境：直接调用 yunxiao skill 或 aliyun CLI` |
+| `subagent: API 文档检查` | `> 其他环境：直接访问上游文档` |
 
 **模板：**
 

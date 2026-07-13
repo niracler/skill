@@ -36,19 +36,16 @@ npx skills add niracler/skill
 
 ### Developer Workflows
 
-Workspace, Git, DevOps, review, linting, and engineering-report workflows.
+Git, repository synchronization, review, linting, and engineering-report workflows.
 
 | Skill | Purpose | Main dependencies |
 | --- | --- | --- |
-| [workspace-init](plugins/developer-workflows/skills/workspace-init/SKILL.md) | Initialize or update `dev-config-template` workspaces | Git, jq, OpenSpec |
-| [workspace-planning](plugins/developer-workflows/skills/workspace-planning/SKILL.md) | Manage YAML schedules, milestones, and delivery status | Python, optional Yunxiao |
 | [git-workflow](plugins/developer-workflows/skills/git-workflow/SKILL.md) | Commits, pull requests, and releases | Git, optional GitHub CLI |
 | [code-sync](plugins/developer-workflows/skills/code-sync/SKILL.md) | Synchronize multiple repositories | Git, `git-workflow` |
 | [ha-integration-reviewer](plugins/developer-workflows/skills/ha-integration-reviewer/SKILL.md) | Review Home Assistant integrations | Git, GitHub CLI, Context7 |
 | [markdown-lint](plugins/developer-workflows/skills/markdown-lint/SKILL.md) | Configure and repair Markdown linting | Node.js, markdownlint-cli2 |
 | [skill-reviewer](plugins/developer-workflows/skills/skill-reviewer/SKILL.md) | Audit Agent Skill quality and compatibility | Built-in `skill-creator` |
-| [weekly-report](plugins/developer-workflows/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Reminders, optional GitHub and Yunxiao |
-| [yunxiao](plugins/developer-workflows/skills/yunxiao/SKILL.md) | Manage Alibaba Cloud DevOps work | Git, Yunxiao MCP or Alibaba Cloud CLI |
+| [weekly-report](plugins/developer-workflows/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Reminders, optional GitHub |
 
 ### Personal Knowledge
 
