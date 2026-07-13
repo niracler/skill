@@ -11,19 +11,16 @@
   "plugins": [
     {
       "name": "developer-workflows",
-      "description": "Workspace, Git, DevOps, review, linting, and reporting workflows",
+      "description": "Git, repository synchronization, review, linting, and reporting workflows",
       "source": "./plugins/developer-workflows",
       "strict": false,
       "skills": [
-        "./skills/workspace-init",
-        "./skills/workspace-planning",
         "./skills/git-workflow",
         "./skills/code-sync",
         "./skills/ha-integration-reviewer",
         "./skills/markdown-lint",
         "./skills/skill-reviewer",
-        "./skills/weekly-report",
-        "./skills/yunxiao"
+        "./skills/weekly-report"
       ]
     },
     {

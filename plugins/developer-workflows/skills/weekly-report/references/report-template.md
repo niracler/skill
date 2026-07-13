@@ -9,7 +9,7 @@ The weekly report follows this exact structure. Adapt content but preserve the h
 
 #### 本周工作总结
 
-{project-display-name}（{phase-name}，进度 {done}/{total}）：
+{project-display-name}：
 
 - **{bold key phrase}**：{concrete description with numbers and context}
 - **{bold key phrase}**：{concrete description}
@@ -35,13 +35,12 @@ The weekly report follows this exact structure. Adapt content but preserve the h
 
 ## Formatting Rules
 
-1. **Project headers**: Use display names from schedule YAML `title` field, or reuse previous report's grouping
-2. **Progress fraction**: Only for projects with schedule YAML (count done/total modules in current phase)
-3. **Time estimates**: In 下周计划, include `（N 天）` when the user has expressed time allocation
-4. **Bold pattern**: Start each bullet with `**bold key phrase**` followed by `：` (Chinese colon) then description
-5. **Concrete details**: Use business-value numbers (接口数量、页面数、配置参数个数), NOT internal numbers (commit 数、PR 编号、test coverage)
-6. **No markdown headers inside sections**: Use bold project names as line text, not `####` or `#####`
-7. **Each project 1-2 bullets**: Compress into core deliverables, don't list every sub-task
+1. **Project headers**: Reuse previous report's grouping, daily-note project names, or repository names
+2. **Time estimates**: In 下周计划, include `（N 天）` when the user has expressed time allocation
+3. **Bold pattern**: Start each bullet with `**bold key phrase**` followed by `：` (Chinese colon) then description
+4. **Concrete details**: Use business-value numbers (接口数量、页面数、配置参数个数), NOT internal numbers (commit 数、PR 编号、test coverage)
+5. **No markdown headers inside sections**: Use bold project names as line text, not `####` or `#####`
+6. **Each project 1-2 bullets**: Compress into core deliverables, don't list every sub-task
 
 ## Style Reference — Boss-Readable Writing
 
