@@ -66,7 +66,7 @@ Author-specific Chinese workflows for diaries, writing, blogging, and reporting.
 | [diary-note](plugins/personal/skills/diary-note/SKILL.md) | Append short notes to the current diary | None |
 | [note-to-blog](plugins/personal/skills/note-to-blog/SKILL.md) | Convert Obsidian notes into blog drafts | Python, PyYAML, optional `writing-assistant` |
 | [biweekly-collector](plugins/personal/skills/biweekly-collector/SKILL.md) | Collect material for a personal biweekly diary | macOS, curl, Git, Pinboard API |
-| [weekly-report](plugins/personal/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Reminders, optional GitHub |
+| [weekly-report](plugins/personal/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Node.js, Obsidian, Apple Calendar, Meegle CLI, GitLab MCP, GitHub CLI |
 
 ### Creative Fun
 

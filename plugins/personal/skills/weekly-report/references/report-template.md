@@ -1,67 +1,81 @@
-# Report Template
+# 软件研发周报模板
 
-The weekly report follows this exact structure. Adapt content but preserve the hierarchy.
+周报使用以下固定结构。内容可以调整，但必须保留标题层级和章节顺序。
 
-## Template
+## 模板
 
 ```markdown
-### 软件研发周报（M/D - M/D）
+### 软件研发周报（M/D - M/D，{大周或小周}）
 
 #### 本周工作总结
 
-{project-display-name}：
+{项目显示名称}：
 
-- **{bold key phrase}**：{concrete description with numbers and context}
-- **{bold key phrase}**：{concrete description}
+- **{核心成果}**：{包含业务数字和背景的具体说明}
+- **{核心成果}**：{具体说明}
 
-{next-project-display-name}：
+{下一个项目显示名称}：
 
-- **{bold key phrase}**：{concrete description}
+- **{核心成果}**：{具体说明}
 
 #### 下周工作计划（M/D - M/D）
 
-{project-display-name}（{estimated-days} 天）：
+{项目显示名称}（{预计天数} 天）：
 
-- **{bold key phrase}**：{what will be done and expected outcome}
+- **{计划成果}**：{计划完成的工作及预期结果}
 
-{next-project-display-name}（{estimated-days} 天）：
+{下一个项目显示名称}（{预计天数} 天）：
 
-- **{bold key phrase}**：{what will be done and expected outcome}
+- **{计划成果}**：{计划完成的工作及预期结果}
 
 #### 其他事项
 
-- {handoff / blocker / carry-forward note}
+- {交接、阻塞或顺延事项}
 ```
 
-## Formatting Rules
+## 格式规则
 
-1. **Project headers**: Reuse previous report's grouping, daily-note project names, or repository names
-2. **Time estimates**: In 下周计划, include `（N 天）` when the user has expressed time allocation
-3. **Bold pattern**: Start each bullet with `**bold key phrase**` followed by `：` (Chinese colon) then description
-4. **Concrete details**: Use business-value numbers (接口数量、页面数、配置参数个数), NOT internal numbers (commit 数、PR 编号、test coverage)
-5. **No markdown headers inside sections**: Use bold project names as line text, not `####` or `#####`
-6. **Each project 1-2 bullets**: Compress into core deliverables, don't list every sub-task
+1. **项目标题**：优先沿用历史周报，其次使用 Obsidian、飞书项目或仓库中的项目名称。
+2. **周类型**：标题必须明确写「大周」或「小周」，用于推导下一周类型。
+3. **时间估算**：已知分配时，在下周计划的项目标题中写 `（N 天）`。
+4. **加粗格式**：每条以 `**加粗关键词**` 开头，后接中文冒号 `：` 和说明。
+5. **具体信息**：使用接口数、页面数和配置参数个数等业务数字，不使用 commit 数、
+   MR/PR 编号或测试覆盖率。
+6. **项目层级**：章节内的项目名称使用普通文本，不新增 `####` 或 `#####` 标题。
+7. **条目数量**：每个项目保留 1～2 条核心成果，不逐项罗列所有子任务。
 
-## Style Reference — Boss-Readable Writing
+## 写作要求
 
-The report is for a manager who does NOT read code. Write in **business language**:
+周报面向不阅读代码的主管，使用业务语言说明「完成了什么」和「带来什么结果」。可以使用
+接口、页面、配置参数和使用者能力等领域词汇，但不要堆叠实现细节。
 
-- Explain **what was done** + **what it enables**, not how it was implemented
-- Use domain terms the boss understands (接口、页面、配置参数、用户可以...)
-- Do NOT use: technical jargon (Router Factory, Playwright E2E, migration downgrade), internal process names (CLAUDE.md, openspec review schema), version bumps (v0.2.0→v0.2.1), commit/PR counts, CI/CD details
+以下内容仅用于收集和核对，不进入正式周报：
 
-### Good Examples
+- 类名、测试框架和数据库迁移等实现术语。
+- 内部说明文件、评审规则和自动化流程名称。
+- 版本号变化、commit 或 MR/PR 数量。
+- CI/CD、依赖升级和无关的基础设施调整。
 
-`**System 模块开发完成**：完成项目管理、成员管理、角色权限共 14 个后端接口，支持四级角色权限体系`
+## 推荐示例
 
-`**ha-dali-center v0.13.0 发布**：新增 4 个设备配置参数，用户可在 Home Assistant 中直接读写，无需依赖桌面软件。已完成端到端测试验证`
+`**权限管理能力完成**：完成项目、成员和角色权限共 14 个后端接口，支持四级角色权限体系。`
 
-### Bad Examples
+`**设备配置能力上线**：新增 4 个设备配置参数，使用者可以在设备管理平台中直接读写，无需依赖桌面软件。`
 
-`完成了 auth 相关的工作` — too vague, no specifics
+## 避免示例
 
-`重构了 BaseService 提取 UUID 解析和成员查询逻辑到基类减少 350 行代码` — too implementation-focused
+`完成了 auth 相关工作。`
 
-`srhome-core 从 v0.1.0 发版到 v0.2.0（新增 INSTALLER 角色枚举）和 v0.2.1（中文 API 描述），sunlite / sylsmart submodule 同步升级` — internal version/infra details, boss doesn't care
+问题：内容过于宽泛，缺少成果和影响。
 
-`添加 Claude Code GitHub Workflow（PR#77），修复 fork PR 无法访问上游 secrets` — CI internals, skip entirely
+`重构公共基类并调整标识解析逻辑，减少 350 行代码。`
+
+问题：强调实现方式和代码量，没有说明业务结果。
+
+`合并 GitLab MR !78，并将服务从 v0.1.0 升级到 v0.2.0。`
+
+问题：MR 编号和版本变化属于内部记录，不适合作为主管周报的核心内容。
+
+`修复 GitHub Workflow，解决 fork PR 无法访问上游 secrets。`
+
+问题：属于 CI 内部细节，除非直接解除业务阻塞，否则不写入周报。

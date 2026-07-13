@@ -40,8 +40,8 @@ metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","reminders-cli"
 | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Areas/生活(Life)/周记(Weekly)/` | 旧版周记输出目录 |
 | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/Areas/生活(Life)/月记(Monthly)/` | 当前月记输出目录 |
 | `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Note/templates/monthly.md` | 周记模板 |
-| `~/code/ai-dev/repos/rss-agent/output/daily/` | AI 筛选的 RSS 每日摘要 |
-| `~/code/nini-dev/repos/plrom/README.md` | plrom「人 × 社区 × 物」源文件，使用独立 Git 仓库 |
+| RSS 摘要目录（运行时发现） | AI 筛选的 RSS 每日摘要 |
+| `~/code/plrom/README.md` | plrom「人 × 社区 × 物」源文件，使用独立 Git 仓库 |
 
 ## 工作流概览
 
@@ -199,7 +199,7 @@ modified: {today}
 - 跟朋友 L 约了羽毛球
 
 #### 3/11 (周二)
-- Home Assistant Dashboard 大整理
+- 家庭自动化 Dashboard 大整理
 - 看完了《迷宫饭》第二季
 ```
 
@@ -336,11 +336,12 @@ reminders show-all
 已完成提醒更有价值，可以反映生活目标、人际维护、重复习惯、后续计划和学习节点。
 
 只保留「生活」「健康」「人际关系」「阅读」「提醒」等个人列表，跳过纯工作事项，例如
-`sunlite: switch API`。
+`内部项目：接口切换`。
 
 ### 2g：RSS 每日摘要
 
-读取 `~/code/ai-dev/repos/rss-agent/output/daily/` 中由 AI 筛选的每日摘要。
+在 `~/code/*/` 中查找名为 `rss-agent` 的仓库，再读取其中 `output/daily/` 下由 AI
+筛选的每日摘要。未找到仓库时跳过此来源，不再尝试旧的嵌套仓库路径。
 
 读取日期范围内存在的 `YYYY-MM-DD.md`。每份摘要包含：
 
@@ -353,13 +354,13 @@ reminders show-all
 
 ### 2h：plrom Git 差异
 
-plrom 仓库 `~/code/nini-dev/repos/plrom/` 是独立 Git 仓库，记录用户关注的
+plrom 仓库 `~/code/plrom/` 是独立 Git 仓库，记录用户关注的
 「人 × 社区 × 物」，并通过 GitHub Actions 自动同步到博客。
 
 检查周期内的变更：
 
 ```bash
-cd ~/code/nini-dev/repos/plrom
+cd ~/code/plrom
 git log --since="{start_date}" --until="{end_date}" --oneline
 # If there are commits, get the diff
 FIRST_COMMIT=$(git log --since="{start_date}" --format="%H" --reverse | head -1)
