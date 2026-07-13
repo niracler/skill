@@ -17,15 +17,6 @@ Start a new task after installation so Codex loads the bundled skills.
 
 ## Other installation methods
 
-Claude Code Marketplace:
-
-```bash
-claude plugin marketplace add https://github.com/niracler/skill.git
-claude plugin install developer-workflows@niracler-skills
-claude plugin install personal-knowledge@niracler-skills
-claude plugin install creative-fun@niracler-skills
-```
-
 Skills CLI:
 
 ```bash
