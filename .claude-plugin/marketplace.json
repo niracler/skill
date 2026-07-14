@@ -11,25 +11,20 @@
   "plugins": [
     {
       "name": "developer-workflows",
-      "description": "Git, repository synchronization, review, linting, and reporting workflows",
+      "description": "Markdown linting and skill review workflows",
       "source": "./plugins/developer-workflows",
       "strict": false,
       "skills": [
-        "./skills/git-workflow",
-        "./skills/code-sync",
-        "./skills/ha-integration-reviewer",
         "./skills/markdown-lint",
         "./skills/skill-reviewer"
       ]
     },
     {
       "name": "personal-knowledge",
-      "description": "Schedules, bookmarks, diaries, writing, blogging, and learning workflows",
+      "description": "Anki flashcard generation workflow",
       "source": "./plugins/personal-knowledge",
       "strict": false,
       "skills": [
-        "./skills/schedule-manager",
-        "./skills/pinboard-manager",
         "./skills/anki-card-generator"
       ]
     },
@@ -44,12 +39,10 @@
     },
     {
       "name": "personal",
-      "description": "Author-specific diary, writing, blogging, and reporting workflows",
+      "description": "Author-specific writing, blogging, and reporting workflows",
       "source": "./plugins/personal",
       "strict": false,
       "skills": [
-        "./skills/diary-assistant",
-        "./skills/diary-note",
         "./skills/biweekly-collector",
         "./skills/note-to-blog",
         "./skills/writing-assistant",

@@ -1,7 +1,7 @@
 {
   "name": "developer-workflows",
   "version": "0.1.0",
-  "description": "Developer workflows for Git, repository synchronization, reviews, and linting",
+  "description": "Developer workflows for Markdown linting and skill review",
   "author": {
     "name": "Niracler",
     "email": "i@niracler.com",
@@ -12,15 +12,15 @@
   "license": "MIT",
   "keywords": [
     "developer-tools",
-    "git",
-    "workflow",
-    "devops"
+    "markdown",
+    "linting",
+    "review"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Developer Workflows",
-    "shortDescription": "Git, repository synchronization, review, and linting workflows",
-    "longDescription": "Manage Git delivery, Home Assistant reviews, Markdown checks, skill audits, and repository synchronization.",
+    "shortDescription": "Markdown linting and skill review workflows",
+    "longDescription": "Check Markdown documents and audit Agent Skills.",
     "developerName": "Niracler",
     "category": "Developer Tools",
     "capabilities": [
@@ -30,9 +30,8 @@
     ],
     "websiteURL": "https://github.com/niracler/skill",
     "defaultPrompt": [
-      "帮我 review 当前改动并生成 commit message",
       "帮我检查 Markdown 文档",
-      "帮我同步所有 Git 仓库"
+      "帮我审查这个 Skill"
     ],
     "brandColor": "#0F9D58"
   }
