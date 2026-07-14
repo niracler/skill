@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+
+- **code-sync / git-workflow / ha-integration-reviewer** — Remove the three skills and their Marketplace entries, plugin metadata, documentation, and contract expectations.
+- **diary-assistant / diary-note** — Remove the two daily diary skills and their Marketplace entries, shared configuration, dependency notes, documentation, and contract expectations.
+- **pinboard-manager / schedule-manager** — Remove the two personal knowledge skills and their Marketplace entries, references, diagnostic scripts, plugin metadata, documentation, and contract expectations.
+
 ## [0.4.0] - 2026-07-13
 
 ### Added

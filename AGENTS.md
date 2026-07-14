@@ -1,8 +1,7 @@
 # Niracler Skills 仓库约定
 
 本文件只记录此仓库特有的结构、发布和内容约束。通用 Skill 质量规则由
-`plugins/developer-workflows/skills/skill-reviewer/` 维护；通用 Commit、PR 和发布规则由
-`plugins/developer-workflows/skills/git-workflow/` 维护，不在此重复。
+`plugins/developer-workflows/skills/skill-reviewer/` 维护，不在此重复。
 
 ## 发布结构
 

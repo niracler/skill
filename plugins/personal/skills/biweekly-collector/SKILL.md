@@ -5,8 +5,7 @@ description: >-
   「周记素材」「双周记」「最近发生了什么」「整理素材写周记」、"biweekly materials"
   或 "gather journal materials" 时立即使用。从日记、Pinboard、豆瓣、Telegram、
   Calendar、Reminders、照片、RSS 摘要和 plrom diff 中收集最近 2～4 周的原始材料，
-  并按周记模板整理，但不代写最终正文。每日写作使用 diary-assistant，工作周报使用
-  weekly-report，快速追记使用 diary-note。
+  并按周记模板整理，但不代写最终正文。工作周报使用 weekly-report。
 metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","reminders-cli","git","icalBuddy"],"env":["PINBOARD_AUTH_TOKEN"]}}}
 ---
 
@@ -27,7 +26,7 @@ metadata: {"openclaw":{"emoji":"📋","requires":{"bins":["curl","reminders-cli"
 | icalBuddy | CLI | 是 | `brew install ical-buddy` |
 | curl | CLI | 是 | macOS 内置 |
 | Git | CLI | 是 | 系统内置或运行 `brew install git` |
-| `PINBOARD_AUTH_TOKEN` | 环境变量 | 是 | 配置方式见 pinboard-manager skill |
+| `PINBOARD_AUTH_TOKEN` | 环境变量 | 是 | 登录 Pinboard 后在 Settings → Password 中获取 |
 
 > 加载 skill 时不要主动检查这些工具。命令因缺少工具而失败时，跳过对应数据源，
 > 使用其余可用数据继续。

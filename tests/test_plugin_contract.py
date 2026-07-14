@@ -10,9 +10,6 @@ EXPECTED_PLUGINS = {
     "developer-workflows": {
         "category": "Developer Tools",
         "skills": {
-            "git-workflow",
-            "code-sync",
-            "ha-integration-reviewer",
             "markdown-lint",
             "skill-reviewer",
         },
@@ -20,8 +17,6 @@ EXPECTED_PLUGINS = {
     "personal-knowledge": {
         "category": "Knowledge & Files",
         "skills": {
-            "schedule-manager",
-            "pinboard-manager",
             "anki-card-generator",
         },
     },
@@ -33,8 +28,6 @@ EXPECTED_PLUGINS = {
         "category": "Productivity",
         "skills": {
             "writing-assistant",
-            "diary-assistant",
-            "diary-note",
             "note-to-blog",
             "biweekly-collector",
             "weekly-report",

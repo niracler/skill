@@ -1,7 +1,7 @@
 {
   "name": "personal-knowledge",
   "version": "0.1.0",
-  "description": "Reusable personal productivity workflows for schedules, bookmarks, and learning",
+  "description": "Reusable workflow for generating Anki flashcards",
   "author": {
     "name": "Niracler",
     "email": "i@niracler.com",
@@ -12,15 +12,15 @@
   "license": "MIT",
   "keywords": [
     "knowledge",
-    "bookmarks",
     "learning",
-    "productivity"
+    "anki",
+    "flashcards"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Personal Knowledge",
-    "shortDescription": "Reusable scheduling, bookmark, and learning workflows",
-    "longDescription": "Manage Apple Calendar and Reminders, maintain Pinboard bookmarks, and generate Anki cards from source material.",
+    "shortDescription": "Reusable Anki flashcard workflow",
+    "longDescription": "Generate atomic Anki cards from source material.",
     "developerName": "Niracler",
     "category": "Knowledge & Files",
     "capabilities": [
@@ -30,9 +30,8 @@
     ],
     "websiteURL": "https://github.com/niracler/skill",
     "defaultPrompt": [
-      "帮我查看今天的日程和待办",
-      "帮我整理 Pinboard 标签",
-      "把这段知识生成 Anki 卡片"
+      "把这段知识生成 Anki 卡片",
+      "帮我把这篇文章整理成记忆卡片"
     ],
     "brandColor": "#7B61FF"
   }
