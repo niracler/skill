@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- **weekly-report** — Switch workweek detection from alternating weeks to working only the last Saturday of each month, align project and item titles with Feishu Project work items, refine manager-facing copy and typography rules, and remove the Apple Calendar afternoon block scheduling step.
+
 ### Removed
 
 - **code-sync / git-workflow / ha-integration-reviewer** — Remove the three skills and their Marketplace entries, plugin metadata, documentation, and contract expectations.
