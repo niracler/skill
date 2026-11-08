@@ -51,7 +51,7 @@ Author-specific Chinese workflows for writing, blogging, and reporting.
 | [writing-assistant](plugins/personal/skills/writing-assistant/SKILL.md) | Plan, review, and polish personal writing | Optional `markdown-lint` from Developer Workflows |
 | [note-to-blog](plugins/personal/skills/note-to-blog/SKILL.md) | Convert Obsidian notes into blog drafts | Python, PyYAML, optional `writing-assistant` |
 | [biweekly-collector](plugins/personal/skills/biweekly-collector/SKILL.md) | Collect material for a personal biweekly diary | macOS, curl, Git, Pinboard API |
-| [weekly-report](plugins/personal/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Node.js, Obsidian, Apple Calendar, Meegle CLI, GitLab MCP, GitHub CLI |
+| [weekly-report](plugins/personal/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Node.js, Obsidian, Meegle CLI, GitLab MCP, GitHub CLI |
 
 ### Creative Fun
 
