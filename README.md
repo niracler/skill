@@ -1,6 +1,6 @@
 # Niracler Skills
 
-Personal Codex and Claude Code workflows packaged as three general-purpose plugins and one author-only plugin. The same bundled skills remain discoverable through the skills CLI.
+Personal Codex and Claude Code workflows packaged as three general-purpose plugins. The same bundled skills remain discoverable through the skills CLI.
 
 ## Codex installation
 
@@ -42,17 +42,6 @@ Reusable Anki flashcard workflow.
 | --- | --- | --- |
 | [anki-card-generator](plugins/personal-knowledge/skills/anki-card-generator/SKILL.md) | Generate atomic Anki cards | None |
 
-### Personal
-
-Author-specific Chinese workflows for writing, blogging, and reporting.
-
-| Skill | Purpose | Main dependencies |
-| --- | --- | --- |
-| [writing-assistant](plugins/personal/skills/writing-assistant/SKILL.md) | Plan, review, and polish personal writing | Optional `markdown-lint` from Developer Workflows |
-| [note-to-blog](plugins/personal/skills/note-to-blog/SKILL.md) | Convert Obsidian notes into blog drafts | Python, PyYAML, optional `writing-assistant` |
-| [biweekly-collector](plugins/personal/skills/biweekly-collector/SKILL.md) | Collect material for a personal biweekly diary | macOS, curl, Git, Pinboard API |
-| [weekly-report](plugins/personal/skills/weekly-report/SKILL.md) | Generate software-engineering weekly reports | Git, Node.js, Obsidian, Meegle CLI, GitLab MCP, GitHub CLI |
-
 ### Creative Fun
 
 | Skill | Purpose | Main dependencies |
@@ -60,8 +49,6 @@ Author-specific Chinese workflows for writing, blogging, and reporting.
 | [zaregoto-miko](plugins/creative-fun/skills/zaregoto-miko/SKILL.md) | Rewrite text using the configured character-voice pattern | None |
 
 ## Dependency notes
-
-The author-only Personal plugin can optionally use `markdown-lint` from Developer Workflows when reviewing writing.
 
 Several skills depend on local applications, CLI tools, APIs, MCP servers, or personal paths. Each `SKILL.md` documents its own prerequisites and fallback behavior.
 

@@ -7,12 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-### Changed
-
-- **weekly-report** — Switch workweek detection from alternating weeks to working only the last Saturday of each month, align project and item titles with Feishu Project work items, refine manager-facing copy and typography rules, and remove the Apple Calendar afternoon block scheduling step.
-
 ### Removed
 
+- **personal plugin (biweekly-collector / note-to-blog / weekly-report / writing-assistant)** — Move the four Obsidian-specific workflows into the local Obsidian vault and remove the author-only plugin, Marketplace entry, documentation, and contract expectations from the public repository.
 - **code-sync / git-workflow / ha-integration-reviewer** — Remove the three skills and their Marketplace entries, plugin metadata, documentation, and contract expectations.
 - **diary-assistant / diary-note** — Remove the two daily diary skills and their Marketplace entries, shared configuration, dependency notes, documentation, and contract expectations.
 - **pinboard-manager / schedule-manager** — Remove the two personal knowledge skills and their Marketplace entries, references, diagnostic scripts, plugin metadata, documentation, and contract expectations.

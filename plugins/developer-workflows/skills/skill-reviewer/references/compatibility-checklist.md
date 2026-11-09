@@ -168,7 +168,6 @@ skill 是否放在语义正确的 group：
 
 - developer-workflows — Markdown 检查与 Skill 审查
 - personal-knowledge — 学习与记忆卡片
-- personal — 写作、博客、周记与软件研发周报
 - creative-fun — 趣味与创意写作
 
 **description 可搜索性**
