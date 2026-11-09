@@ -3,7 +3,7 @@
 #
 # Usage:
 #   ./scripts/sync                  # 同步全部 skills
-#   ./scripts/sync note-to-blog     # 只同步指定 skill
+#   ./scripts/sync markdown-lint    # 只同步指定 skill
 #   ./scripts/sync --dry-run        # 预览模式
 
 set -euo pipefail
